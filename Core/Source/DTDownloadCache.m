@@ -15,7 +15,10 @@
 
 #import <ImageIO/CGImageSource.h>
 #import "NSString+DTFormatNumbers.h"
+
+#if TARGET_OS_IPHONE
 #import "DTAsyncFileDeleter.h"
+#endif
 
 NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFile";
 
@@ -99,7 +102,9 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 
 		_maintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(_maintenanceTimerTick:) userInfo:nil repeats:YES];
 		
+#if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+#endif
 	}
 	
 	return self;
@@ -423,8 +428,12 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			
 			[self _commitWorkerContext];
 			
+#if TARGET_OS_IPHONE
 			// we transfered the file into the database, so we don't need it any more
 			[[DTAsyncFileDeleter sharedInstance] removeItemAtPath:path];
+#else
+            [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+#endif
 			
 			NSString *key = [download.URL absoluteString];
 			NSArray *blocksToExecute = _completionHandlers[key];
@@ -915,6 +924,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 @end
 
 
+#if TARGET_OS_IPHONE
 
 @implementation DTDownloadCache (Images)
 
@@ -998,5 +1008,6 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	return [self cachedImageForURL:URL option:option completion:NULL];
 }
 
-
 @end
+
+#endif

@@ -22,7 +22,10 @@ typedef NSUInteger DTDownloadCacheOption;
 
 // when download succeedes or fails the blocks are called, passing URL. If there was an error then data/image is nil and the NSError holds the reason
 typedef void (^DTDownloadCacheDataCompletionBlock)(NSURL *URL, NSData *data, NSError *error);
+
+#if TARGET_OS_IPHONE
 typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, NSError *error);
+#endif
 
 /**
  A global cache for <DTDownload> instances.
@@ -91,6 +94,7 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  Specialized methods for dealing with images. An NSCache holds on to UIImage references after they have been retrieved once since that speeds up subsequent drawing.
  */
 
+#if TARGET_OS_IPHONE
 @interface DTDownloadCache (Images)
 
 /**
@@ -114,3 +118,4 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option completion:(DTDownloadCacheImageCompletionBlock)completion;
 
 @end
+#endif

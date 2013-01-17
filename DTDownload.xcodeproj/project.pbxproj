@@ -24,6 +24,7 @@
 		A719040A16A808E600C1EC52 /* Test2.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040816A808E600C1EC52 /* Test2.txt.download */; };
 		A719040E16A8097100C1EC52 /* libDTDownload (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */; };
 		A719042816A80CFF00C1EC52 /* Test in Resources */ = {isa = PBXBuildFile; fileRef = A719042716A80CFF00C1EC52 /* Test */; };
+		A719042916A80FA800C1EC52 /* DTDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902C116A802FF00C1EC52 /* DTDownloadCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,6 +373,7 @@
 				A71903E416A807E300C1EC52 /* DTDownloadItem.m in Sources */,
 				A71903E516A807E300C1EC52 /* DTDownloadQueue.m in Sources */,
 				A71903E616A807EC00C1EC52 /* DTCachedFile.m in Sources */,
+				A719042916A80FA800C1EC52 /* DTDownloadCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
