@@ -473,17 +473,16 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		}
 
         // if _destinationBundleFilePath is not nil this means that it is a resumable download
-        NSLog(@"_destinationBundleFilePath %@", _destinationBundleFilePath);
-        if (!_destinationBundleFilePath) {
+        if (!_destinationBundleFilePath)
+        {
             _destinationBundleFilePath = [self createBundleFilePathForFilename:[self filenameFromHeader:http.allHeaderFields]];
         }
-		NSLog(@"store result in %@", _destinationBundleFilePath);
-
 	}
 	else
 	{
 		[_urlConnection cancel];
 	}
+    
 	// could be redirections, so we set the Length to 0 every time
 	[_receivedData setLength:0];
 }
