@@ -32,7 +32,7 @@ typedef void (^DTDownloadQueueCompletionBlock)(DTDownloadItem *downloadItem, NSE
 typedef void (^DTDownloadQueueProgressBlock)(DTDownloadItem *downloadItem, long long int downloadedBytes, long long int totalBytes, float speed);
 
 /**
- A global queue for <DTDownload> instances.
+ A global queue for <DTDownloadItem> instances.
 
  Note: all URL parameters may only be remote URLs e.g. http: or https.
  */
