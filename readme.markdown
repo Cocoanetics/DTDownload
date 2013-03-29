@@ -11,7 +11,7 @@ It is open source and covered by a standard BSD license. That means you have to 
 Documentation
 -------------
 
-Documentation can be [browsed online](http://cocoanetics.github.com/DTDownload) or installed in your Xcode Organizer via the [Atom Feed URL](http://cocoanetics.github.com/DTDownload/DTDownload.atom).
+Documentation can be [browsed online](https://docs.cocoanetics.com/DTDownload) or installed in your Xcode Organizer via the [Atom Feed URL](https://docs.cocoanetics.com/DTDownload/DTDownload.atom).
 
 Usage
 -----
