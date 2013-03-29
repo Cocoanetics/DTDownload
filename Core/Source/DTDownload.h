@@ -88,6 +88,11 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 
 @interface DTDownload : NSObject
 
+/**-------------------------------------------------------------------------------------
+ @name Getting Information about Downloads
+ ---------------------------------------------------------------------------------------
+ */
+
 /**
  Returns the URL that is being downloaded by the receiver.
  */
@@ -155,17 +160,19 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 /** Creates a download for a given URL and stores the result to the file
 
  @param url A remote URL
- @param destinationPath where the downloaded file should be stored
+ @param destinationFile where the downloaded file should be stored
  @returns An initialized download object
  */
 - (id)initWithURL:(NSURL *)url withDestinationFile:(NSString *)destinationFile;
 
 /**
-* Creates a download for a given URL at the given path
-* If a previous uncompleted download at the destination location exists then the download is tried to resumed,
-* otherwise a new full download is performed.
-*
-* @return a new DTDownload instance
+ Creates a download for a given URL at the given path
+ If a previous uncompleted download at the destination location exists then the download is tried to resumed,
+ otherwise a new full download is performed.
+
+ @param URL The remote URL to download
+ @param path The path to download to
+ @return a new DTDownload instance
 */
 + (DTDownload *)downloadForURL:(NSURL *)URL atPath:(NSString *)path;
 
@@ -178,7 +185,6 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 /**
  Starts or Resumes a download for a given URL.
  
- @param shouldResume Specifies if the download should be resumed if possible
  @returns An initialized download object
  */
 - (void)start;

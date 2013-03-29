@@ -57,6 +57,7 @@ typedef void (^DTDownloadQueueProgressBlock)(DTDownloadItem *downloadItem, long 
 
 /**
  Starts downloading a given download item.
+ @param downloadItem The download item
  @param completion The completion block to execute after the download is finished, either with a file or error.
  @param progress The block of code to execute for each step in the download progress
  */

@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		A76F50401705D2E500DF52D5 /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A76F50411705D2E500DF52D5 /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				A76F50441705D2F100DF52D5 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		A71902AB16A8029400C1EC52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902AA16A8029400C1EC52 /* Foundation.framework */; };
 		A71902C616A802FF00C1EC52 /* DTDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902BF16A802FF00C1EC52 /* DTDownload.m */; };
@@ -151,6 +165,7 @@
 		A719040816A808E600C1EC52 /* Test2.txt.download */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Test2.txt.download; sourceTree = "<group>"; };
 		A719042616A80C7200C1EC52 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		A719042716A80CFF00C1EC52 /* Test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test; sourceTree = "<group>"; };
+		A76F503F1705D24A00DF52D5 /* AppledocSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +297,7 @@
 		A71903CB16A804A700C1EC52 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				A76F503F1705D24A00DF52D5 /* AppledocSettings.plist */,
 				A71903CC16A804C000C1EC52 /* DTDownload.podspec */,
 				A71903CE16A804C000C1EC52 /* LICENSE */,
 				A71903CD16A804C000C1EC52 /* readme.markdown */,
@@ -412,6 +428,7 @@
 				A71902A616A8029400C1EC52 /* DTDownload (iOS) */,
 				A71903D216A8068B00C1EC52 /* DTDownload (Mac) */,
 				A71903F316A808A700C1EC52 /* Unit Tests */,
+				A76F50401705D2E500DF52D5 /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -515,6 +532,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		A76F50441705D2F100DF52D5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/appledoc --print-settings --output \"${BUILD_DIR}/Documentation/\" \"${PROJECT_DIR}\"\necho \"Documentation Output directory: ${BUILD_DIR}/Documentation/\"";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -716,6 +747,20 @@
 			};
 			name = Release;
 		};
+		A76F50421705D2E500DF52D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A76F50431705D2E500DF52D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -754,6 +799,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		A76F50411705D2E500DF52D5 /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A76F50421705D2E500DF52D5 /* Debug */,
+				A76F50431705D2E500DF52D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
