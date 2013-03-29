@@ -31,13 +31,6 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 @optional
 
 /**
- Sent by the download object to the delegate to inquire if a download that can be resumed should continue. Return `NO` if the download should startNext from the beginning.
- 
- @param download A download object.
- */
-- (BOOL)shouldResumeDownload:(DTDownload *)download;
-
-/**
  Sent by the download object to inform the delegate about its progress.
  
  @param download A download object.
