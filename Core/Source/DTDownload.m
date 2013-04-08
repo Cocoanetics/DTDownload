@@ -469,6 +469,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			if (shouldCancel)
 			{
 				[self stop];
+                [_receivedData setLength:0];
+                return;
 			}
 		}
 
