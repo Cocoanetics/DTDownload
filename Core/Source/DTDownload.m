@@ -67,6 +67,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	// response handlers
 	DTDownloadResponseHandler _responseHandler;
 	DTDownloadCompletionHandler _completionHandler;
+	
+	NSDate *_lastProgressSentDate;
+	
+	float _progressInterval;
 }
 
 #pragma mark Downloading
@@ -85,6 +89,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		_URL = URL;
 		_resumeFileOffset = 0;
 		_destinationPath = destinationPath;
+		
+		// this is optimal for refreshing progress in UI (~60fps)
+		_progressInterval = 0.017;
+		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
 #else
@@ -220,6 +228,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	{
 		_receivedData = [NSMutableData data];
 	}
+	
+	_lastProgressSentDate = [NSDate date];
 }
 
 - (void)stop
@@ -584,14 +594,24 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	// send notification
 	if (_expectedContentLength > 0)
 	{
-		// notify delegate
-		if ([_delegate respondsToSelector:@selector(download:downloadedBytes:ofTotalBytes:withSpeed:)])
-		{
-			[_delegate download:self downloadedBytes:_receivedBytes ofTotalBytes:_expectedContentLength withSpeed:downloadSpeed];
-		}
+		NSDate *now = [NSDate date];
 		
-		NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) _receivedBytes / (float) _expectedContentLength], @"TotalBytes" : [NSNumber numberWithLongLong:_expectedContentLength], @"ReceivedBytes" : [NSNumber numberWithLongLong:_receivedBytes]};
-		[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
+		NSTimeInterval currentProgressInterval = [now timeIntervalSinceDate:_lastProgressSentDate];
+		
+		// throttling sending of progress notifications for specified progressInterval in seconds
+		if (currentProgressInterval > _progressInterval)
+		{
+			// notify delegate
+			if ([_delegate respondsToSelector:@selector(download:downloadedBytes:ofTotalBytes:withSpeed:)])
+			{
+				[_delegate download:self downloadedBytes:_receivedBytes ofTotalBytes:_expectedContentLength withSpeed:downloadSpeed];
+			}
+			
+			NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) _receivedBytes / (float) _expectedContentLength], @"TotalBytes" : [NSNumber numberWithLongLong:_expectedContentLength], @"ReceivedBytes" : [NSNumber numberWithLongLong:_receivedBytes]};
+			[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
+		
+			_lastProgressSentDate = [NSDate date];
+		}
 	}
 }
 
