@@ -293,8 +293,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	}
 	
 	_urlConnection = nil;
-	// send notification
-	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidFinishNotification object:self];
+	
+	// send finish notification with error in userInfo
+	NSDictionary *userInfo = @{@"Error":error};
+	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidFinishNotification object:self userInfo:userInfo];
 }
 
 - (void)_completeWithSuccess
