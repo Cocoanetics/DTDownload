@@ -119,6 +119,13 @@
 			remoteGlobalIDString = A78220BA168060CA005B602D;
 			remoteInfo = DTUTI;
 		};
+		F8B44D0F173260DB0018AE02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A70B4CE61486637E00873A4A;
+			remoteInfo = "Static Library";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -356,6 +363,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F8B44D10173260DB0018AE02 /* PBXTargetDependency */,
 			);
 			name = "DTDownload (iOS)";
 			productName = DTDownload;
@@ -590,6 +598,11 @@
 			target = A71903D216A8068B00C1EC52 /* DTDownload (Mac) */;
 			targetProxy = A719040C16A8096D00C1EC52 /* PBXContainerItemProxy */;
 		};
+		F8B44D10173260DB0018AE02 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library";
+			targetProxy = F8B44D0F173260DB0018AE02 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -807,6 +820,7 @@
 				A76F50431705D2E500DF52D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
