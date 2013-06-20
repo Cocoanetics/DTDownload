@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'DTDownload'
-  spec.version      = '1.0.0'
+  spec.version      = '1.0.1'
   spec.summary      = "File Downloading, Caching and Queueing."
   spec.homepage     = "https://github.com/Cocoanetics/DTDownload"
   spec.author       = { "Oliver Drobnik" => "oliver@drobnik.com" }
