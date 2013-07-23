@@ -32,13 +32,28 @@
 		A71903E516A807E300C1EC52 /* DTDownloadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902C516A802FF00C1EC52 /* DTDownloadQueue.m */; };
 		A71903E616A807EC00C1EC52 /* DTCachedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A71903C916A8043000C1EC52 /* DTCachedFile.m */; };
 		A71903F616A808A700C1EC52 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903F516A808A700C1EC52 /* SenTestingKit.framework */; };
-		A71903F716A808A700C1EC52 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903D416A8068B00C1EC52 /* Cocoa.framework */; };
 		A719040616A808D400C1EC52 /* DTDownloadTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A71903E816A8086400C1EC52 /* DTDownloadTest.m */; };
 		A719040916A808E600C1EC52 /* Test1.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040716A808E600C1EC52 /* Test1.txt.download */; };
 		A719040A16A808E600C1EC52 /* Test2.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040816A808E600C1EC52 /* Test2.txt.download */; };
 		A719040E16A8097100C1EC52 /* libDTDownload (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */; };
 		A719042816A80CFF00C1EC52 /* Test in Resources */ = {isa = PBXBuildFile; fileRef = A719042716A80CFF00C1EC52 /* Test */; };
 		A719042916A80FA800C1EC52 /* DTDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902C116A802FF00C1EC52 /* DTDownloadCache.m */; };
+		FABA5EAD178ED6BE00D13C5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAC178ED6BE00D13C5A /* UIKit.framework */; };
+		FABA5EAE178ED6BE00D13C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902AA16A8029400C1EC52 /* Foundation.framework */; };
+		FABA5EB0178ED6BE00D13C5A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAF178ED6BE00D13C5A /* CoreGraphics.framework */; };
+		FABA5EB6178ED6BE00D13C5A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FABA5EB4178ED6BE00D13C5A /* InfoPlist.strings */; };
+		FABA5EB8178ED6BE00D13C5A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FABA5EB7178ED6BE00D13C5A /* main.m */; };
+		FABA5EBC178ED6BE00D13C5A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FABA5EBB178ED6BE00D13C5A /* AppDelegate.m */; };
+		FABA5EBE178ED6BE00D13C5A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FABA5EBD178ED6BE00D13C5A /* Default.png */; };
+		FABA5EC0178ED6BE00D13C5A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FABA5EBF178ED6BE00D13C5A /* Default@2x.png */; };
+		FABA5EC2178ED6BE00D13C5A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FABA5EC1178ED6BE00D13C5A /* Default-568h@2x.png */; };
+		FABA5EC5178ED6BE00D13C5A /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FABA5EC3178ED6BE00D13C5A /* MainStoryboard_iPhone.storyboard */; };
+		FABA5EC8178ED6BE00D13C5A /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FABA5EC6178ED6BE00D13C5A /* MainStoryboard_iPad.storyboard */; };
+		FABA5ECB178ED6BE00D13C5A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FABA5ECA178ED6BE00D13C5A /* ViewController.m */; };
+		FABA5ECF178ED6D900D13C5A /* libDTDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902A716A8029400C1EC52 /* libDTDownload.a */; };
+		FABA5EED178EDB4300D13C5A /* libDTFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7724F0A16A954BB005391C2 /* libDTFoundation.a */; };
+		FABA5EF5178EDB7900D13C5A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EF4178EDB7900D13C5A /* CoreData.framework */; };
+		FABA5EF9178EDCF000D13C5A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EF8178EDCF000D13C5A /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +134,62 @@
 			remoteGlobalIDString = A7E889A416A9B190009EF0DF;
 			remoteInfo = "DTUTI (Mac)";
 		};
+		FABA5EE1178EDB4300D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A72121DA173BFFB1003C6F0A;
+			remoteInfo = "DTReachability (iOS)";
+		};
+		FABA5EE3178EDB4300D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A72121EA173BFFED003C6F0A;
+			remoteInfo = "DTReachability (Mac)";
+		};
+		FABA5EE5178EDB4300D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7C92B7A174FB8900019D70A;
+			remoteInfo = "DTSQLite (iOS)";
+		};
+		FABA5EE7178EDB4300D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7C92B8C174FB9720019D70A;
+			remoteInfo = "DTSQLite (Mac)";
+		};
+		FABA5EE9178EDB4300D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A70D74D01743AFBC00E6E626;
+			remoteInfo = "DTSidePanels Demo";
+		};
+		FABA5EEB178EDB4300D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7D9D62D1758C89800C29B6F;
+			remoteInfo = "DTReachability Demo";
+		};
+		FABA5EEE178EDB5500D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719029F16A8029400C1EC52 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A71902A616A8029400C1EC52;
+			remoteInfo = "DTDownload (iOS)";
+		};
+		FABA5EF2178EDB5F00D13C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A70B4CE61486637E00873A4A;
+			remoteInfo = "Static Library";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,7 +223,6 @@
 		A71903CD16A804C000C1EC52 /* readme.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = readme.markdown; sourceTree = "<group>"; };
 		A71903CE16A804C000C1EC52 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libDTDownload (Mac).a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A71903D416A8068B00C1EC52 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		A71903D716A8068B00C1EC52 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		A71903D816A8068B00C1EC52 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A71903D916A8068B00C1EC52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -166,6 +236,25 @@
 		A719042616A80C7200C1EC52 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		A719042716A80CFF00C1EC52 /* Test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test; sourceTree = "<group>"; };
 		A76F503F1705D24A00DF52D5 /* AppledocSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
+		FABA5EAB178ED6BE00D13C5A /* ImageDownloadSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageDownloadSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FABA5EAC178ED6BE00D13C5A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FABA5EAF178ED6BE00D13C5A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FABA5EB3178ED6BE00D13C5A /* ImageDownloadSample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageDownloadSample-Info.plist"; sourceTree = "<group>"; };
+		FABA5EB5178ED6BE00D13C5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FABA5EB7178ED6BE00D13C5A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FABA5EB9178ED6BE00D13C5A /* ImageDownloadSample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImageDownloadSample-Prefix.pch"; sourceTree = "<group>"; };
+		FABA5EBA178ED6BE00D13C5A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FABA5EBB178ED6BE00D13C5A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FABA5EBD178ED6BE00D13C5A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		FABA5EBF178ED6BE00D13C5A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FABA5EC1178ED6BE00D13C5A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		FABA5EC4178ED6BE00D13C5A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		FABA5EC7178ED6BE00D13C5A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		FABA5EC9178ED6BE00D13C5A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		FABA5ECA178ED6BE00D13C5A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FABA5EF4178EDB7900D13C5A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FABA5EF6178EDCC500D13C5A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FABA5EF8178EDCF000D13C5A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +279,20 @@
 			files = (
 				A719040E16A8097100C1EC52 /* libDTDownload (Mac).a in Frameworks */,
 				A71903F616A808A700C1EC52 /* SenTestingKit.framework in Frameworks */,
-				A71903F716A808A700C1EC52 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FABA5EA8178ED6BE00D13C5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FABA5EF9178EDCF000D13C5A /* QuartzCore.framework in Frameworks */,
+				FABA5EF5178EDB7900D13C5A /* CoreData.framework in Frameworks */,
+				FABA5EED178EDB4300D13C5A /* libDTFoundation.a in Frameworks */,
+				FABA5ECF178ED6D900D13C5A /* libDTDownload.a in Frameworks */,
+				FABA5EAD178ED6BE00D13C5A /* UIKit.framework in Frameworks */,
+				FABA5EAE178ED6BE00D13C5A /* Foundation.framework in Frameworks */,
+				FABA5EB0178ED6BE00D13C5A /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +306,7 @@
 				A71902B816A802D000C1EC52 /* Core */,
 				A71903CB16A804A700C1EC52 /* Documentation */,
 				A71902BB16A802D900C1EC52 /* Test */,
+				FABA5EB1178ED6BE00D13C5A /* ImageDownloadSample */,
 				A71902A916A8029400C1EC52 /* Frameworks */,
 				A71902A816A8029400C1EC52 /* Products */,
 			);
@@ -215,6 +318,7 @@
 				A71902A716A8029400C1EC52 /* libDTDownload.a */,
 				A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */,
 				A71903F416A808A700C1EC52 /* UnitTests.octest */,
+				FABA5EAB178ED6BE00D13C5A /* ImageDownloadSample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,9 +326,13 @@
 		A71902A916A8029400C1EC52 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FABA5EF8178EDCF000D13C5A /* QuartzCore.framework */,
+				FABA5EF6178EDCC500D13C5A /* CoreMedia.framework */,
+				FABA5EF4178EDB7900D13C5A /* CoreData.framework */,
 				A71902AA16A8029400C1EC52 /* Foundation.framework */,
-				A71903D416A8068B00C1EC52 /* Cocoa.framework */,
 				A71903F516A808A700C1EC52 /* SenTestingKit.framework */,
+				FABA5EAC178ED6BE00D13C5A /* UIKit.framework */,
+				FABA5EAF178ED6BE00D13C5A /* CoreGraphics.framework */,
 				A71903D616A8068B00C1EC52 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -322,14 +430,48 @@
 				A7724F0A16A954BB005391C2 /* libDTFoundation.a */,
 				A7724F0C16A954BB005391C2 /* UnitTests.octest */,
 				A7724F0E16A954BB005391C2 /* libDTFoundation_Mac.a */,
-				A7724F1016A954BB005391C2 /* libDTHTMLParser.a */,
-				A7724F1216A954BB005391C2 /* libDTHTMLParser.a */,
-				A7724F1416A954BB005391C2 /* libDTZipArchive.a */,
+				A7724F1016A954BB005391C2 /* libDTHTMLParser_iOS.a */,
+				A7724F1216A954BB005391C2 /* libDTHTMLParser_Mac.a */,
+				A7724F1416A954BB005391C2 /* libDTZipArchive_iOS.a */,
 				FAB87D09178BE59D00D0DCDC /* libDTZipArchive_Mac.a */,
-				A7724F1A16A954BB005391C2 /* libDTUTI.a */,
-				FAB87D0B178BE59D00D0DCDC /* libDTUTI.a */,
+				A7724F1A16A954BB005391C2 /* libDTUTI_iOS.a */,
+				FAB87D0B178BE59D00D0DCDC /* libDTUTI_Mac.a */,
+				FABA5EE2178EDB4300D13C5A /* libDTReachability_iOS.a */,
+				FABA5EE4178EDB4300D13C5A /* libDTReachability_Mac.a */,
+				FABA5EE6178EDB4300D13C5A /* libDTSQLite_iOS.a */,
+				FABA5EE8178EDB4300D13C5A /* libDTSQLite_Mac.a */,
+				FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */,
+				FABA5EEC178EDB4300D13C5A /* DTReachability Demo.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FABA5EB1178ED6BE00D13C5A /* ImageDownloadSample */ = {
+			isa = PBXGroup;
+			children = (
+				FABA5EBA178ED6BE00D13C5A /* AppDelegate.h */,
+				FABA5EBB178ED6BE00D13C5A /* AppDelegate.m */,
+				FABA5EC3178ED6BE00D13C5A /* MainStoryboard_iPhone.storyboard */,
+				FABA5EC6178ED6BE00D13C5A /* MainStoryboard_iPad.storyboard */,
+				FABA5EC9178ED6BE00D13C5A /* ViewController.h */,
+				FABA5ECA178ED6BE00D13C5A /* ViewController.m */,
+				FABA5EB2178ED6BE00D13C5A /* Supporting Files */,
+			);
+			path = ImageDownloadSample;
+			sourceTree = "<group>";
+		};
+		FABA5EB2178ED6BE00D13C5A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FABA5EB3178ED6BE00D13C5A /* ImageDownloadSample-Info.plist */,
+				FABA5EB4178ED6BE00D13C5A /* InfoPlist.strings */,
+				FABA5EB7178ED6BE00D13C5A /* main.m */,
+				FABA5EB9178ED6BE00D13C5A /* ImageDownloadSample-Prefix.pch */,
+				FABA5EBD178ED6BE00D13C5A /* Default.png */,
+				FABA5EBF178ED6BE00D13C5A /* Default@2x.png */,
+				FABA5EC1178ED6BE00D13C5A /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,6 +540,25 @@
 			productReference = A71903F416A808A700C1EC52 /* UnitTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		FABA5EAA178ED6BE00D13C5A /* ImageDownloadSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FABA5ECE178ED6BE00D13C5A /* Build configuration list for PBXNativeTarget "ImageDownloadSample" */;
+			buildPhases = (
+				FABA5EA7178ED6BE00D13C5A /* Sources */,
+				FABA5EA8178ED6BE00D13C5A /* Frameworks */,
+				FABA5EA9178ED6BE00D13C5A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FABA5EF3178EDB5F00D13C5A /* PBXTargetDependency */,
+				FABA5EEF178EDB5500D13C5A /* PBXTargetDependency */,
+			);
+			name = ImageDownloadSample;
+			productName = ImageDownloadSample;
+			productReference = FABA5EAB178ED6BE00D13C5A /* ImageDownloadSample.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -429,6 +590,7 @@
 				A71903D216A8068B00C1EC52 /* DTDownload (Mac) */,
 				A71903F316A808A700C1EC52 /* Unit Tests */,
 				A76F50401705D2E500DF52D5 /* Documentation */,
+				FABA5EAA178ED6BE00D13C5A /* ImageDownloadSample */,
 			);
 		};
 /* End PBXProject section */
@@ -462,31 +624,31 @@
 			remoteRef = A7724F0D16A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A7724F1016A954BB005391C2 /* libDTHTMLParser.a */ = {
+		A7724F1016A954BB005391C2 /* libDTHTMLParser_iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libDTHTMLParser.a;
+			path = libDTHTMLParser_iOS.a;
 			remoteRef = A7724F0F16A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A7724F1216A954BB005391C2 /* libDTHTMLParser.a */ = {
+		A7724F1216A954BB005391C2 /* libDTHTMLParser_Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libDTHTMLParser.a;
+			path = libDTHTMLParser_Mac.a;
 			remoteRef = A7724F1116A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A7724F1416A954BB005391C2 /* libDTZipArchive.a */ = {
+		A7724F1416A954BB005391C2 /* libDTZipArchive_iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libDTZipArchive.a;
+			path = libDTZipArchive_iOS.a;
 			remoteRef = A7724F1316A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A7724F1A16A954BB005391C2 /* libDTUTI.a */ = {
+		A7724F1A16A954BB005391C2 /* libDTUTI_iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libDTUTI.a;
+			path = libDTUTI_iOS.a;
 			remoteRef = A7724F1916A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -497,11 +659,53 @@
 			remoteRef = FAB87D08178BE59D00D0DCDC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAB87D0B178BE59D00D0DCDC /* libDTUTI.a */ = {
+		FAB87D0B178BE59D00D0DCDC /* libDTUTI_Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libDTUTI.a;
+			path = libDTUTI_Mac.a;
 			remoteRef = FAB87D0A178BE59D00D0DCDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FABA5EE2178EDB4300D13C5A /* libDTReachability_iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTReachability_iOS.a;
+			remoteRef = FABA5EE1178EDB4300D13C5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FABA5EE4178EDB4300D13C5A /* libDTReachability_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTReachability_Mac.a;
+			remoteRef = FABA5EE3178EDB4300D13C5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FABA5EE6178EDB4300D13C5A /* libDTSQLite_iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTSQLite_iOS.a;
+			remoteRef = FABA5EE5178EDB4300D13C5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FABA5EE8178EDB4300D13C5A /* libDTSQLite_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTSQLite_Mac.a;
+			remoteRef = FABA5EE7178EDB4300D13C5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "DTSidePanels Demo.app";
+			remoteRef = FABA5EE9178EDB4300D13C5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FABA5EEC178EDB4300D13C5A /* DTReachability Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "DTReachability Demo.app";
+			remoteRef = FABA5EEB178EDB4300D13C5A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -514,6 +718,19 @@
 				A719040916A808E600C1EC52 /* Test1.txt.download in Resources */,
 				A719040A16A808E600C1EC52 /* Test2.txt.download in Resources */,
 				A719042816A80CFF00C1EC52 /* Test in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FABA5EA9178ED6BE00D13C5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FABA5EB6178ED6BE00D13C5A /* InfoPlist.strings in Resources */,
+				FABA5EBE178ED6BE00D13C5A /* Default.png in Resources */,
+				FABA5EC0178ED6BE00D13C5A /* Default@2x.png in Resources */,
+				FABA5EC2178ED6BE00D13C5A /* Default-568h@2x.png in Resources */,
+				FABA5EC5178ED6BE00D13C5A /* MainStoryboard_iPhone.storyboard in Resources */,
+				FABA5EC8178ED6BE00D13C5A /* MainStoryboard_iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +799,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FABA5EA7178ED6BE00D13C5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FABA5EB8178ED6BE00D13C5A /* main.m in Sources */,
+				FABA5EBC178ED6BE00D13C5A /* AppDelegate.m in Sources */,
+				FABA5ECB178ED6BE00D13C5A /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -590,7 +817,44 @@
 			target = A71903D216A8068B00C1EC52 /* DTDownload (Mac) */;
 			targetProxy = A719040C16A8096D00C1EC52 /* PBXContainerItemProxy */;
 		};
+		FABA5EEF178EDB5500D13C5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A71902A616A8029400C1EC52 /* DTDownload (iOS) */;
+			targetProxy = FABA5EEE178EDB5500D13C5A /* PBXContainerItemProxy */;
+		};
+		FABA5EF3178EDB5F00D13C5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library";
+			targetProxy = FABA5EF2178EDB5F00D13C5A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FABA5EB4178ED6BE00D13C5A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FABA5EB5178ED6BE00D13C5A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FABA5EC3178ED6BE00D13C5A /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FABA5EC4178ED6BE00D13C5A /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		FABA5EC6178ED6BE00D13C5A /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FABA5EC7178ED6BE00D13C5A /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A71902B316A8029400C1EC52 /* Debug */ = {
@@ -761,6 +1025,40 @@
 			};
 			name = Release;
 		};
+		FABA5ECC178ED6BE00D13C5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ImageDownloadSample/ImageDownloadSample-Prefix.pch";
+				INFOPLIST_FILE = "ImageDownloadSample/ImageDownloadSample-Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FABA5ECD178ED6BE00D13C5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ImageDownloadSample/ImageDownloadSample-Prefix.pch";
+				INFOPLIST_FILE = "ImageDownloadSample/ImageDownloadSample-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -805,6 +1103,15 @@
 			buildConfigurations = (
 				A76F50421705D2E500DF52D5 /* Debug */,
 				A76F50431705D2E500DF52D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FABA5ECE178ED6BE00D13C5A /* Build configuration list for PBXNativeTarget "ImageDownloadSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FABA5ECC178ED6BE00D13C5A /* Debug */,
+				FABA5ECD178ED6BE00D13C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
