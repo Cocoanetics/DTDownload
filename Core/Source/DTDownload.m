@@ -327,10 +327,34 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			return;
 		}
 		
-		if (![fileManager removeItemAtPath:[_destinationBundleFilePath stringByDeletingLastPathComponent] error:&error]) {
+		if (![fileManager removeItemAtPath:[_destinationBundleFilePath stringByDeletingLastPathComponent] error:&error])
+		{
 			NSLog(@"Cannot remove item from %@, %@ ", [_destinationBundleFilePath stringByDeletingLastPathComponent], [error localizedDescription]);
-			
 		}
+		
+		NSData *data = [NSData dataWithContentsOfFile:targetPath options:NSDataReadingMappedIfSafe error:&error];
+		
+		if (error)
+		{
+			NSLog(@"Error occured when reading file from path: %@", targetPath);
+		}
+		
+		// Error: finished file size differs from header size -> so throw error
+		if (_expectedContentLength>0 && [data length] != _expectedContentLength)
+		{
+			NSString *errorMessage = [NSString stringWithFormat:@"Error: finished file size %d differs from header size %d", (int)[data length], (int)_expectedContentLength];
+			
+			NSLog(errorMessage, nil);
+			
+			NSDictionary *userInfo = @{errorMessage : NSLocalizedDescriptionKey};
+			
+			NSError *error = [NSError errorWithDomain:@"DTDownloadError" code:1 userInfo:userInfo];
+			
+			[self _completeWithError:error];
+			
+			return;
+		}
+		
 		
 		// notify delegate
 		if ([_delegate respondsToSelector:@selector(download:didFinishWithFile:)])
