@@ -10,8 +10,6 @@
 
 #import "DTDownloadCache.h"
 
-
-
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @end
@@ -28,10 +26,10 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	
 	// Do any additional setup after loading the view, typically from a nib.
-	
-	_imageURL = [NSURL URLWithString:@"http://bundles.icatalogapp.com/bundles/TestApp/cache/AJGA-Volume4-Issue11-December2012.jpg"];	
-	
+	_imageURL = [NSURL URLWithString:@"http://bundles.icatalogapp.com/bundles/TestApp/cache/AJGA-Volume4-Issue11-December2012.jpg"];
+		
 	_downloadOptionPickerView.dataSource = self;
 	_downloadOptionPickerView.delegate = self;
 	
@@ -91,6 +89,7 @@
 
 	if (image && _downloadCacheOption == DTDownloadCacheOptionReturnCacheAndLoadIfChanged)
 	{
+		_activityIndicatorView.alpha = 0.0;
 		_reloading = NO;
 	}
 	
