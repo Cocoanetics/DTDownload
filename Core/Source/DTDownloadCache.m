@@ -314,6 +314,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			case DTDownloadCacheOptionReturnCacheAndLoadAlways:
 			{
 				cachedFile.forceLoad = [NSNumber numberWithBool:YES];
+				cachedFile.abortDownloadIfNotChanged = @(NO);
 				
 				break;
 			}
@@ -392,12 +393,14 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	NSURL *URL = download.URL;
 	
     [_workerContext performBlock:^{
-		 NSData *data = [NSData dataWithContentsOfMappedFile:path];
 		 
-		 if (download.expectedContentLength>0 && [data length] != download.expectedContentLength)
-		 {
-			 NSLog(@"Warning: finished file size %d differs from header size %d", (int)[data length], (int)download.expectedContentLength);
-		 }
+		 NSError *error = nil;
+		NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:&error];
+		 
+		if (error)
+		{
+			NSLog(@"Error occured when reading file from path: %@", path);
+		}
 		 
 		 // only add cached file if we actually got data in it
 		if (data)
@@ -932,14 +935,15 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option completion:(DTDownloadCacheImageCompletionBlock)completion
 {
+	
 	// try memory cache first
 	UIImage *cachedImage = [_memoryCache objectForKey:URL];
 	
-	if (cachedImage)
+	if (cachedImage && !DTDownloadCacheOptionReturnCacheAndLoadAlways)
 	{
 		return cachedImage;
 	}
-	
+
 	// create a special wrapper completion handler
 	DTDownloadCacheDataCompletionBlock internalBlock = NULL;
 	
@@ -969,7 +973,6 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			completion(URL, cachedImage, error);
 		};
 	}
-	
 	
 	// try file cache
 	NSData *data = [self cachedDataForURL:URL option:option completion:internalBlock];
