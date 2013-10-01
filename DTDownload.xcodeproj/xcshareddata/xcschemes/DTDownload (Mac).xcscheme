@@ -26,15 +26,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      buildConfiguration = "Coverage">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A71903F316A808A700C1EC52"
-               BuildableName = "UnitTests.octest"
-               BlueprintName = "Unit Tests (iOS)"
+               BlueprintIdentifier = "A71F5BB117FB0B7B00D5E42C"
+               BuildableName = "Unit Tests copy.octest"
+               BlueprintName = "Unit Tests (Mac)"
                ReferencedContainer = "container:DTDownload.xcodeproj">
             </BuildableReference>
          </TestableReference>

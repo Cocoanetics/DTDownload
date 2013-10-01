@@ -31,13 +31,27 @@
 		A71903E416A807E300C1EC52 /* DTDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902C316A802FF00C1EC52 /* DTDownloadItem.m */; };
 		A71903E516A807E300C1EC52 /* DTDownloadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902C516A802FF00C1EC52 /* DTDownloadQueue.m */; };
 		A71903E616A807EC00C1EC52 /* DTCachedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A71903C916A8043000C1EC52 /* DTCachedFile.m */; };
-		A71903F616A808A700C1EC52 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903F516A808A700C1EC52 /* SenTestingKit.framework */; };
 		A719040616A808D400C1EC52 /* DTDownloadTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A71903E816A8086400C1EC52 /* DTDownloadTest.m */; };
 		A719040916A808E600C1EC52 /* Test1.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040716A808E600C1EC52 /* Test1.txt.download */; };
 		A719040A16A808E600C1EC52 /* Test2.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040816A808E600C1EC52 /* Test2.txt.download */; };
-		A719040E16A8097100C1EC52 /* libDTDownload (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */; };
 		A719042816A80CFF00C1EC52 /* Test in Resources */ = {isa = PBXBuildFile; fileRef = A719042716A80CFF00C1EC52 /* Test */; };
 		A719042916A80FA800C1EC52 /* DTDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902C116A802FF00C1EC52 /* DTDownloadCache.m */; };
+		A71F5B8B17FB0A8E00D5E42C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71F5B8A17FB0A8E00D5E42C /* AppKit.framework */; };
+		A71F5BB517FB0B7B00D5E42C /* DTDownloadTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A71903E816A8086400C1EC52 /* DTDownloadTest.m */; };
+		A71F5BB717FB0B7B00D5E42C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71F5BA617FB0AA700D5E42C /* CoreData.framework */; };
+		A71F5BB817FB0B7B00D5E42C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71F5B8A17FB0A8E00D5E42C /* AppKit.framework */; };
+		A71F5BB917FB0B7B00D5E42C /* libDTDownload (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */; };
+		A71F5BBA17FB0B7B00D5E42C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903F516A808A700C1EC52 /* SenTestingKit.framework */; };
+		A71F5BBC17FB0B7B00D5E42C /* Test1.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040716A808E600C1EC52 /* Test1.txt.download */; };
+		A71F5BBD17FB0B7B00D5E42C /* Test2.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040816A808E600C1EC52 /* Test2.txt.download */; };
+		A71F5BBE17FB0B7B00D5E42C /* Test in Resources */ = {isa = PBXBuildFile; fileRef = A719042716A80CFF00C1EC52 /* Test */; };
+		A71F5BC617FB0C1B00D5E42C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EF4178EDB7900D13C5A /* CoreData.framework */; };
+		A71F5BCB17FB0C3E00D5E42C /* libDTDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902A716A8029400C1EC52 /* libDTDownload.a */; };
+		A71F5BCF17FB0C7600D5E42C /* libDTFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7724F0A16A954BB005391C2 /* libDTFoundation.a */; };
+		A71F5BD017FB0C8A00D5E42C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EF8178EDCF000D13C5A /* QuartzCore.framework */; };
+		A71F5BD117FB0C9400D5E42C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAC178ED6BE00D13C5A /* UIKit.framework */; };
+		A71F5BD217FB0C9C00D5E42C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAF178ED6BE00D13C5A /* CoreGraphics.framework */; };
+		A71F5BD317FB0CA600D5E42C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903F516A808A700C1EC52 /* SenTestingKit.framework */; };
 		FABA5EAD178ED6BE00D13C5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAC178ED6BE00D13C5A /* UIKit.framework */; };
 		FABA5EAE178ED6BE00D13C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902AA16A8029400C1EC52 /* Foundation.framework */; };
 		FABA5EB0178ED6BE00D13C5A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAF178ED6BE00D13C5A /* CoreGraphics.framework */; };
@@ -57,12 +71,47 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A719040C16A8096D00C1EC52 /* PBXContainerItemProxy */ = {
+		A71F5B9F17FB0A8E00D5E42C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A79D999C1792D1F50082BC06;
+			remoteInfo = "DTAWS (iOS)";
+		};
+		A71F5BA117FB0A8E00D5E42C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA9CB80C17ABDEF200A596C5;
+			remoteInfo = "DTASN1 (iOS)";
+		};
+		A71F5BA317FB0A8E00D5E42C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAF37A2017AFDD93009AC27C;
+			remoteInfo = DTZipArchiveDemo;
+		};
+		A71F5BB317FB0B7B00D5E42C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A719029F16A8029400C1EC52 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A71903D216A8068B00C1EC52;
 			remoteInfo = "DTDownload (Mac)";
+		};
+		A71F5BC917FB0C3700D5E42C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719029F16A8029400C1EC52 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A71902A616A8029400C1EC52;
+			remoteInfo = "DTDownload (iOS)";
+		};
+		A71F5BCD17FB0C7300D5E42C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A70B4CE61486637E00873A4A;
+			remoteInfo = "Static Library";
 		};
 		A7724F0716A954BB005391C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -230,11 +279,15 @@
 		A71903E916A8086400C1EC52 /* DTDownloadTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTDownloadTest.h; sourceTree = "<group>"; };
 		A71903F416A808A700C1EC52 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71903F516A808A700C1EC52 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		A719040516A808BB00C1EC52 /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		A719040716A808E600C1EC52 /* Test1.txt.download */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Test1.txt.download; sourceTree = "<group>"; };
 		A719040816A808E600C1EC52 /* Test2.txt.download */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Test2.txt.download; sourceTree = "<group>"; };
 		A719042616A80C7200C1EC52 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		A719042716A80CFF00C1EC52 /* Test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test; sourceTree = "<group>"; };
+		A71F5B8A17FB0A8E00D5E42C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		A71F5BA617FB0AA700D5E42C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		A71F5BAE17FB0B2A00D5E42C /* UnitTests-Prefix-iOS.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix-iOS.pch"; sourceTree = "<group>"; };
+		A71F5BAF17FB0B2A00D5E42C /* UnitTests-Prefix-Mac.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix-Mac.pch"; sourceTree = "<group>"; };
+		A71F5BC417FB0B7B00D5E42C /* Unit Tests copy.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests copy.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76F503F1705D24A00DF52D5 /* AppledocSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
 		FABA5EAB178ED6BE00D13C5A /* ImageDownloadSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageDownloadSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABA5EAC178ED6BE00D13C5A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -270,6 +323,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A71F5B8B17FB0A8E00D5E42C /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,8 +331,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A719040E16A8097100C1EC52 /* libDTDownload (Mac).a in Frameworks */,
-				A71903F616A808A700C1EC52 /* SenTestingKit.framework in Frameworks */,
+				A71F5BD317FB0CA600D5E42C /* SenTestingKit.framework in Frameworks */,
+				A71F5BD217FB0C9C00D5E42C /* CoreGraphics.framework in Frameworks */,
+				A71F5BD117FB0C9400D5E42C /* UIKit.framework in Frameworks */,
+				A71F5BD017FB0C8A00D5E42C /* QuartzCore.framework in Frameworks */,
+				A71F5BCF17FB0C7600D5E42C /* libDTFoundation.a in Frameworks */,
+				A71F5BCB17FB0C3E00D5E42C /* libDTDownload.a in Frameworks */,
+				A71F5BC617FB0C1B00D5E42C /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A71F5BB617FB0B7B00D5E42C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A71F5BB717FB0B7B00D5E42C /* CoreData.framework in Frameworks */,
+				A71F5BB817FB0B7B00D5E42C /* AppKit.framework in Frameworks */,
+				A71F5BB917FB0B7B00D5E42C /* libDTDownload (Mac).a in Frameworks */,
+				A71F5BBA17FB0B7B00D5E42C /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +389,7 @@
 				A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */,
 				A71903F416A808A700C1EC52 /* UnitTests.octest */,
 				FABA5EAB178ED6BE00D13C5A /* ImageDownloadSample.app */,
+				A71F5BC417FB0B7B00D5E42C /* Unit Tests copy.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -326,6 +397,8 @@
 		A71902A916A8029400C1EC52 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A71F5BA617FB0AA700D5E42C /* CoreData.framework */,
+				A71F5B8A17FB0A8E00D5E42C /* AppKit.framework */,
 				FABA5EF8178EDCF000D13C5A /* QuartzCore.framework */,
 				FABA5EF6178EDCC500D13C5A /* CoreMedia.framework */,
 				FABA5EF4178EDB7900D13C5A /* CoreData.framework */,
@@ -368,7 +441,8 @@
 			isa = PBXGroup;
 			children = (
 				A719042616A80C7200C1EC52 /* UnitTests-Info.plist */,
-				A719040516A808BB00C1EC52 /* UnitTests-Prefix.pch */,
+				A71F5BAE17FB0B2A00D5E42C /* UnitTests-Prefix-iOS.pch */,
+				A71F5BAF17FB0B2A00D5E42C /* UnitTests-Prefix-Mac.pch */,
 				A71902BC16A802D900C1EC52 /* Resources */,
 				A71902BD16A802D900C1EC52 /* Source */,
 			);
@@ -430,6 +504,8 @@
 				A7724F0A16A954BB005391C2 /* libDTFoundation.a */,
 				A7724F0C16A954BB005391C2 /* UnitTests.octest */,
 				A7724F0E16A954BB005391C2 /* libDTFoundation_Mac.a */,
+				A71F5BA017FB0A8E00D5E42C /* libDTAWS.a */,
+				A71F5BA217FB0A8E00D5E42C /* libDTASN1.a */,
 				A7724F1016A954BB005391C2 /* libDTHTMLParser_iOS.a */,
 				A7724F1216A954BB005391C2 /* libDTHTMLParser_Mac.a */,
 				A7724F1416A954BB005391C2 /* libDTZipArchive_iOS.a */,
@@ -442,6 +518,7 @@
 				FABA5EE8178EDB4300D13C5A /* libDTSQLite_Mac.a */,
 				FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */,
 				FABA5EEC178EDB4300D13C5A /* DTReachability Demo.app */,
+				A71F5BA417FB0A8E00D5E42C /* DTZipArchive.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -521,23 +598,41 @@
 			productReference = A71903D316A8068B00C1EC52 /* libDTDownload (Mac).a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A71903F316A808A700C1EC52 /* Unit Tests */ = {
+		A71903F316A808A700C1EC52 /* Unit Tests (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A719040216A808A700C1EC52 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
+			buildConfigurationList = A719040216A808A700C1EC52 /* Build configuration list for PBXNativeTarget "Unit Tests (iOS)" */;
 			buildPhases = (
 				A71903EF16A808A700C1EC52 /* Sources */,
 				A71903F016A808A700C1EC52 /* Frameworks */,
 				A71903F116A808A700C1EC52 /* Resources */,
-				A71903F216A808A700C1EC52 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A719040D16A8096D00C1EC52 /* PBXTargetDependency */,
+				A71F5BCE17FB0C7300D5E42C /* PBXTargetDependency */,
+				A71F5BCA17FB0C3700D5E42C /* PBXTargetDependency */,
 			);
-			name = "Unit Tests";
+			name = "Unit Tests (iOS)";
 			productName = UnitTest;
 			productReference = A71903F416A808A700C1EC52 /* UnitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		A71F5BB117FB0B7B00D5E42C /* Unit Tests (Mac) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A71F5BC017FB0B7B00D5E42C /* Build configuration list for PBXNativeTarget "Unit Tests (Mac)" */;
+			buildPhases = (
+				A71F5BB417FB0B7B00D5E42C /* Sources */,
+				A71F5BB617FB0B7B00D5E42C /* Frameworks */,
+				A71F5BBB17FB0B7B00D5E42C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A71F5BB217FB0B7B00D5E42C /* PBXTargetDependency */,
+			);
+			name = "Unit Tests (Mac)";
+			productName = UnitTest;
+			productReference = A71F5BC417FB0B7B00D5E42C /* Unit Tests copy.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		FABA5EAA178ED6BE00D13C5A /* ImageDownloadSample */ = {
@@ -588,7 +683,8 @@
 			targets = (
 				A71902A616A8029400C1EC52 /* DTDownload (iOS) */,
 				A71903D216A8068B00C1EC52 /* DTDownload (Mac) */,
-				A71903F316A808A700C1EC52 /* Unit Tests */,
+				A71903F316A808A700C1EC52 /* Unit Tests (iOS) */,
+				A71F5BB117FB0B7B00D5E42C /* Unit Tests (Mac) */,
 				A76F50401705D2E500DF52D5 /* Documentation */,
 				FABA5EAA178ED6BE00D13C5A /* ImageDownloadSample */,
 			);
@@ -596,6 +692,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		A71F5BA017FB0A8E00D5E42C /* libDTAWS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTAWS.a;
+			remoteRef = A71F5B9F17FB0A8E00D5E42C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A71F5BA217FB0A8E00D5E42C /* libDTASN1.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTASN1.a;
+			remoteRef = A71F5BA117FB0A8E00D5E42C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A71F5BA417FB0A8E00D5E42C /* DTZipArchive.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DTZipArchive.app;
+			remoteRef = A71F5BA317FB0A8E00D5E42C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A7724F0816A954BB005391C2 /* DTFoundation.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -721,6 +838,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A71F5BBB17FB0B7B00D5E42C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A71F5BBC17FB0B7B00D5E42C /* Test1.txt.download in Resources */,
+				A71F5BBD17FB0B7B00D5E42C /* Test2.txt.download in Resources */,
+				A71F5BBE17FB0B7B00D5E42C /* Test in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FABA5EA9178ED6BE00D13C5A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -737,19 +864,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A71903F216A808A700C1EC52 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
 		A76F50441705D2F100DF52D5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -799,6 +913,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A71F5BB417FB0B7B00D5E42C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A71F5BB517FB0B7B00D5E42C /* DTDownloadTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FABA5EA7178ED6BE00D13C5A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -812,10 +934,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A719040D16A8096D00C1EC52 /* PBXTargetDependency */ = {
+		A71F5BB217FB0B7B00D5E42C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A71903D216A8068B00C1EC52 /* DTDownload (Mac) */;
-			targetProxy = A719040C16A8096D00C1EC52 /* PBXContainerItemProxy */;
+			targetProxy = A71F5BB317FB0B7B00D5E42C /* PBXContainerItemProxy */;
+		};
+		A71F5BCA17FB0C3700D5E42C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A71902A616A8029400C1EC52 /* DTDownload (iOS) */;
+			targetProxy = A71F5BC917FB0C3700D5E42C /* PBXContainerItemProxy */;
+		};
+		A71F5BCE17FB0C7300D5E42C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library";
+			targetProxy = A71F5BCD17FB0C7300D5E42C /* PBXContainerItemProxy */;
 		};
 		FABA5EEF178EDB5500D13C5A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -881,7 +1013,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -904,7 +1037,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -916,7 +1050,6 @@
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = DTDownload;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/iOS";
@@ -929,7 +1062,6 @@
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = DTDownload;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/iOS";
@@ -943,7 +1075,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/Mac";
@@ -958,7 +1089,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/Mac";
@@ -969,19 +1099,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix-iOS.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "Test/UnitTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
 				);
 				PRODUCT_NAME = UnitTests;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -991,18 +1123,187 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix-iOS.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "Test/UnitTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
 				);
 				PRODUCT_NAME = UnitTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		A71F5BA817FB0AB800D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Coverage;
+		};
+		A71F5BA917FB0AB800D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/DTDownload.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
+				PRODUCT_NAME = DTDownload;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/iOS";
+			};
+			name = Coverage;
+		};
+		A71F5BAA17FB0AB800D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/Mac";
+			};
+			name = Coverage;
+		};
+		A71F5BAB17FB0AB800D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix-iOS.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "Test/UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = UnitTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Coverage;
+		};
+		A71F5BAC17FB0AB800D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Coverage;
+		};
+		A71F5BAD17FB0AB800D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ImageDownloadSample/ImageDownloadSample-Prefix.pch";
+				INFOPLIST_FILE = "ImageDownloadSample/ImageDownloadSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Coverage;
+		};
+		A71F5BC117FB0B7B00D5E42C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix-Mac.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "Test/UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "Unit Tests copy";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		A71F5BC217FB0B7B00D5E42C /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix-Mac.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "Test/UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "Unit Tests copy";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Coverage;
+		};
+		A71F5BC317FB0B7B00D5E42C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test/UnitTests-Prefix-Mac.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "Test/UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "Unit Tests copy";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1030,6 +1331,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageDownloadSample/ImageDownloadSample-Prefix.pch";
 				INFOPLIST_FILE = "ImageDownloadSample/ImageDownloadSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1047,6 +1349,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ImageDownloadSample/ImageDownloadSample-Prefix.pch";
 				INFOPLIST_FILE = "ImageDownloadSample/ImageDownloadSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1063,6 +1366,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A71902B316A8029400C1EC52 /* Debug */,
+				A71F5BA817FB0AB800D5E42C /* Coverage */,
 				A71902B416A8029400C1EC52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1072,6 +1376,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A71902B616A8029400C1EC52 /* Debug */,
+				A71F5BA917FB0AB800D5E42C /* Coverage */,
 				A71902B716A8029400C1EC52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1081,16 +1386,28 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A71903E116A8068B00C1EC52 /* Debug */,
+				A71F5BAA17FB0AB800D5E42C /* Coverage */,
 				A71903E216A8068B00C1EC52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A719040216A808A700C1EC52 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
+		A719040216A808A700C1EC52 /* Build configuration list for PBXNativeTarget "Unit Tests (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A719040316A808A700C1EC52 /* Debug */,
+				A71F5BAB17FB0AB800D5E42C /* Coverage */,
 				A719040416A808A700C1EC52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A71F5BC017FB0B7B00D5E42C /* Build configuration list for PBXNativeTarget "Unit Tests (Mac)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A71F5BC117FB0B7B00D5E42C /* Debug */,
+				A71F5BC217FB0B7B00D5E42C /* Coverage */,
+				A71F5BC317FB0B7B00D5E42C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1099,6 +1416,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A76F50421705D2E500DF52D5 /* Debug */,
+				A71F5BAC17FB0AB800D5E42C /* Coverage */,
 				A76F50431705D2E500DF52D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1108,6 +1426,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FABA5ECC178ED6BE00D13C5A /* Debug */,
+				A71F5BAD17FB0AB800D5E42C /* Coverage */,
 				FABA5ECD178ED6BE00D13C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
