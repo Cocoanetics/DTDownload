@@ -204,6 +204,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		[self _completeWithSuccess];
 		return;
 	}
+    
+    [_additionHTTPHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [request setValue:obj forHTTPHeaderField:key];
+    }];
 	
 	if (_resumeFileOffset)
 	{
