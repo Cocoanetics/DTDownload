@@ -57,6 +57,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		58FC11A117FD8F55000D553B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A79D999C1792D1F50082BC06;
+			remoteInfo = "DTAWS (iOS)";
+		};
+		58FC11A317FD8F55000D553B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA9CB80C17ABDEF200A596C5;
+			remoteInfo = "DTASN1 (iOS)";
+		};
+		58FC11A517FD8F55000D553B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAF37A2017AFDD93009AC27C;
+			remoteInfo = DTZipArchiveDemo;
+		};
 		A719040C16A8096D00C1EC52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A719029F16A8029400C1EC52 /* Project object */;
@@ -430,6 +451,8 @@
 				A7724F0A16A954BB005391C2 /* libDTFoundation.a */,
 				A7724F0C16A954BB005391C2 /* UnitTests.octest */,
 				A7724F0E16A954BB005391C2 /* libDTFoundation_Mac.a */,
+				58FC11A217FD8F55000D553B /* libDTAWS.a */,
+				58FC11A417FD8F55000D553B /* libDTASN1.a */,
 				A7724F1016A954BB005391C2 /* libDTHTMLParser_iOS.a */,
 				A7724F1216A954BB005391C2 /* libDTHTMLParser_Mac.a */,
 				A7724F1416A954BB005391C2 /* libDTZipArchive_iOS.a */,
@@ -442,6 +465,7 @@
 				FABA5EE8178EDB4300D13C5A /* libDTSQLite_Mac.a */,
 				FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */,
 				FABA5EEC178EDB4300D13C5A /* DTReachability Demo.app */,
+				58FC11A617FD8F55000D553B /* DTZipArchive.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -565,7 +589,7 @@
 		A719029F16A8029400C1EC52 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Drobnik KG";
 			};
 			buildConfigurationList = A71902A216A8029400C1EC52 /* Build configuration list for PBXProject "DTDownload" */;
@@ -596,6 +620,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		58FC11A217FD8F55000D553B /* libDTAWS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTAWS.a;
+			remoteRef = 58FC11A117FD8F55000D553B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		58FC11A417FD8F55000D553B /* libDTASN1.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTASN1.a;
+			remoteRef = 58FC11A317FD8F55000D553B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		58FC11A617FD8F55000D553B /* DTZipArchive.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DTZipArchive.app;
+			remoteRef = 58FC11A517FD8F55000D553B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A7724F0816A954BB005391C2 /* DTFoundation.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -882,6 +927,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -938,7 +984,6 @@
 		A71903E116A8068B00C1EC52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -953,7 +998,6 @@
 		A71903E216A8068B00C1EC52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -969,7 +1013,6 @@
 		A719040316A808A700C1EC52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -991,7 +1034,6 @@
 		A719040416A808A700C1EC52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";

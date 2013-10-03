@@ -73,6 +73,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	NSDate *_lastProgressSentDate;
 	
 	BOOL _isResume;
+    
+    dispatch_once_t onceToken;
 }
 
 #pragma mark Downloading
@@ -204,11 +206,15 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		[self _completeWithSuccess];
 		return;
 	}
-	
-	if (_resumeFileOffset)
+    
+    if (_resumeFileOffset)
 	{
-		[request setValue:[NSString stringWithFormat:@"bytes=%lld-", _resumeFileOffset] forHTTPHeaderField:@"Range"];
+        [self.additionHTTPHeaders setObject:[NSString stringWithFormat:@"bytes=%lld-", _resumeFileOffset] forKey:@"Range"];
 	}
+    
+    [_additionHTTPHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [request setValue:obj forHTTPHeaderField:key];
+    }];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidStartNotification object:self];
 	
@@ -736,6 +742,15 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	return [_destinationBundleFilePath stringByDeletingLastPathComponent];
 }
 
+- (NSMutableDictionary *)additionHTTPHeaders
+{
+    dispatch_once(&onceToken, ^{
+        _additionHTTPHeaders = [NSMutableDictionary dictionary];
+    });
+    
+    return _additionHTTPHeaders;
+}
+
 
 @synthesize URL = _URL;
 @synthesize downloadEntityTag = _downloadEntityTag;
@@ -747,5 +762,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 @synthesize context = _context;
 @synthesize responseHandler = _responseHandler;
 @synthesize completionHandler = _completionHandler;
+@synthesize additionHTTPHeaders = _additionHTTPHeaders;
 
 @end
