@@ -125,7 +125,7 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
  @see additionHTTPHeaders
  */
 
-@property (nonatomic, copy) NSDictionary *additionHTTPHeaders;
+@property (nonatomic, readonly, copy) NSMutableDictionary *additionHTTPHeaders;
 
 /**
  Returns the receiver’s delegate.
