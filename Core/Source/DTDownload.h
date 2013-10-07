@@ -122,10 +122,10 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 /**
  Using for HTTP headers parameters. For example, basic http authentification
  
- @see additionHTTPHeaders
+ @see additionalHTTPHeaders
  */
 
-@property (nonatomic, readonly, copy) NSMutableDictionary *additionHTTPHeaders;
+@property (nonatomic, readonly, copy) NSDictionary *additionalHTTPHeaders;
 
 /**
  Returns the receiver’s delegate.
