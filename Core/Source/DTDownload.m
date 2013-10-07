@@ -73,8 +73,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	NSDate *_lastProgressSentDate;
 	
 	BOOL _isResume;
-    
-    dispatch_once_t onceToken;
 }
 
 #pragma mark Downloading
