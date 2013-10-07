@@ -223,8 +223,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[_urlConnection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 	
 	// start urlConnection on the main queue, because when download lots of small file, we had a crash when this is done on a background thread
-	dispatch_async(dispatch_get_main_queue(), ^
-						{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		
 							[_urlConnection start];
 						});
 	
