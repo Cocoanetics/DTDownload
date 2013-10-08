@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A71902A616A8029400C1EC52"
-               BuildableName = "libDTDownload.a"
+               BuildableName = "libDTDownload_iOS.a"
                BlueprintName = "DTDownload (iOS)"
                ReferencedContainer = "container:DTDownload.xcodeproj">
             </BuildableReference>
