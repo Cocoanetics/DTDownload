@@ -286,6 +286,7 @@
 		A71F5BAE17FB0B2A00D5E42C /* UnitTests-Prefix-iOS.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix-iOS.pch"; sourceTree = "<group>"; };
 		A71F5BAF17FB0B2A00D5E42C /* UnitTests-Prefix-Mac.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix-Mac.pch"; sourceTree = "<group>"; };
 		A71F5BC417FB0B7B00D5E42C /* Unit Tests copy.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests copy.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A76C24011835449300F54F02 /* Change Log-template.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Change Log-template.markdown"; path = "Documentation/Change Log-template.markdown"; sourceTree = "<group>"; };
 		A76F503F1705D24A00DF52D5 /* AppledocSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppledocSettings.plist; sourceTree = "<group>"; };
 		A784452D1802B00F00965447 /* ImageDownload-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageDownload-Info.plist"; sourceTree = "<group>"; };
 		A784452E1802B00F00965447 /* ImageDownload-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImageDownload-Prefix.pch"; sourceTree = "<group>"; };
@@ -477,6 +478,7 @@
 		A71903CB16A804A700C1EC52 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				A76C24011835449300F54F02 /* Change Log-template.markdown */,
 				A76F503F1705D24A00DF52D5 /* AppledocSettings.plist */,
 				A71903CC16A804C000C1EC52 /* DTDownload.podspec */,
 				A71903CE16A804C000C1EC52 /* LICENSE */,
