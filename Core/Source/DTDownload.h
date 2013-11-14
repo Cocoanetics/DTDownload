@@ -120,6 +120,14 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 @property (nonatomic, strong) id context;
 
 /**
+ Using for HTTP headers parameters. For example, basic http authentification
+ 
+ @see additionalHTTPHeaders
+ */
+
+@property (nonatomic, copy) NSDictionary *additionalHTTPHeaders;
+
+/**
  Returns the receiver’s delegate.
  
  @see delegate

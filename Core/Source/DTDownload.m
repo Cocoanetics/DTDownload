@@ -205,6 +205,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		return;
 	}
 	
+	[_additionalHTTPHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		
+		[request setValue:obj forHTTPHeaderField:key];
+	}];
+	
 	if (_resumeFileOffset)
 	{
 		[request setValue:[NSString stringWithFormat:@"bytes=%lld-", _resumeFileOffset] forHTTPHeaderField:@"Range"];
@@ -218,8 +223,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[_urlConnection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 	
 	// start urlConnection on the main queue, because when download lots of small file, we had a crash when this is done on a background thread
-	dispatch_async(dispatch_get_main_queue(), ^
-						{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		
 							[_urlConnection start];
 						});
 	
@@ -736,7 +741,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	return [_destinationBundleFilePath stringByDeletingLastPathComponent];
 }
 
-
 @synthesize URL = _URL;
 @synthesize downloadEntityTag = _downloadEntityTag;
 @synthesize lastPacketTimestamp = _lastPacketTimestamp;
@@ -747,5 +751,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 @synthesize context = _context;
 @synthesize responseHandler = _responseHandler;
 @synthesize completionHandler = _completionHandler;
+@synthesize additionalHTTPHeaders = _additionalHTTPHeaders;
 
 @end

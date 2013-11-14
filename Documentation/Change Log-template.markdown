@@ -3,6 +3,13 @@ Change Log
 
 This is the history of version updates.
 
+**Version 1.0.3**
+
+ADDED: Ability to set headers for requests
+ADDED: Implemented Unit Testing and Coverage support
+CHANGED: Updated DTFoundation to 1.6.0
+CHANGED: Moved DTDownloadCache and DTDownloadQueue into CocoaPods subspecs
+
 **Version 1.0.2**
 
 - ADDED: Sample for DTDownloadCache
