@@ -25,8 +25,6 @@ static NSString *const DownloadEntryURL = @"DownloadEntryURL";
 static NSString *const NSURLDownloadBytesReceived = @"NSURLDownloadBytesReceived";
 static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
-//static NSURLSessionConfiguration *backgroundConfiguration;
-
 @interface DTDownload () <NSURLConnectionDelegate, NSURLSessionDownloadDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate>
 
 @property(nonatomic, retain) NSDate *lastPacketTimestamp;
@@ -65,6 +63,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	long long _expectedContentLength;
 	long long _resumeFileOffset;
 	
+	NSData *_resumeData;
+	
 	NSString *_contentType;
 	
 	NSString *_destinationBundleFilePath;
@@ -89,12 +89,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	BOOL _shouldCancel;
 }
 
-#pragma mark Downloading
-
-//+ (void)initialize
-//{
-//	backgroundConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration"];
-//}
+#pragma mark - Creation
 
 - (id)initWithURL:(NSURL *)URL
 {
@@ -119,12 +114,14 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 #endif
 		if ([NSURLSession class])
 		{
-			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration.%f.%@", [[NSDate date] timeIntervalSince1970], _URL];
+			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
 			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
 			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
 
-//			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration];
+			//NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+			//_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+			
+//			_backgroundSession = [NSURLSession sharedSession];
 		}
 	}
 	return self;
@@ -156,6 +153,50 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		}
 		_isResume = NO;
 		
+		if ([NSURLSession class])
+		{
+			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
+			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
+			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+			
+			//NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+			//_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+			
+			//			_backgroundSession = [NSURLSession sharedSession];
+		}
+		
+#if TARGET_OS_IPHONE
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
+#else
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
+#endif
+	}
+	return self;
+}
+
+- (id)initWithResumeData:(NSData *)resumeData atPath:(NSString *)path URL:(NSURL *)URL
+{
+	self = [super init];
+	if (self)
+	{
+		_destinationBundleFilePath = path;
+		_resumeData = resumeData;
+		_URL = URL;
+		
+		_isResume = YES;
+		
+		if ([NSURLSession class])
+		{
+			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
+			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
+			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+			
+			//NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+			//_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+			
+			//			_backgroundSession = [NSURLSession sharedSession];
+		}
+		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
 #else
@@ -177,12 +218,36 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			NSString *bundlePath = [path stringByAppendingPathComponent:file];
 			NSString *infoFile = [bundlePath stringByAppendingPathComponent:@"Info.plist"];
-			NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:infoFile];
-			NSString *infoFileURL = [dictionary objectForKey:DownloadEntryURL];
-			if ([infoFileURL isEqualToString:[URL absoluteString]])
+			NSString *resumeDataPath = [bundlePath stringByAppendingPathComponent:@"resumedata"];
+			
+			NSFileManager *fileManager = [NSFileManager defaultManager];
+			
+			if ([fileManager fileExistsAtPath:infoFile isDirectory:nil])
 			{
-				return [[DTDownload alloc] initWithDictionary:dictionary atBundlePath:bundlePath];
+				NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:infoFile];
+				
+				if (dictionary)
+				{
+					NSString *infoFileURL = [dictionary objectForKey:DownloadEntryURL];
+					if ([infoFileURL isEqualToString:[URL absoluteString]])
+					{
+						return [[DTDownload alloc] initWithDictionary:dictionary atBundlePath:bundlePath];
+					}
+				}
 			}
+			else if ([fileManager fileExistsAtPath:resumeDataPath isDirectory:nil])
+			{
+				NSData *resumeData = [NSData dataWithContentsOfFile:resumeDataPath];
+				
+				NSString *fileName = [file stringByDeletingPathExtension];
+				NSString *downloadFilePath = [bundlePath stringByAppendingPathComponent:fileName];
+				
+				if (resumeData)
+				{
+					return [[DTDownload alloc] initWithResumeData:resumeData atPath:downloadFilePath URL:URL];
+				}
+			}
+				
 		}
 	}
 	return [[DTDownload alloc] initWithURL:URL withDestinationPath:path];
@@ -201,6 +266,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[self stop];
 }
 
+#pragma mark - Downloading
+
 - (void)startHEAD
 {
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_URL
@@ -212,6 +279,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	if ([NSURLSession class])
 	{
 		_downloadTask = [_backgroundSession downloadTaskWithRequest:request];
+		
+		NSParameterAssert(_downloadTask);
+		
 		[_downloadTask resume];
 	}
 	else
@@ -265,34 +335,22 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	if ([NSURLSession class])
 	{
-//		if (_resumeFileOffset)
-//		{
-//			NSError *error;
-//			NSData *resumeData = [NSData dataWithContentsOfFile:_destinationBundleFilePath options:NSDataReadingMappedIfSafe error:&error];
-//			
-//			if (error)
-//			{
-//				NSLog(@"Error when loading data of old download, %@", error);
-//			}
-//			else
-//			{
-//				_downloadTask = [_backgroundSession downloadTaskWithResumeData:resumeData];
-//			}
-//		}
+		if (_resumeData)
+		{
+			_downloadTask = [_backgroundSession downloadTaskWithResumeData:_resumeData];
+		}
 		
 		if (!_downloadTask)
 		{
 			_downloadTask = [_backgroundSession downloadTaskWithRequest:request];
 		}
 		
-		//dispatch_async(dispatch_get_main_queue(), ^{
-			[_downloadTask resume];
-		//});
+		NSParameterAssert(_downloadTask);
 		
+		[_downloadTask resume];
 	}
 	else
 	{
-		
 		_urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
 		
 		// without this special it would get paused during scrolling of scroll views
@@ -319,34 +377,45 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	{
 		return;
 	}
-	
-	// update resume info on disk if necessary
-	[self storeDownloadInfo];
-	_resumeFileOffset = _receivedBytes;
-	
+
 	// only send cancel notification if it was loading
-	
 	if ([NSURLSession class])
 	{
-//		[_downloadTask cancelByProducingResumeData:^(NSData *resumeData) {
-//			if (_destinationBundleFilePath)
-//			{
-//				NSError *error;
-//				[resumeData writeToFile:_destinationBundleFilePath options:NSDataWritingAtomic error:&error];
-//				
-//				if (error)
-//				{
-//					NSLog(@"Error when saving data of download for resuming later, %@", error);
-//				}
-//			}
-//		}];
+		NSLog(@"cancelByProducingResumeData");
+		
+		[_downloadTask cancelByProducingResumeData:^(NSData *resumeData) {
+			
+			NSLog(@"cancelByProducingResumeData block");
+			
+			if (_destinationBundleFilePath)
+			{
+				// change extension to .resume > for easier identification between DTDownload
+				NSString *resumeDataPath = _destinationBundleFilePath;
+				resumeDataPath = [resumeDataPath stringByDeletingLastPathComponent];
+				resumeDataPath = [resumeDataPath stringByAppendingPathComponent:@"resumedata"];
+				
+				NSError *error;
+				[resumeData writeToFile:resumeDataPath options:NSDataWritingAtomic error:&error];
+				
+				if (error)
+				{
+					NSLog(@"Error when saving data of download for resuming later, %@", error);
+				}
+			}
+			else
+			{
+				NSLog(@"NOOOOO");
+			}
+		}];
 		[_downloadTask cancel];
-		[_backgroundSession invalidateAndCancel];
 		_downloadTask = nil;
-		_backgroundSession = nil;
 	}
 	else
 	{
+		// update resume info on disk if necessary
+		[self storeDownloadInfo];
+		_resumeFileOffset = _receivedBytes;
+		
 		// cancel the connection
 		[_urlConnection cancel];
 		_urlConnection = nil;
@@ -371,6 +440,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	NSFileManager *fileManager = [[NSFileManager alloc] init];
 	[fileManager removeItemAtPath:_destinationBundleFilePath error:nil];
 	[fileManager removeItemAtPath:[[self downloadBundlePath] stringByAppendingPathComponent:@"Info.plist"] error:nil];
+	[fileManager removeItemAtPath:[[self downloadBundlePath] stringByAppendingPathComponent:@"resumedata"] error:nil];
 	[fileManager removeItemAtPath:[self downloadBundlePath] error:nil];
 	
 }
@@ -453,21 +523,23 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		}
 		
 		// Error: finished file size differs from header size -> so throw error
-		if (_expectedContentLength>0 && [data length] != _expectedContentLength)
+		if (![NSURLSession class])
 		{
-			NSString *errorMessage = [NSString stringWithFormat:@"Error: finished file size %d differs from header size %d", (int)[data length], (int)_expectedContentLength];
-			
-			NSLog(errorMessage, nil);
-			
-			NSDictionary *userInfo = @{errorMessage : NSLocalizedDescriptionKey};
-			
-			NSError *error = [NSError errorWithDomain:@"DTDownloadError" code:1 userInfo:userInfo];
-			
-			[self _completeWithError:error];
-			
-			return;
+			if (_expectedContentLength>0 && [data length] != _expectedContentLength)
+			{
+				NSString *errorMessage = [NSString stringWithFormat:@"Error: finished file size %d differs from header size %d", (int)[data length], (int)_expectedContentLength];
+				
+				NSLog(errorMessage, nil);
+				
+				NSDictionary *userInfo = @{errorMessage : NSLocalizedDescriptionKey};
+				
+				NSError *error = [NSError errorWithDomain:@"DTDownloadError" code:1 userInfo:userInfo];
+				
+				[self _completeWithError:error];
+				
+				return;
+			}
 		}
-		
 		
 		// notify delegate
 		if ([_delegate respondsToSelector:@selector(download:didFinishWithFile:)])
@@ -490,6 +562,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidFinishNotification object:self];
 }
 
+#pragma mark - Infos for resuming
 
 - (void)setInfoDictionary:(NSDictionary *)infoDictionary
 {
@@ -702,9 +775,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	[self closeDestinationFile];
 	
-	// update resume info on disk
-	[self storeDownloadInfo];
-	
 	[self _completeWithError:error];
 }
 
@@ -713,6 +783,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	_urlConnection = nil;
+	
+	// update resume info on disk
+	[self storeDownloadInfo];
 	
 	[self _didFailWithError:error];
 }
@@ -813,129 +886,77 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-//	if (downloadTask == _downloadTask)
-//	{
-	NSLog(@"%s", __PRETTY_FUNCTION__);
 	
-		if (!_didReceiveResponse)
-		{
-			// use response only on first call
-			[self _didReceiveResponse:downloadTask.response];
-			_didReceiveResponse = YES;
-		}
-		
-//		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)downloadTask.response;
-		
-//		if (_completion && httpResponse.statusCode == 200)
-//		{
-//			_completion(UIBackgroundFetchResultNewData);
-//			_completion = nil;
-//		}
-		
-		// calculate a transfer speed
-//		float downloadSpeed = 0;
-//		NSDate *now = [NSDate date];
-//		if (self.lastPacketTimestamp)
-//		{
-//			NSTimeInterval downloadDurationForPacket = [now timeIntervalSinceDate:self.lastPacketTimestamp];
-//			float instantSpeed = [data length] / downloadDurationForPacket;
-//			
-//			downloadSpeed = (_previousSpeed * 0.9) + 0.1 * instantSpeed;
-//		}
-//		self.lastPacketTimestamp = now;
-		
-		
+	if (!_didReceiveResponse)
+	{
+		// use response only on first call
+		[self _didReceiveResponse:downloadTask.response];
+		_didReceiveResponse = YES;
+	}
+	
 	_receivedBytes = totalBytesWritten;
 	
-		// send notification
-//		if (_expectedContentLength > 0)
-//		{
-			NSDate *now = [NSDate date];
-			
-			NSTimeInterval currentProgressInterval = [now timeIntervalSinceDate:_lastProgressSentDate];
-			
-			// throttling sending of progress notifications for specified progressInterval in seconds
-			if (currentProgressInterval > PROGRESS_INTERVAL)
-			{
-				// notify delegate
-				if ([_delegate respondsToSelector:@selector(download:downloadedBytes:ofTotalBytes:withSpeed:)])
-				{
-					// TODO: i see no option to calculate download speed with NSURLSession
-					[_delegate download:self downloadedBytes:_receivedBytes ofTotalBytes:_expectedContentLength withSpeed:0];
-				}
-				
-				NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) totalBytesWritten / (float) totalBytesExpectedToWrite], @"TotalBytes" : [NSNumber numberWithLongLong:totalBytesExpectedToWrite], @"ReceivedBytes" : [NSNumber numberWithLongLong:totalBytesWritten]};
-				[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
-				
-				_lastProgressSentDate = [NSDate date];
-			}
-//		}
-//	}
+	NSDate *now = [NSDate date];
+	
+	NSTimeInterval currentProgressInterval = [now timeIntervalSinceDate:_lastProgressSentDate];
+	
+	// throttling sending of progress notifications for specified progressInterval in seconds
+	if (currentProgressInterval > PROGRESS_INTERVAL)
+	{
+		// notify delegate
+		if ([_delegate respondsToSelector:@selector(download:downloadedBytes:ofTotalBytes:withSpeed:)])
+		{
+			// TODO: i see no option to calculate download speed with NSURLSession
+			[_delegate download:self downloadedBytes:_receivedBytes ofTotalBytes:_expectedContentLength withSpeed:0];
+		}
+		
+		NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) totalBytesWritten / (float) totalBytesExpectedToWrite], @"TotalBytes" : [NSNumber numberWithLongLong:totalBytesExpectedToWrite], @"ReceivedBytes" : [NSNumber numberWithLongLong:totalBytesWritten]};
+		[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
+		
+		_lastProgressSentDate = [NSDate date];
+	}
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
-//	
-//	if (_downloadTask == downloadTask)
-//	{
-	NSLog(@"%s", __PRETTY_FUNCTION__);
+	if (_shouldCancel || _downloadTask.state == NSURLSessionTaskStateCanceling)
+	{
+		return;
+	}
 	
-		if (_shouldCancel)
-		{
-			return;
-		}
+	_temporaryDownloadLocationPath = [location path];
+	
+	NSLog(@"Task: %@ completed successfully", downloadTask);
 		
-		_temporaryDownloadLocationPath = [location path];
+	_receivedData = nil;
+	_downloadTask = nil;
 		
-		NSLog(@"Task: %@ completed successfully", downloadTask);
-		
-		//[self _didReceiveResponse:task.response];
-		
-		_receivedData = nil;
-		_downloadTask = nil;
-		
-		//[self closeDestinationFile];
-		
-		[self _completeWithSuccess];
-//	}
+	[self _completeWithSuccess];
 }
 
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
+	//NSLog(@"%s", __PRETTY_FUNCTION__);
 	
-//	if (_downloadTask == task)
-//	{
+	_receivedData = nil;
+	_downloadTask = nil;
+	
+	[self closeDestinationFile];
+	
+	
+	if (error.code == -999)
+	{
+		// ignore this -> this error comes when a NSURLSessionDownloadTask is cancelled!? WTF?!
+		return;
+	}
+	
+	else if (error)
+	{
+		NSLog(@"Task: %@ completed with error: %@", task, [error localizedDescription]);
 		
-		_receivedData = nil;
-		_downloadTask = nil;
-		
-		[self closeDestinationFile];
-		
-//		if (error == nil)
-//		{
-//			NSLog(@"Task: %@ completed successfully", task);
-//			
-//			//[self _didReceiveResponse:task.response];
-//			
-//			_receivedData = nil;
-//			_downloadTask = nil;
-//			
-//			[self closeDestinationFile];
-//			
-//			[self _completeWithSuccess];
-//		}
-		if (error)
-		{
-			NSLog(@"Task: %@ completed with error: %@", task, [error localizedDescription]);
-			
-			// update resume info on disk
-			[self storeDownloadInfo];
-			
-			[self _completeWithError:error];
-		}
-//	}
+		[self _completeWithError:error];
+	}
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes
