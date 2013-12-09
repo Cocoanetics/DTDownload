@@ -325,10 +325,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		[request setValue:obj forHTTPHeaderField:key];
 	}];
 	
-	if (_resumeFileOffset)
-	{
-		[request setValue:[NSString stringWithFormat:@"bytes=%lld-", _resumeFileOffset] forHTTPHeaderField:@"Range"];
-	}
+
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidStartNotification object:self];
 	
@@ -351,6 +348,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	}
 	else
 	{
+		if (_resumeFileOffset)
+		{
+			[request setValue:[NSString stringWithFormat:@"bytes=%lld-", _resumeFileOffset] forHTTPHeaderField:@"Range"];
+		}
+		
 		_urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
 		
 		// without this special it would get paused during scrolling of scroll views
@@ -406,9 +408,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			{
 				NSLog(@"NOOOOO");
 			}
+			
+			_downloadTask = nil;
 		}];
-		[_downloadTask cancel];
-		_downloadTask = nil;
 	}
 	else
 	{
