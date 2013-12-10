@@ -9,6 +9,8 @@
 #import "DTDownloadTest.h"
 #import "DTDownload.h"
 
+#import <objc/objc-runtime.h>
+
 
 @interface DTDownload()
 - (NSString *)uniqueFileNameForFile:(NSString *)fileName atDestinationPath:(NSString *)path;
@@ -22,8 +24,21 @@
 
 }
 
+- (NSString *)unitTestBundleIdentifier
+{
+	return @"com.cocoanetics.DTDownload";
+}
 
-
++ (void)initialize
+{
+	Method original, swizzled;
+    
+	// swizzle method to return valid bundle identifier of main bundle for NSURLSession on iOS7
+	// otherwise it won't work
+    original = class_getInstanceMethod([NSBundle class], @selector(bundleIdentifier));
+    swizzled = class_getInstanceMethod([self class], @selector(unitTestBundleIdentifier));
+    method_exchangeImplementations(original, swizzled);
+}
 
 - (void)testDownloadWithBundlePath1
 {
