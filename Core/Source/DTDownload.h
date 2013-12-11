@@ -47,7 +47,6 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
  */
 - (void)downloadDidFinishHEAD:(DTDownload *)download;
 
-
 /**
  Sent by the download object to the delegate when the download was been aborted due to failure.
  

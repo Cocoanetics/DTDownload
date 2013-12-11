@@ -327,7 +327,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidStartNotification object:self];
+	
 	
 	
 	if ([NSURLSession class])
@@ -365,7 +365,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		});
 	}
 	
-	if (_urlConnection || _downloadTask)
+	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidStartNotification object:self];
+	
+	if (_urlConnection)
 	{
 		_receivedData = [NSMutableData data];
 	}
@@ -914,6 +916,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 		NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) totalBytesWritten / (float) totalBytesExpectedToWrite], @"TotalBytes" : [NSNumber numberWithLongLong:totalBytesExpectedToWrite], @"ReceivedBytes" : [NSNumber numberWithLongLong:totalBytesWritten]};
 		[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
+		
+		NSLog(@"%s - %lld", __PRETTY_FUNCTION__, totalBytesWritten);
 		
 		_lastProgressSentDate = [NSDate date];
 	}
