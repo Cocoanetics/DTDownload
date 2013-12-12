@@ -53,8 +53,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	NSMutableData *_receivedData;
 	
 	// NSURLSession
-	NSURLSession *_backgroundSession /*NS_AVAILABLE(10_9, 7_0)*/;
-	NSURLSessionDownloadTask *_downloadTask NS_AVAILABLE(10_9, 7_0);
+	NSURLSession *_backgroundSession;
+	NSURLSessionDownloadTask *_downloadTask;
 
 	NSDate *_lastPacketTimestamp;
 	float _previousSpeed;
@@ -117,11 +117,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
 			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
 			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-
-			//NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-			//_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-			
-//			_backgroundSession = [NSURLSession sharedSession];
 		}
 	}
 	return self;
@@ -158,11 +153,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
 			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
 			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-			
-			//NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-			//_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-			
-			//			_backgroundSession = [NSURLSession sharedSession];
 		}
 		
 #if TARGET_OS_IPHONE
@@ -190,11 +180,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
 			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
 			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-			
-			//NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-			//_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-			
-			//			_backgroundSession = [NSURLSession sharedSession];
 		}
 		
 #if TARGET_OS_IPHONE
@@ -242,7 +227,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 				NSString *fileName = [file stringByDeletingPathExtension];
 				NSString *downloadFilePath = [bundlePath stringByAppendingPathComponent:fileName];
 				
-				if (resumeData)
+				if (resumeData && [[URL lastPathComponent] isEqualToString:fileName])
 				{
 					return [[DTDownload alloc] initWithResumeData:resumeData atPath:downloadFilePath URL:URL];
 				}
