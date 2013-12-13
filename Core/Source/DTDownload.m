@@ -7,6 +7,7 @@
 //
 
 #import "DTDownload.h"
+#import "DTLog.h"
 
 #define PROGRESS_INTERVAL 0.017
 
@@ -241,7 +242,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)dealloc
 {
-	NSLog(@"DEALLOC of DTDownload for URL: %@", _URL);
+	DTLogDebug(@"DEALLOC of DTDownload for URL: %@", _URL);
 	
 	_urlConnection = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -310,11 +311,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		[request setValue:obj forHTTPHeaderField:key];
 	}];
 	
-
-	
-	
-	
-	
 	if ([NSURLSession class])
 	{
 		if (_resumeData)
@@ -362,6 +358,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)stop
 {
+	[self _stopWithResume:YES];
+}
+
+- (void)_stopWithResume:(BOOL)resume
+{
 	if (!_urlConnection && !_downloadTask)
 	{
 		return;
@@ -370,34 +371,38 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	// only send cancel notification if it was loading
 	if ([NSURLSession class])
 	{
-		NSLog(@"cancelByProducingResumeData");
-		
-		[_downloadTask cancelByProducingResumeData:^(NSData *resumeData) {
-			
-			NSLog(@"cancelByProducingResumeData block");
-			
-			if (_destinationBundleFilePath)
-			{
-				// change extension to .resume > for easier identification between DTDownload
-				NSString *resumeDataPath = _destinationBundleFilePath;
-				resumeDataPath = [resumeDataPath stringByDeletingLastPathComponent];
-				resumeDataPath = [resumeDataPath stringByAppendingPathComponent:@"resumedata"];
+		if (resume)
+		{
+			[_downloadTask cancelByProducingResumeData:^(NSData *resumeData) {
 				
-				NSError *error;
-				[resumeData writeToFile:resumeDataPath options:NSDataWritingAtomic error:&error];
-				
-				if (error)
+				if (_destinationBundleFilePath)
 				{
-					NSLog(@"Error when saving data of download for resuming later, %@", error);
+					// change extension to .resume > for easier identification between DTDownload
+					NSString *resumeDataPath = _destinationBundleFilePath;
+					resumeDataPath = [resumeDataPath stringByDeletingLastPathComponent];
+					resumeDataPath = [resumeDataPath stringByAppendingPathComponent:@"resumedata"];
+					
+					NSError *error;
+					[resumeData writeToFile:resumeDataPath options:NSDataWritingAtomic error:&error];
+					
+					if (error)
+					{
+						DTLogError(@"Error when saving data of download for resuming later, %@", error);
+					}
 				}
-			}
-			else
-			{
-				NSLog(@"NOOOOO");
-			}
-			
+				else
+				{
+					DTLogDebug(@"NO destination bundle path set - not possible to resume download");
+				}
+				
+				_downloadTask = nil;
+			}];
+		}
+		else
+		{
+			[_downloadTask cancel];
 			_downloadTask = nil;
-		}];
+		}
 	}
 	else
 	{
@@ -487,28 +492,28 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			if (![fileManager copyItemAtPath:_temporaryDownloadLocationPath toPath:targetPath error:&error])
 			{
-				NSLog(@"Cannot copy item from %@ to %@, %@", _destinationBundleFilePath, targetPath, [error localizedDescription]);
+				DTLogError(@"Cannot copy item from %@ to %@, %@", _destinationBundleFilePath, targetPath, [error localizedDescription]);
 				[self _completeWithError:error];
 				return;
 			}
 		}
 		else if (![fileManager moveItemAtPath:_destinationBundleFilePath toPath:targetPath error:&error])
 		{
-			NSLog(@"Cannot move item from %@ to %@, %@", _destinationBundleFilePath, targetPath, [error localizedDescription]);
+			DTLogError(@"Cannot move item from %@ to %@, %@", _destinationBundleFilePath, targetPath, [error localizedDescription]);
 			[self _completeWithError:error];
 			return;
 		}
 		
 		if (![fileManager removeItemAtPath:[_destinationBundleFilePath stringByDeletingLastPathComponent] error:&error])
 		{
-			NSLog(@"Cannot remove item from %@, %@ ", [_destinationBundleFilePath stringByDeletingLastPathComponent], [error localizedDescription]);
+			DTLogError(@"Cannot remove item from %@, %@ ", [_destinationBundleFilePath stringByDeletingLastPathComponent], [error localizedDescription]);
 		}
 		
 		NSData *data = [NSData dataWithContentsOfFile:targetPath options:NSDataReadingMappedIfSafe error:&error];
 		
 		if (error)
 		{
-			NSLog(@"Error occured when reading file from path: %@", targetPath);
+			DTLogError(@"Error occured when reading file from path: %@", targetPath);
 		}
 		
 		// Error: finished file size differs from header size -> so throw error
@@ -679,7 +684,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			
 			if (_expectedContentLength == NSURLResponseUnknownLength)
 			{
-				NSLog(@"No expected content length for %@", _URL);
+				DTLogInfo(@"No expected content length for %@", _URL);
 			}
 		}
 		
@@ -715,12 +720,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 		if (_responseHandler)
 		{
-			//BOOL shouldCancel = NO;
 			_responseHandler([http allHeaderFields], &_shouldCancel);
 			
 			if (_shouldCancel)
 			{
-				[self stop];
+				[self _stopWithResume:NO];
 				
 				// exit here to avoid adding of download bundle folder
 				return;
@@ -810,7 +814,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		NSError *error;
 		if (![fileManager createDirectoryAtPath:downloadBundlePath withIntermediateDirectories:YES attributes:nil error:&error])
 		{
-			NSLog(@"Cannot create download folder %@, %@", downloadBundlePath, [error localizedDescription]);
+			DTLogError(@"Cannot create download folder %@, %@", downloadBundlePath, [error localizedDescription]);
 			[self _completeWithError:error];
 			return nil;
 		}
@@ -902,7 +906,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) totalBytesWritten / (float) totalBytesExpectedToWrite], @"TotalBytes" : [NSNumber numberWithLongLong:totalBytesExpectedToWrite], @"ReceivedBytes" : [NSNumber numberWithLongLong:totalBytesWritten]};
 		[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
 		
-		NSLog(@"%s - %lld", __PRETTY_FUNCTION__, totalBytesWritten);
+		DTLogDebug(@"%s - %f", __PRETTY_FUNCTION__, (float) totalBytesWritten / (float) totalBytesExpectedToWrite);
 		
 		_lastProgressSentDate = [NSDate date];
 	}
@@ -917,7 +921,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	_temporaryDownloadLocationPath = [location path];
 	
-	NSLog(@"Task: %@ completed successfully", downloadTask);
+	DTLogDebug(@"Task: %@ completed successfully", downloadTask);
 		
 	_receivedData = nil;
 	_downloadTask = nil;
@@ -928,8 +932,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-	//NSLog(@"%s", __PRETTY_FUNCTION__);
-	
 	_receivedData = nil;
 	_downloadTask = nil;
 	
@@ -944,7 +946,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	else if (error)
 	{
-		NSLog(@"Task: %@ completed with error: %@", task, [error localizedDescription]);
+		DTLogError(@"Task: %@ completed with error: %@", task, [error localizedDescription]);
 		
 		[self _completeWithError:error];
 	}
@@ -952,7 +954,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes
 {
-	//BLog();
+	// nothing to do
 }
 
 
