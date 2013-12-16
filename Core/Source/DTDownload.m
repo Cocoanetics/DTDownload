@@ -914,6 +914,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
+	if (!_downloadTask)
+	{
+		return;
+	}
+	
 	if (_shouldCancel || _downloadTask.state == NSURLSessionTaskStateCanceling)
 	{
 		return;
@@ -932,11 +937,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-	_receivedData = nil;
 	_downloadTask = nil;
 	
 	[self closeDestinationFile];
-	
 	
 	if (error.code == -999)
 	{
