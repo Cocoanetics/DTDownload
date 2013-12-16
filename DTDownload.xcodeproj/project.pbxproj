@@ -66,6 +66,7 @@
 		A78445811802B16400965447 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A784453A1802B00F00965447 /* main.m */; };
 		A78445821802B16400965447 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A784453C1802B00F00965447 /* ViewController.m */; };
 		A78445851802B25000965447 /* libDTFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7724F0A16A954BB005391C2 /* libDTFoundation.a */; };
+		FAA963DB185F12B000812AA7 /* libDTFoundation_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7724F0E16A954BB005391C2 /* libDTFoundation_Mac.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +181,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A70B4CE61486637E00873A4A;
 			remoteInfo = "Static Library";
+		};
+		FAA963D9185F12A500812AA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A710A4FF1607556000437D36;
+			remoteInfo = "Static Library (Mac)";
 		};
 		FAB87D08178BE59D00D0DCDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -343,6 +351,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA963DB185F12B000812AA7 /* libDTFoundation_Mac.a in Frameworks */,
 				A71F5BB717FB0B7B00D5E42C /* CoreData.framework in Frameworks */,
 				A71F5BB817FB0B7B00D5E42C /* AppKit.framework in Frameworks */,
 				A71F5BB917FB0B7B00D5E42C /* libDTDownload (Mac).a in Frameworks */,
@@ -641,6 +650,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FAA963DA185F12A500812AA7 /* PBXTargetDependency */,
 				A71F5BB217FB0B7B00D5E42C /* PBXTargetDependency */,
 			);
 			name = "Unit Tests (Mac)";
@@ -970,6 +980,11 @@
 			isa = PBXTargetDependency;
 			name = "Static Library";
 			targetProxy = A78445831802B24A00965447 /* PBXContainerItemProxy */;
+		};
+		FAA963DA185F12A500812AA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library (Mac)";
+			targetProxy = FAA963D9185F12A500812AA7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
