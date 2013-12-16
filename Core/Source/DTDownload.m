@@ -882,6 +882,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	if (!_didReceiveResponse)
 	{
+		DTLogDebug(@"Response received: %@", downloadTask.response);
+		
 		// use response only on first call
 		[self _didReceiveResponse:downloadTask.response];
 		_didReceiveResponse = YES;
@@ -928,6 +930,15 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	DTLogDebug(@"Task: %@ completed successfully", downloadTask);
 		
+	if (!_didReceiveResponse)
+	{
+		DTLogDebug(@"Response received: %@", downloadTask.response);
+		
+		// use response only on first call
+		[self _didReceiveResponse:downloadTask.response];
+		_didReceiveResponse = YES;
+	}
+	
 	_receivedData = nil;
 	_downloadTask = nil;
 		
