@@ -61,6 +61,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	float _previousSpeed;
 	
 	long long _receivedBytes;
+	long long _totalReceivedBytes;
 	long long _expectedContentLength;
 	long long _resumeFileOffset;
 	
@@ -233,7 +234,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 					return [[DTDownload alloc] initWithResumeData:resumeData atPath:downloadFilePath URL:URL];
 				}
 			}
-				
 		}
 	}
 	return [[DTDownload alloc] initWithURL:URL withDestinationPath:path];
@@ -610,20 +610,24 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	[self writeToDestinationFile:data];
 	
+	_receivedBytes = [data length];
+	
+	[self _sendProgress];
+}
+
+- (void)_sendProgress
+{
 	// calculate a transfer speed
 	float downloadSpeed = 0;
 	NSDate *now = [NSDate date];
 	if (self.lastPacketTimestamp)
 	{
 		NSTimeInterval downloadDurationForPacket = [now timeIntervalSinceDate:self.lastPacketTimestamp];
-		float instantSpeed = [data length] / downloadDurationForPacket;
-		
-		downloadSpeed = (_previousSpeed * 0.9) + 0.1 * instantSpeed;
+		downloadSpeed = _receivedBytes / downloadDurationForPacket;
 	}
 	self.lastPacketTimestamp = now;
 	// calculation speed done
-	
-	
+		
 	// send notification
 	if (_expectedContentLength > 0)
 	{
@@ -640,7 +644,14 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 				[_delegate download:self downloadedBytes:_receivedBytes ofTotalBytes:_expectedContentLength withSpeed:downloadSpeed];
 			}
 			
-			NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) _receivedBytes / (float) _expectedContentLength], @"TotalBytes" : [NSNumber numberWithLongLong:_expectedContentLength], @"ReceivedBytes" : [NSNumber numberWithLongLong:_receivedBytes]};
+			float progress = (float) _totalReceivedBytes / (float) _expectedContentLength;
+			
+			DTLogDebug(@"Progress: %f, TotalBytes: %lld, ReceivedBytes: %lld, DownloadSpeed: %f", progress, _expectedContentLength, _receivedBytes, downloadSpeed);
+			
+			NSDictionary *userInfo = @{@"ProgressPercent" : @(progress),
+												@"TotalBytes" : @(_expectedContentLength),
+												@"ReceivedBytes" : @(_totalReceivedBytes),
+												@"DownloadSpeed" : @(downloadSpeed) };
 			[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
 			
 			_lastProgressSentDate = [NSDate date];
@@ -699,10 +710,13 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			if (![self.downloadEntityTag isEqualToString:currentEntityTag])
 			{
 				// file was changed on server restart from beginning
-				[_urlConnection cancel];
-				_urlConnection = nil;
-				// update loading flag to allow resume
-				[self start];
+				if (![NSURLSession class])
+				{
+					[_urlConnection cancel];
+					_urlConnection = nil;
+					// update loading flag to allow resume
+					[self start];
+				}
 			}
 		}
 		
@@ -889,29 +903,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		_didReceiveResponse = YES;
 	}
 	
-	_receivedBytes = totalBytesWritten;
 	
-	NSDate *now = [NSDate date];
-	
-	NSTimeInterval currentProgressInterval = [now timeIntervalSinceDate:_lastProgressSentDate];
-	
-	// throttling sending of progress notifications for specified progressInterval in seconds
-	if (currentProgressInterval > PROGRESS_INTERVAL)
-	{
-		// notify delegate
-		if ([_delegate respondsToSelector:@selector(download:downloadedBytes:ofTotalBytes:withSpeed:)])
-		{
-			// TODO: i see no option to calculate download speed with NSURLSession
-			[_delegate download:self downloadedBytes:_receivedBytes ofTotalBytes:_expectedContentLength withSpeed:0];
-		}
-		
-		NSDictionary *userInfo = @{@"ProgressPercent" : [NSNumber numberWithFloat:(float) totalBytesWritten / (float) totalBytesExpectedToWrite], @"TotalBytes" : [NSNumber numberWithLongLong:totalBytesExpectedToWrite], @"ReceivedBytes" : [NSNumber numberWithLongLong:totalBytesWritten]};
-		[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadProgressNotification object:self userInfo:userInfo];
-		
-		DTLogDebug(@"%s - %f", __PRETTY_FUNCTION__, (float) totalBytesWritten / (float) totalBytesExpectedToWrite);
-		
-		_lastProgressSentDate = [NSDate date];
-	}
+	_receivedBytes = bytesWritten;
+	_totalReceivedBytes = totalBytesWritten;
+	[self _sendProgress];
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
