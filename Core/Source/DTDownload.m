@@ -236,6 +236,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			}
 		}
 	}
+	
 	return [[DTDownload alloc] initWithURL:URL withDestinationPath:path];
 }
 
@@ -469,6 +470,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)_completeWithSuccess
 {
+	if (_shouldCancel)
+	{
+		return;
+	}
 	
 	if (_headOnly)
 	{
@@ -565,6 +570,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	_expectedContentLength = [[infoDictionary objectForKey:DownloadEntryProgressTotalToLoad] longLongValue];
 	NSDictionary *resumeInfo = [infoDictionary objectForKey:DownloadEntryResumeInformation];
 	_resumeFileOffset = [[resumeInfo objectForKey:NSURLDownloadBytesReceived] longLongValue];
+	_totalReceivedBytes = _resumeFileOffset;
 	_downloadEntityTag = [infoDictionary objectForKey:NSURLDownloadEntityTag];
 	_expectedContentLength = [[infoDictionary objectForKey:DownloadEntryProgressTotalToLoad] longLongValue];
 }
@@ -572,7 +578,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 - (NSDictionary *)infoDictionary
 {
 	NSMutableDictionary *resumeDictionary = [NSMutableDictionary dictionary];
-	[resumeDictionary setObject:[NSNumber numberWithLongLong:_receivedBytes] forKey:NSURLDownloadBytesReceived];
+	[resumeDictionary setObject:[NSNumber numberWithLongLong:_totalReceivedBytes] forKey:NSURLDownloadBytesReceived];
 	if (_downloadEntityTag)
 	{
 		[resumeDictionary setObject:_downloadEntityTag forKey:NSURLDownloadEntityTag];
@@ -582,7 +588,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 											  [NSNumber numberWithInt:-999], DownloadEntryErrorCodeDictionaryKey,
 											  NSURLErrorDomain, DownloadEntryErrorDomainDictionaryKey,
 											  _destinationBundleFilePath, DownloadEntryPath,
-											  [NSNumber numberWithLongLong:_receivedBytes], DownloadEntryProgressBytesSoFar,
+											  [NSNumber numberWithLongLong:_totalReceivedBytes], DownloadEntryProgressBytesSoFar,
 											  [NSNumber numberWithLongLong:_expectedContentLength], DownloadEntryProgressTotalToLoad,
 											  resumeDictionary, DownloadEntryResumeInformation,
 											  [_URL absoluteString], DownloadEntryURL
@@ -611,6 +617,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[self writeToDestinationFile:data];
 	
 	_receivedBytes = [data length];
+	_totalReceivedBytes += _receivedBytes;
 	
 	[self _sendProgress];
 }
@@ -689,7 +696,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			return;
 		}
 		
-		if (_expectedContentLength <= 0)
+		if (![NSURLSession class]  && _expectedContentLength <= 0)
 		{
 			_expectedContentLength = [response expectedContentLength];
 			
@@ -906,6 +913,12 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	_receivedBytes = bytesWritten;
 	_totalReceivedBytes = totalBytesWritten;
+	
+//	if (!_expectedContentLength && totalBytesExpectedToWrite)
+//	{
+		_expectedContentLength = totalBytesExpectedToWrite;
+//	}
+	
 	[self _sendProgress];
 }
 
@@ -945,7 +958,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 {
 	_downloadTask = nil;
 	
-	[self closeDestinationFile];
+	//[self closeDestinationFile];
 	
 	if (error.code == -999)
 	{
