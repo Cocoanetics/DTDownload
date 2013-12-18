@@ -229,7 +229,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 				NSString *fileName = [file stringByDeletingPathExtension];
 				NSString *downloadFilePath = [bundlePath stringByAppendingPathComponent:fileName];
 				
-				if (resumeData && [[URL lastPathComponent] isEqualToString:fileName])
+				NSURL *fileNameURL = [URL URLByDeletingPathExtension];
+				
+				if (resumeData && [fileName hasPrefix:[fileNameURL lastPathComponent]])
 				{
 					return [[DTDownload alloc] initWithResumeData:resumeData atPath:downloadFilePath URL:URL];
 				}
@@ -389,6 +391,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 					if (error)
 					{
 						DTLogError(@"Error when saving data of download for resuming later, %@", error);
+					}
+					else
+					{
+						DTLogDebug(@"Successfully saved resume info");
 					}
 				}
 				else
