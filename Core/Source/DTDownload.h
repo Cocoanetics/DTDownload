@@ -88,7 +88,7 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 /**
  Returns the URL that is being downloaded by the receiver.
  */
-@property (nonatomic, strong, readonly) NSURL *URL;
+@property (nonatomic, readonly) NSURL *URL;
 
 /**
  Returns the entity tag of the downloading file.
