@@ -636,7 +636,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 {
 	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
 	
-	NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"lastAccessDate" ascending:NO];
+	NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"lastAccessDate" ascending:YES];
 	request.sortDescriptors = [NSArray arrayWithObject:sort];
 	
 	request.predicate = [NSPredicate predicateWithFormat:@"forceLoad == YES and isLoading == NO"];
