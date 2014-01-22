@@ -71,4 +71,9 @@ Abort a download if the ETag and/or last modified are the same
  */
 @property (nonatomic, retain) NSString *entityTagIdentifier;
 
+/**
+ The priority for next downloads (0 = highest priority >0 lower priority)
+ */
+@property (nonatomic, retain) NSNumber *priority;
+
 @end
