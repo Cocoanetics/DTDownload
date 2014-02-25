@@ -315,6 +315,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		return;
 	}
 	
+	DTLogDebug(@"DTDownload started for URL: %@", _URL);
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_URL cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:60.0];
 	
