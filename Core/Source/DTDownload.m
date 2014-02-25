@@ -114,12 +114,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 #else
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 #endif
-		if ([NSURLSession class])
-		{
-			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
-			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
-			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-		}
+		
+		[self _createURLSession];
 	}
 	return self;
 }
@@ -150,12 +146,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		}
 		_isResume = NO;
 		
-		if ([NSURLSession class])
-		{
-			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
-			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
-			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-		}
+		[self _createURLSession];
 		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
@@ -186,12 +177,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 		_isResume = YES;
 		
-		if ([NSURLSession class])
-		{
-			NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
-			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
-			_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-		}
+		[self _createURLSession];
+		
 		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
@@ -256,6 +243,20 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	}
 	
 	return [[DTDownload alloc] initWithURL:URL withDestinationPath:path];
+}
+
+- (void)_createURLSession
+{
+	if ([NSURLSession class])
+	{
+		NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
+		NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
+		
+		// TODO: use default session on iPad mini
+		//configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+
+		_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+	}
 }
 
 
