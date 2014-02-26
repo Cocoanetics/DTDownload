@@ -262,7 +262,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)dealloc
 {
-	DTLogDebug(@"DEALLOC of DTDownload for URL: %@", _URL);
+	//DTLogDebug(@"DEALLOC of DTDownload for URL: %@", _URL);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -346,6 +346,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 		NSParameterAssert(_downloadTask);
 		
+		DTLogDebug(@"DTDownload resumed for URL: %@", _URL);
 		[_downloadTask resume];
 	}
 	else
@@ -708,7 +709,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			
 			float progress = (float) _totalReceivedBytes / (float) _expectedContentLength;
 			 
-			DTLogDebug(@"Progress: %f, TotalBytes: %lld, ReceivedBytes: %lld, DownloadSpeed: %f", progress, _expectedContentLength, _receivedBytes, downloadSpeed);
+			DTLogDebug(@"DTDownload Progress: %f, TotalBytes: %lld, ReceivedBytes: %lld, DownloadSpeed: %f", progress, _expectedContentLength, _receivedBytes, downloadSpeed);
 			
 			NSDictionary *userInfo = @{@"ProgressPercent" : @(progress),
 												@"TotalBytes" : @(_expectedContentLength),
@@ -958,7 +959,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	if (!_didReceiveResponse)
 	{
-		DTLogDebug(@"Response received: %@", downloadTask.response);
+		//DTLogDebug(@"Response received: %@", downloadTask.response);
 		
 		// use response only on first call
 		[self _didReceiveResponse:downloadTask.response];
@@ -995,7 +996,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 	if (!_didReceiveResponse)
 	{
-		DTLogDebug(@"Response received: %@", downloadTask.response);
+		//DTLogDebug(@"Response received: %@", downloadTask.response);
 		
 		// use response only on first call
 		[self _didReceiveResponse:downloadTask.response];
@@ -1028,6 +1029,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		DTLogError(@"Task: %@ completed with error: %@", task, [error localizedDescription]);
 		
 		[self _completeWithError:error];
+	}
+	else
+	{
+		DTLogError(@"DTDownload finished for URL: %@", _URL);
 	}
 }
 
