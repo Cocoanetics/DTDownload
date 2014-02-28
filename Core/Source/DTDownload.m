@@ -54,7 +54,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	NSMutableData *_receivedData;
 	
 	// NSURLSession
-	NSURLSession *_backgroundSession;
+	NSURLSession *_urlSession;
 	NSURLSessionDownloadTask *_downloadTask;
 
 	NSDate *_lastPacketTimestamp;
@@ -90,6 +90,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	BOOL _shouldCancel;
 }
+
 
 #pragma mark - Creation
 
@@ -230,11 +231,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 				if (resumeData && [fileName hasPrefix:[fileNameURL lastPathComponent]])
 				{
 					NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:resumeDataPath];
-					
-					//dictionary[@"NSURLSessionResumeBytesReceived"]
-					
-					NSLog(@"--- BYTES ----> already received: %@", dictionary[@"NSURLSessionResumeBytesReceived"]);
-					NSLog(@"resume info: %@", dictionary);
+										
+					DTLogDebug(@"--- BYTES ----> already received: %@", dictionary[@"NSURLSessionResumeBytesReceived"]);
+					DTLogDebug(@"resume info: %@", dictionary);
 					
 					return [[DTDownload alloc] initWithResumeData:resumeData atPath:downloadFilePath URL:URL];
 				}
@@ -249,20 +248,17 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 {
 	if ([NSURLSession class])
 	{
-		NSString *URLSessionIdentifier = [NSString stringWithFormat:@"com.cocoanetics.DTDownload.BackgroundSessionConfiguration-%f-%@", [[NSDate date] timeIntervalSince1970], _URL];
-		NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:URLSessionIdentifier];
-		
-		// TODO: use default session on iPad mini
-		//configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+		NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+		configuration.HTTPShouldUsePipelining = YES;
 
-		_backgroundSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+		_urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
 	}
 }
 
 
 - (void)dealloc
 {
-	//DTLogDebug(@"DEALLOC of DTDownload for URL: %@", _URL);
+	DTLogDebug(@"DEALLOC of DTDownload for URL: %@", _URL);
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
@@ -284,7 +280,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	if ([NSURLSession class])
 	{
-		_downloadTask = [_backgroundSession downloadTaskWithRequest:request];
+		_downloadTask = [_urlSession downloadTaskWithRequest:request];
 		
 		NSParameterAssert(_downloadTask);
 		
@@ -336,12 +332,12 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	{
 		if (_resumeData)
 		{
-			_downloadTask = [_backgroundSession downloadTaskWithResumeData:_resumeData];
+			_downloadTask = [_urlSession downloadTaskWithResumeData:_resumeData];
 		}
 		
 		if (!_downloadTask)
 		{
-			_downloadTask = [_backgroundSession downloadTaskWithRequest:request];
+			_downloadTask = [_urlSession downloadTaskWithRequest:request];
 		}
 		
 		NSParameterAssert(_downloadTask);
@@ -438,7 +434,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 				}
 				
 				_downloadTask = nil;
-				[_backgroundSession invalidateAndCancel];
+				[_urlSession invalidateAndCancel];
 			}];
 		}
 		else
@@ -446,7 +442,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			[_downloadTask cancel];
 			_downloadTask = nil;
 			
-			[_backgroundSession invalidateAndCancel];
+			[_urlSession invalidateAndCancel];
 		}
 	}
 	else
@@ -508,7 +504,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	if ([NSURLSession class])
 	{
-		[_backgroundSession invalidateAndCancel];
+		[_urlSession invalidateAndCancel];
 	}
 	
 	_urlConnection = nil;
@@ -722,7 +718,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	}
 }
 
-
 - (void)_didReceiveResponse:(NSURLResponse *)response
 {
 	if ([response isKindOfClass:[NSHTTPURLResponse class]])
@@ -847,6 +842,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	[self _completeWithError:error];
 }
+
 
 #pragma mark - NSURLConnection Delegate
 
@@ -1008,7 +1004,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 	[self _completeWithSuccess];
 	
-	[_backgroundSession invalidateAndCancel];
+	[_urlSession invalidateAndCancel];
 }
 
 
