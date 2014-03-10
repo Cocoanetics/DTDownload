@@ -454,7 +454,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:http.statusCode] forKey:NSLocalizedDescriptionKey];
 			
-			NSError *error = [NSError errorWithDomain:@"iCatalog" code:http.statusCode userInfo:userInfo];
+			NSError *error = [NSError errorWithDomain:@"DTDownload" code:http.statusCode userInfo:userInfo];
 			
 			[connection cancel];
 			
