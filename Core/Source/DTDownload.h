@@ -232,6 +232,4 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 @property (nonatomic, copy) DTDownloadCompletionHandler completionHandler;
 
 
-
-
 @end

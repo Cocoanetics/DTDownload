@@ -166,16 +166,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		_destinationBundleFilePath = path;
 		_resumeData = resumeData;
 		_URL = URL;
-				
-//		NSData *data = [NSPropertyListSerialization
-//							 dataFromPropertyList:resumeData
-//							 format:NSPropertyListBinaryFormat_v1_0
-//							 errorDescription:nil];
-//		
-//		NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//		
-//		NSLog(@"resumeinfo: %@", string);
-		
 		_isResume = YES;
 		
 		[self _createURLSession];
@@ -258,8 +248,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)dealloc
 {
-	DTLogDebug(@"DEALLOC of DTDownload for URL: %@", _URL);
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	if (![NSURLSession class])
@@ -381,11 +369,10 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)_stopWithResume:(BOOL)resume
 {
-	DTLogDebug(@"STOP");
 	
 	if (!_urlConnection && !_downloadTask)
 	{
-		DTLogDebug(@"DANGER!");
+		DTLogError(@"No NSURLConnection or NSURLSession active!");
 		return;
 	}
 
@@ -406,7 +393,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 				
 				if (receivedBytes > 0)
 				{
-					DTLogDebug(@"Resume Info with 0 bytes!!!");
+					DTLogError(@"Resume Info with 0 bytes!!!");
 				}
 				
 				if (_destinationBundleFilePath)
@@ -422,10 +409,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 					if (error)
 					{
 						DTLogError(@"Error when saving data of download for resuming later, %@", error);
-					}
-					else
-					{
-						DTLogDebug(@"Successfully saved resume info");
 					}
 				}
 				else
@@ -485,6 +468,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 {
 	return [NSString stringWithFormat:@"<%@ URL='%@'>", NSStringFromClass([self class]), self.URL];
 }
+
 
 #pragma mark - Internal Utilities
 
@@ -613,6 +597,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[[NSNotificationCenter defaultCenter] postNotificationName:DTDownloadDidFinishNotification object:self];
 }
 
+
 #pragma mark - Infos for resuming
 
 - (void)setInfoDictionary:(NSDictionary *)infoDictionary
@@ -660,6 +645,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	NSString *infoPath = [[self downloadBundlePath] stringByAppendingPathComponent:@"Info.plist"];
 	[[self infoDictionary] writeToFile:infoPath atomically:YES];
 }
+
 
 #pragma mark - Common download functions
 
@@ -948,6 +934,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[self _completeWithSuccess];
 }
 
+
 #pragma mark - NSURLSessionDelegate
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
@@ -955,8 +942,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	if (!_didReceiveResponse)
 	{
-		//DTLogDebug(@"Response received: %@", downloadTask.response);
-		
 		// use response only on first call
 		[self _didReceiveResponse:downloadTask.response];
 		_didReceiveResponse = YES;
@@ -965,11 +950,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	
 	_receivedBytes = bytesWritten;
 	_totalReceivedBytes = totalBytesWritten;
-	
-//	if (!_expectedContentLength && totalBytesExpectedToWrite)
-//	{
-		_expectedContentLength = totalBytesExpectedToWrite;
-//	}
+	_expectedContentLength = totalBytesExpectedToWrite;
 	
 	[self _sendProgress];
 }
@@ -992,8 +973,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		
 	if (!_didReceiveResponse)
 	{
-		//DTLogDebug(@"Response received: %@", downloadTask.response);
-		
 		// use response only on first call
 		[self _didReceiveResponse:downloadTask.response];
 		_didReceiveResponse = YES;
@@ -1011,9 +990,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
 	_downloadTask = nil;
-	
-	//[self closeDestinationFile];
-	
+		
 	if (error.code == -999)
 	{
 		// ignore this -> this error comes when a NSURLSessionDownloadTask is cancelled!? WTF?!
@@ -1093,7 +1070,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	_destinationFileHandle = nil;
 }
 
-#pragma mark Properties
+
+#pragma mark - Properties
 
 - (BOOL)isRunning
 {
