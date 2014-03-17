@@ -15,6 +15,8 @@ NSString *const DTDownloadDidFinishNotification = @"DTDownloadDidFinishNotificat
 NSString *const DTDownloadDidCancelNotification = @"DTDownloadDidCancelNotification";
 NSString *const DTDownloadProgressNotification = @"DTDownloadProgressNotification";
 
+NSString * const DTDownloadErrorDomain = @"DTDownload";
+
 static NSString *const DownloadEntryErrorCodeDictionaryKey = @"DownloadEntryErrorCodeDictionaryKey";
 static NSString *const DownloadEntryErrorDomainDictionaryKey = @"DownloadEntryErrorDomainDictionaryKey";
 static NSString *const DownloadEntryPath = @"DownloadEntryPath";
@@ -353,7 +355,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			
 			NSDictionary *userInfo = @{errorMessage : NSLocalizedDescriptionKey};
 			
-			NSError *error = [NSError errorWithDomain:@"DTDownloadError" code:1 userInfo:userInfo];
+			NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:1 userInfo:userInfo];
 			
 			[self _completeWithError:error];
 			
@@ -454,7 +456,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:http.statusCode] forKey:NSLocalizedDescriptionKey];
 			
-			NSError *error = [NSError errorWithDomain:@"iCatalog" code:http.statusCode userInfo:userInfo];
+			NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:http.statusCode userInfo:userInfo];
 			
 			[connection cancel];
 			
@@ -688,7 +690,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	if (!_destinationBundleFilePath) {
 		// should never happen because in didReceiveResponse the _destinationBundleFilePath is set
 		NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"Cannot store the downloaded data"};
-		NSError *error = [[NSError alloc] initWithDomain:@"DTDownload" code:100 userInfo:userInfo];
+		NSError *error = [[NSError alloc] initWithDomain:DTDownloadErrorDomain code:100 userInfo:userInfo];
 		[self _completeWithError:error];
 		return;
 	}

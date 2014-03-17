@@ -22,5 +22,6 @@
 @dynamic isLoading;
 @dynamic abortDownloadIfNotChanged;
 @dynamic entityTagIdentifier;
+@dynamic priority;
 
 @end

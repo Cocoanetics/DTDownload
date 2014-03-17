@@ -12,6 +12,8 @@ extern NSString * const DTDownloadDidFinishNotification;
 extern NSString * const DTDownloadDidCancelNotification;
 extern NSString * const DTDownloadProgressNotification;
 
+// constants
+extern NSString * const DTDownloadErrorDomain;
 
 @class DTDownload;
 
