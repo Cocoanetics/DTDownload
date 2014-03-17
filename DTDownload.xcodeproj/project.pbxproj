@@ -699,7 +699,7 @@
 		A719029F16A8029400C1EC52 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Drobnik KG";
 			};
 			buildConfigurationList = A71902A216A8029400C1EC52 /* Build configuration list for PBXProject "DTDownload" */;

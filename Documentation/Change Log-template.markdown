@@ -3,6 +3,12 @@ Change Log
 
 This is the history of version updates.
 
+**Version 1.1.0**
+
+FIXED: Error domain string
+ADDED: Download priority in DTDownloadQueue
+CHANGED: Updated DTFoundation to 1.6.2
+
 **Version 1.0.3**
 
 ADDED: Ability to set headers for requests
