@@ -283,7 +283,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 				if (priority < [cachedFile.priority unsignedIntegerValue])
 				{
 					// update priority only if it is requested higher
-					cachedFile.priority = [NSNumber numberWithUnsignedInt:priority];
+					cachedFile.priority = [NSNumber numberWithUnsignedLong:(unsigned long)priority];
 				}
 			}
 		}
@@ -297,7 +297,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			cachedFile.expirationDate = [NSDate distantFuture];
 			cachedFile.forceLoad = [NSNumber numberWithBool:YES];
 			cachedFile.isLoading = [NSNumber numberWithBool:NO];
-			cachedFile.priority = [NSNumber numberWithUnsignedInt:priority];
+			cachedFile.priority = [NSNumber numberWithUnsignedLong:(unsigned long)priority];
 		}
 		
 		cachedFile.lastAccessDate = [NSDate date];
