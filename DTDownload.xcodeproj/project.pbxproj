@@ -1083,7 +1083,7 @@
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				PRODUCT_NAME = DTDownload_iOS;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/iOS";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/DTFoundation/Core/Source ${SRCROOT}/Externals/DTFoundation/Core/Source/iOS $(inherited)";
 			};
 			name = Debug;
 		};
@@ -1096,7 +1096,7 @@
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				PRODUCT_NAME = DTDownload_iOS;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/iOS";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/DTFoundation/Core/Source ${SRCROOT}/Externals/DTFoundation/Core/Source/iOS $(inherited)";
 			};
 			name = Release;
 		};
@@ -1216,7 +1216,7 @@
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				PRODUCT_NAME = DTDownload_iOS;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/iOS";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/DTFoundation/Core/Source ${SRCROOT}/Externals/DTFoundation/Core/Source/iOS $(inherited)";
 			};
 			name = Coverage;
 		};
