@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0600"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A71903D216A8068B00C1EC52"
-               BuildableName = "libDTDownload (Mac).a"
+               BuildableName = "libDTDownload_Mac.a"
                BlueprintName = "DTDownload (Mac)"
                ReferencedContainer = "container:DTDownload.xcodeproj">
             </BuildableReference>
@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A71F5BB117FB0B7B00D5E42C"
-               BuildableName = "Unit Tests copy.octest"
+               BlueprintIdentifier = "A766636A1987A89A001944DA"
+               BuildableName = "DTDownload.xctest"
                BlueprintName = "Unit Tests (Mac)"
                ReferencedContainer = "container:DTDownload.xcodeproj">
             </BuildableReference>
@@ -49,6 +49,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A71903D216A8068B00C1EC52"
+            BuildableName = "libDTDownload_Mac.a"
+            BlueprintName = "DTDownload (Mac)"
+            ReferencedContainer = "container:DTDownload.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
