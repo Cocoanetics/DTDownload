@@ -654,7 +654,7 @@
 			name = "Unit Tests (iOS)";
 			productName = UnitTest;
 			productReference = A71903F416A808A700C1EC52 /* UnitTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		A71F5BB117FB0B7B00D5E42C /* Unit Tests (Mac) */ = {
 			isa = PBXNativeTarget;
@@ -672,7 +672,7 @@
 			name = "Unit Tests (Mac)";
 			productName = UnitTest;
 			productReference = A71F5BC417FB0B7B00D5E42C /* Unit Tests copy.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		A78445451802B10D00965447 /* ImageDownload */ = {
 			isa = PBXNativeTarget;
@@ -1077,26 +1077,28 @@
 		A71902B616A8029400C1EC52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				PRODUCT_NAME = DTDownload_iOS;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/DTFoundation/Core/Source ${SRCROOT}/Externals/DTFoundation/Core/Source/iOS $(inherited)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/** $(inherited)";
 			};
 			name = Debug;
 		};
 		A71902B716A8029400C1EC52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				PRODUCT_NAME = DTDownload_iOS;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/DTFoundation/Core/Source ${SRCROOT}/Externals/DTFoundation/Core/Source/iOS $(inherited)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/** $(inherited)";
 			};
 			name = Release;
 		};
@@ -1210,13 +1212,14 @@
 		A71F5BA917FB0AB800D5E42C /* Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				PRODUCT_NAME = DTDownload_iOS;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/DTFoundation/Core/Source ${SRCROOT}/Externals/DTFoundation/Core/Source/iOS $(inherited)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/Externals/** $(inherited)";
 			};
 			name = Coverage;
 		};
