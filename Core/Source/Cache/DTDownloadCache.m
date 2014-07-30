@@ -38,16 +38,16 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	// Core Data Stack
 	NSManagedObjectModel *_managedObjectModel;
 	NSPersistentStoreCoordinator *_persistentStoreCoordinator;
-    
-    NSManagedObjectContext *_writerContext;
-    NSManagedObjectContext *_workerContext;
+	
+	NSManagedObjectContext *_writerContext;
+	NSManagedObjectContext *_workerContext;
 	
 	// Internals
 	NSMutableSet *_activeDownloads;
 	
 	// memory cache for certain types, e.g. images
 	NSCache *_memoryCache;
-    NSCache *_entityCache;
+	NSCache *_entityCache;
 	
 	NSUInteger _maxNumberOfConcurrentDownloads;
 	NSUInteger _diskCapacity;
@@ -283,7 +283,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 				if (priority < [cachedFile.priority unsignedIntegerValue])
 				{
 					// update priority only if it is requested higher
-					cachedFile.priority = [NSNumber numberWithUnsignedInt:priority];
+					cachedFile.priority = [NSNumber numberWithUnsignedLong:(unsigned long)priority];
 				}
 			}
 		}
@@ -297,7 +297,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			cachedFile.expirationDate = [NSDate distantFuture];
 			cachedFile.forceLoad = [NSNumber numberWithBool:YES];
 			cachedFile.isLoading = [NSNumber numberWithBool:NO];
-			cachedFile.priority = [NSNumber numberWithUnsignedInt:priority];
+			cachedFile.priority = [NSNumber numberWithUnsignedLong:(unsigned long)priority];
 		}
 		
 		cachedFile.lastAccessDate = [NSDate date];

@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface DTDownloadTest : SenTestCase
+@interface DTDownloadTest : XCTestCase
 
 - (void)testDownloadWithBundlePath1;
 - (void)testDownloadWithBundlePath2;
