@@ -6,8 +6,10 @@ This is the history of version updates.
 **Version 1.1.1**
 
 - FIXED: arm64 Warnings
+- FIXED: DTDownload.h could not found building via Cocoapods. Moved into new Core subspec
+- FIXED: [DTDownloadCache] Error on __weak when building for platform not supporting zeroing weak refs
 - CHANGED: Migrated Unit Tests to xctest
-- CHaNGED: Updated DTFoundation to require 1.7.x
+- CHANGED: Updated DTFoundation to require 1.7.x
 
 **Version 1.1.0**
 
