@@ -15,6 +15,7 @@
 
 #import <ImageIO/CGImageSource.h>
 #import "NSString+DTFormatNumbers.h"
+#import "DTWeakSupport.h"
 
 #if TARGET_OS_IPHONE
 #import "DTAsyncFileDeleter.h"
@@ -167,7 +168,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			NSString *cachedETag = cachedFile.entityTagIdentifier;
 			NSDate *lastModifiedDate = cachedFile.lastModifiedDate;
 			
-            __weak DTDownload *weakDownload = download;
+			DT_WEAK_VARIABLE DTDownload *weakDownload = download;
             
 			download.responseHandler = ^(NSDictionary *headers, BOOL *shouldCancel) {
 				if (cachedETag)
