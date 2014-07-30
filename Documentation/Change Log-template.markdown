@@ -3,6 +3,12 @@ Change Log
 
 This is the history of version updates.
 
+**Version 1.1.1**
+
+- FIXED: arm64 Warnings
+- CHANGED: Migrated Unit Tests to xctest
+- CHaNGED: Updated DTFoundation to require 1.7.x
+
 **Version 1.1.0**
 
 - FIXED: Error domain string
