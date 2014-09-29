@@ -118,7 +118,7 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  NO -> load first added URLs first
  YES -> load last added URLs first
  */
-@property (nonatomic, assign) BOOL loadLastAddedFilesFirst;
+@property (nonatomic, assign) BOOL loadLastAddedURLFirst;
 
 @end
 
