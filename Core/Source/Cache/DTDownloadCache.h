@@ -112,6 +112,14 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  */
 @property (nonatomic, assign) NSUInteger diskCapacity;
 
+/**
+ Settings which URLs should be loaded first
+ 
+ NO -> load first added URLs first
+ YES -> load last added URLs first
+ */
+@property (nonatomic, assign) BOOL loadLastAddedFilesFirst;
+
 @end
 
 
