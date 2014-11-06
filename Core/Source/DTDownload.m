@@ -104,8 +104,18 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 }
 
 - (id)initWithURL:(NSURL *)URL withDestinationFile:(NSString *)destinationFile {
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	BOOL isDirectory = NO;
+	if ([fileManager fileExistsAtPath:destinationFile isDirectory:&isDirectory]) {
+		if (isDirectory) {
+			// given destination file is a directory so tread it like a directory
+			return [self initWithURL:URL withDestinationPath:destinationFile];
+		}
+	}
+
 	self = [self initWithURL:URL withDestinationPath:[destinationFile stringByDeletingLastPathComponent]];
 	_destinationFileName = [destinationFile lastPathComponent];
+	
 	return self;
 }
 
@@ -521,7 +531,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		// if _destinationBundleFilePath is not nil this means that it is a resumable download
 		if (!_destinationBundleFilePath)
 		{
-			_destinationBundleFilePath = [self createBundleFilePathForFilename:[self filenameFromHeader:http.allHeaderFields]];
+			NSString *fileNameForHeader = [self filenameFromHeader:http.allHeaderFields];
+			if (!fileNameForHeader) {
+				fileNameForHeader = @"unknown";
+			}
+			_destinationBundleFilePath = [self createBundleFilePathForFilename:fileNameForHeader];
 		}
 		
 		_isResume = NO;
@@ -607,8 +621,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (NSString *)filenameFromHeader:(NSDictionary *)headerDictionary
 {
-	NSString *contentDisposition = [headerDictionary objectForKey:@"Content-disposition"];
-	
+	NSString *contentDisposition = [headerDictionary objectForKey:@"Content-Disposition"];
+
 	NSRange range = [contentDisposition rangeOfString:@"filename=\""];
 	if (range.location != NSNotFound)
 	{

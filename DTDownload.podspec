@@ -3,7 +3,7 @@ Pod::Spec.new do |spec|
   spec.version      = '1.1.1'
   spec.summary      = "File Downloading, Caching and Queueing."
   spec.homepage     = "https://github.com/Cocoanetics/DTDownload"
-  spec.author       = { "Oliver Drobnik" => "oliver@drobnik.com" }
+  spec.author       = { "Oliver Drobnik" => "oliver@cocoanetics.com", "René Pirringer" => "rene@cocoanetics.com }
   spec.source       = { :git => "https://github.com/Cocoanetics/DTDownload.git", :tag => spec.version.to_s  }
   spec.ios.deployment_target = '5.0'
   spec.osx.deployment_target = '10.6'
