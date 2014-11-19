@@ -185,6 +185,34 @@
 			remoteGlobalIDString = A70B4CE61486637E00873A4A;
 			remoteInfo = "Static Library";
 		};
+		F827DC791A1CA39E00341E70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7AC21AF196417830009E1B9;
+			remoteInfo = "DTAnimatedGIF (iOS)";
+		};
+		F827DC7B1A1CA39E00341E70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F88FF6801920A83300120808;
+			remoteInfo = "DTProgressHUD (iOS)";
+		};
+		F827DC7D1A1CA39E00341E70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A78381C31963F8D700AF09D3;
+			remoteInfo = "DTAnimatedGIF Demo";
+		};
+		F827DC7F1A1CA39E00341E70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F88FF6A51920AAB600120808;
+			remoteInfo = "DTProgressHUD Demo";
+		};
 		FAB87D08178BE59D00D0DCDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
@@ -515,23 +543,27 @@
 			children = (
 				A7724F0816A954BB005391C2 /* DTFoundation.framework */,
 				A7724F0A16A954BB005391C2 /* libDTFoundation.a */,
-				A7724F0C16A954BB005391C2 /* UnitTests.octest */,
 				A7724F0E16A954BB005391C2 /* libDTFoundation_Mac.a */,
+				F827DC7A1A1CA39E00341E70 /* libDTAnimatedGIF.a */,
 				A71F5BA017FB0A8E00D5E42C /* libDTAWS.a */,
 				A71F5BA217FB0A8E00D5E42C /* libDTASN1.a */,
 				A7724F1016A954BB005391C2 /* libDTHTMLParser_iOS.a */,
 				A7724F1216A954BB005391C2 /* libDTHTMLParser_Mac.a */,
-				A7724F1416A954BB005391C2 /* libDTZipArchive_iOS.a */,
-				FAB87D09178BE59D00D0DCDC /* libDTZipArchive_Mac.a */,
-				A7724F1A16A954BB005391C2 /* libDTUTI_iOS.a */,
-				FAB87D0B178BE59D00D0DCDC /* libDTUTI_Mac.a */,
+				F827DC7C1A1CA39E00341E70 /* libDTProgressHUD_iOS.a */,
 				FABA5EE2178EDB4300D13C5A /* libDTReachability_iOS.a */,
 				FABA5EE4178EDB4300D13C5A /* libDTReachability_Mac.a */,
 				FABA5EE6178EDB4300D13C5A /* libDTSQLite_iOS.a */,
 				FABA5EE8178EDB4300D13C5A /* libDTSQLite_Mac.a */,
-				FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */,
+				A7724F1A16A954BB005391C2 /* libDTUTI_iOS.a */,
+				FAB87D0B178BE59D00D0DCDC /* libDTUTI_Mac.a */,
+				A7724F1416A954BB005391C2 /* libDTZipArchive_iOS.a */,
+				FAB87D09178BE59D00D0DCDC /* libDTZipArchive_Mac.a */,
+				F827DC7E1A1CA39E00341E70 /* DTAnimatedGIF Demo.app */,
+				F827DC801A1CA39E00341E70 /* DTProgressHUD Demo.app */,
 				FABA5EEC178EDB4300D13C5A /* DTReachability Demo.app */,
+				FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */,
 				A71F5BA417FB0A8E00D5E42C /* DTZipArchive.app */,
+				A7724F0C16A954BB005391C2 /* Unit Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -693,7 +725,7 @@
 		A719029F16A8029400C1EC52 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Drobnik KG";
 				TargetAttributes = {
 					A766634E1987A65A001944DA = {
@@ -768,10 +800,10 @@
 			remoteRef = A7724F0916A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A7724F0C16A954BB005391C2 /* UnitTests.octest */ = {
+		A7724F0C16A954BB005391C2 /* Unit Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = UnitTests.octest;
+			path = "Unit Tests.xctest";
 			remoteRef = A7724F0B16A954BB005391C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -808,6 +840,34 @@
 			fileType = archive.ar;
 			path = libDTUTI_iOS.a;
 			remoteRef = A7724F1916A954BB005391C2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F827DC7A1A1CA39E00341E70 /* libDTAnimatedGIF.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTAnimatedGIF.a;
+			remoteRef = F827DC791A1CA39E00341E70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F827DC7C1A1CA39E00341E70 /* libDTProgressHUD_iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDTProgressHUD_iOS.a;
+			remoteRef = F827DC7B1A1CA39E00341E70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F827DC7E1A1CA39E00341E70 /* DTAnimatedGIF Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "DTAnimatedGIF Demo.app";
+			remoteRef = F827DC7D1A1CA39E00341E70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F827DC801A1CA39E00341E70 /* DTProgressHUD Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "DTProgressHUD Demo.app";
+			remoteRef = F827DC7F1A1CA39E00341E70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FAB87D09178BE59D00D0DCDC /* libDTZipArchive_Mac.a */ = {
@@ -1110,6 +1170,7 @@
 		A71903E116A8068B00C1EC52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -1123,6 +1184,7 @@
 		A71903E216A8068B00C1EC52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1183,6 +1245,7 @@
 		A71F5BAA17FB0AB800D5E42C /* Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -1291,6 +1354,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
@@ -1322,6 +1386,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1351,6 +1416,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
