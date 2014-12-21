@@ -187,8 +187,6 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 
 /**
  Starts or Resumes a download for a given URL.
- 
- @returns An initialized download object
  */
 - (void)start;
 
