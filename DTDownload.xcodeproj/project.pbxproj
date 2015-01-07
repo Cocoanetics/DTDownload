@@ -87,6 +87,27 @@
 			remoteGlobalIDString = FAF37A2017AFDD93009AC27C;
 			remoteInfo = DTZipArchiveDemo;
 		};
+		A724C3841A5D3C10007490BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAC284E619B84B5F0010C385;
+			remoteInfo = "DTActionSheet Demo";
+		};
+		A724C3861A5D3C10007490BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7EA07B81A2B2F6A00B61CCE;
+			remoteInfo = "DTFoundation (iOS)";
+		};
+		A724C3881A5D3C10007490BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A7EA07391A2B215200B61CCE;
+			remoteInfo = "DTFoundation (OSX)";
+		};
 		A759C96C1987AA560016B462 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A719029F16A8029400C1EC52 /* Project object */;
@@ -114,13 +135,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = A71903D216A8068B00C1EC52;
 			remoteInfo = "DTDownload (Mac)";
-		};
-		A7724F0716A954BB005391C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7BAD10E1483F934000E2B6A;
-			remoteInfo = "Static Framework";
 		};
 		A7724F0916A954BB005391C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -541,7 +555,6 @@
 		A7724EFA16A954BB005391C2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A7724F0816A954BB005391C2 /* DTFoundation.framework */,
 				A7724F0A16A954BB005391C2 /* libDTFoundation.a */,
 				A7724F0E16A954BB005391C2 /* libDTFoundation_Mac.a */,
 				F827DC7A1A1CA39E00341E70 /* libDTAnimatedGIF.a */,
@@ -563,7 +576,10 @@
 				FABA5EEC178EDB4300D13C5A /* DTReachability Demo.app */,
 				FABA5EEA178EDB4300D13C5A /* DTSidePanels Demo.app */,
 				A71F5BA417FB0A8E00D5E42C /* DTZipArchive.app */,
+				A724C3851A5D3C10007490BD /* DTActionSheet Demo.app */,
 				A7724F0C16A954BB005391C2 /* Unit Tests.xctest */,
+				A724C3871A5D3C10007490BD /* DTFoundation.framework */,
+				A724C3891A5D3C10007490BD /* DTFoundation.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -786,11 +802,25 @@
 			remoteRef = A71F5BA317FB0A8E00D5E42C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A7724F0816A954BB005391C2 /* DTFoundation.framework */ = {
+		A724C3851A5D3C10007490BD /* DTActionSheet Demo.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
+			fileType = wrapper.application;
+			path = "DTActionSheet Demo.app";
+			remoteRef = A724C3841A5D3C10007490BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A724C3871A5D3C10007490BD /* DTFoundation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
 			path = DTFoundation.framework;
-			remoteRef = A7724F0716A954BB005391C2 /* PBXContainerItemProxy */;
+			remoteRef = A724C3861A5D3C10007490BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A724C3891A5D3C10007490BD /* DTFoundation.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DTFoundation.framework;
+			remoteRef = A724C3881A5D3C10007490BD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A7724F0A16A954BB005391C2 /* libDTFoundation.a */ = {
@@ -1145,6 +1175,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -1158,6 +1192,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -1233,6 +1271,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
