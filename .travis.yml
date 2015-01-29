@@ -5,7 +5,7 @@ before_install:
 # - brew update
 # - brew upgrade xctool
 
-before_script:
+install:
   - sudo easy_install cpp-coveralls
 
 script:

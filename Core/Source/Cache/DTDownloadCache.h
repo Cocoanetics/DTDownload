@@ -87,6 +87,7 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
 /**
  @param URL The URL of the file
  @param option A loading option to specify wheter the file should be loaded if it is already cached.
+ @param priority priority
  @param completion The block to be executed when the file data is available.
  @returns The cached data or `nil` if none is cached.
  */
