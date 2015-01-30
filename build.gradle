@@ -20,7 +20,8 @@ xcodebuild {
 
 }
 
-// ---------- FTP Publish ----------
+
+// ---------- FTP PUBLISH ----------
 
 repositories {
   mavenCentral()
@@ -89,7 +90,7 @@ task documentationUpload << {
 }
 
 
-// ---------- Unit Tests ----------
+// ---------- UNIT TESTS ----------
 
 task continuous(dependsOn: 'test')
 
