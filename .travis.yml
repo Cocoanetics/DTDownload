@@ -1,0 +1,16 @@
+---
+language: objective-c
+
+before_install:
+# - brew update
+# - brew upgrade xctool
+
+install:
+  - sudo easy_install cpp-coveralls
+
+script:
+  - xctool -project DTDownload.xcodeproj -scheme "DTDownload (iOS)" build test -sdk iphonesimulator -arch i386 ONLY_ACTIVE_ARCH=NO -configuration Coverage
+  - xctool -project DTDownload.xcodeproj -scheme "DTDownload (Mac)" build test ONLY_ACTIVE_ARCH=NO -arch x86_64 -configuration Coverage
+
+after_success:
+  - ./coveralls.rb --extension m --exclude-folder Demo --exclude-folder Test --exclude-folder Externals

@@ -15,6 +15,8 @@ NSString *const DTDownloadDidFinishNotification = @"DTDownloadDidFinishNotificat
 NSString *const DTDownloadDidCancelNotification = @"DTDownloadDidCancelNotification";
 NSString *const DTDownloadProgressNotification = @"DTDownloadProgressNotification";
 
+NSString * const DTDownloadErrorDomain = @"DTDownload";
+
 static NSString *const DownloadEntryErrorCodeDictionaryKey = @"DownloadEntryErrorCodeDictionaryKey";
 static NSString *const DownloadEntryErrorDomainDictionaryKey = @"DownloadEntryErrorDomainDictionaryKey";
 static NSString *const DownloadEntryPath = @"DownloadEntryPath";
@@ -205,6 +207,11 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		return;
 	}
 	
+	[_additionalHTTPHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		
+		[request setValue:obj forHTTPHeaderField:key];
+	}];
+	
 	if (_resumeFileOffset)
 	{
 		[request setValue:[NSString stringWithFormat:@"bytes=%lld-", _resumeFileOffset] forHTTPHeaderField:@"Range"];
@@ -218,8 +225,8 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	[_urlConnection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 	
 	// start urlConnection on the main queue, because when download lots of small file, we had a crash when this is done on a background thread
-	dispatch_async(dispatch_get_main_queue(), ^
-						{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		
 							[_urlConnection start];
 						});
 	
@@ -327,10 +334,34 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 			return;
 		}
 		
-		if (![fileManager removeItemAtPath:[_destinationBundleFilePath stringByDeletingLastPathComponent] error:&error]) {
+		if (![fileManager removeItemAtPath:[_destinationBundleFilePath stringByDeletingLastPathComponent] error:&error])
+		{
 			NSLog(@"Cannot remove item from %@, %@ ", [_destinationBundleFilePath stringByDeletingLastPathComponent], [error localizedDescription]);
-			
 		}
+		
+		NSData *data = [NSData dataWithContentsOfFile:targetPath options:NSDataReadingMappedIfSafe error:&error];
+		
+		if (error)
+		{
+			NSLog(@"Error occured when reading file from path: %@", targetPath);
+		}
+		
+		// Error: finished file size differs from header size -> so throw error
+		if (_expectedContentLength>0 && [data length] != _expectedContentLength)
+		{
+			NSString *errorMessage = [NSString stringWithFormat:@"Error: finished file size %d differs from header size %d", (int)[data length], (int)_expectedContentLength];
+			
+			NSLog(errorMessage, nil);
+			
+			NSDictionary *userInfo = @{errorMessage : NSLocalizedDescriptionKey};
+			
+			NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:1 userInfo:userInfo];
+			
+			[self _completeWithError:error];
+			
+			return;
+		}
+		
 		
 		// notify delegate
 		if ([_delegate respondsToSelector:@selector(download:didFinishWithFile:)])
@@ -425,7 +456,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:http.statusCode] forKey:NSLocalizedDescriptionKey];
 			
-			NSError *error = [NSError errorWithDomain:@"iCatalog" code:http.statusCode userInfo:userInfo];
+			NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:http.statusCode userInfo:userInfo];
 			
 			[connection cancel];
 			
@@ -659,7 +690,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	if (!_destinationBundleFilePath) {
 		// should never happen because in didReceiveResponse the _destinationBundleFilePath is set
 		NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"Cannot store the downloaded data"};
-		NSError *error = [[NSError alloc] initWithDomain:@"DTDownload" code:100 userInfo:userInfo];
+		NSError *error = [[NSError alloc] initWithDomain:DTDownloadErrorDomain code:100 userInfo:userInfo];
 		[self _completeWithError:error];
 		return;
 	}
@@ -712,7 +743,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	return [_destinationBundleFilePath stringByDeletingLastPathComponent];
 }
 
-
 @synthesize URL = _URL;
 @synthesize downloadEntityTag = _downloadEntityTag;
 @synthesize lastPacketTimestamp = _lastPacketTimestamp;
@@ -723,5 +753,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 @synthesize context = _context;
 @synthesize responseHandler = _responseHandler;
 @synthesize completionHandler = _completionHandler;
+@synthesize additionalHTTPHeaders = _additionalHTTPHeaders;
 
 @end

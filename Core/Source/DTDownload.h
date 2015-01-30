@@ -12,6 +12,8 @@ extern NSString * const DTDownloadDidFinishNotification;
 extern NSString * const DTDownloadDidCancelNotification;
 extern NSString * const DTDownloadProgressNotification;
 
+// constants
+extern NSString * const DTDownloadErrorDomain;
 
 @class DTDownload;
 
@@ -120,6 +122,14 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 @property (nonatomic, strong) id context;
 
 /**
+ Using for HTTP headers parameters. For example, basic http authentification
+ 
+ @see additionalHTTPHeaders
+ */
+
+@property (nonatomic, copy) NSDictionary *additionalHTTPHeaders;
+
+/**
  Returns the receiver’s delegate.
  
  @see delegate
@@ -177,8 +187,6 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 
 /**
  Starts or Resumes a download for a given URL.
- 
- @returns An initialized download object
  */
 - (void)start;
 

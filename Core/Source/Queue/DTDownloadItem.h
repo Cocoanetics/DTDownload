@@ -19,7 +19,7 @@
 /**
  The target file path the item is to be downloaded to
  */
-@property (nonatomic, strong) NSString *destinationFile;
+@property (nonatomic, copy) NSString *destinationFile;
 
 
 /**

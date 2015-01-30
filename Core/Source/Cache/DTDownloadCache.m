@@ -15,6 +15,7 @@
 
 #import <ImageIO/CGImageSource.h>
 #import "NSString+DTFormatNumbers.h"
+#import "DTWeakSupport.h"
 
 #if TARGET_OS_IPHONE
 #import "DTAsyncFileDeleter.h"
@@ -38,16 +39,16 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	// Core Data Stack
 	NSManagedObjectModel *_managedObjectModel;
 	NSPersistentStoreCoordinator *_persistentStoreCoordinator;
-    
-    NSManagedObjectContext *_writerContext;
-    NSManagedObjectContext *_workerContext;
+	
+	NSManagedObjectContext *_writerContext;
+	NSManagedObjectContext *_workerContext;
 	
 	// Internals
 	NSMutableSet *_activeDownloads;
 	
 	// memory cache for certain types, e.g. images
 	NSCache *_memoryCache;
-    NSCache *_entityCache;
+	NSCache *_entityCache;
 	
 	NSUInteger _maxNumberOfConcurrentDownloads;
 	NSUInteger _diskCapacity;
@@ -167,7 +168,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			NSString *cachedETag = cachedFile.entityTagIdentifier;
 			NSDate *lastModifiedDate = cachedFile.lastModifiedDate;
 			
-            __weak DTDownload *weakDownload = download;
+			DT_WEAK_VARIABLE DTDownload *weakDownload = download;
             
 			download.responseHandler = ^(NSDictionary *headers, BOOL *shouldCancel) {
 				if (cachedETag)
@@ -251,7 +252,12 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 
 #pragma mark External Methods
 
-- (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option completion:(DTDownloadCacheDataCompletionBlock)completion;
+- (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option completion:(DTDownloadCacheDataCompletionBlock)completion
+{
+	return [self cachedDataForURL:URL option:option priority:DTDownloadCachePriorityNormal completion:completion];
+}
+
+- (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority completion:(DTDownloadCacheDataCompletionBlock)completion
 {
     NSAssert(![URL isFileURL], @"URL may not be a file URL in DTDownloadCache");
     
@@ -274,6 +280,12 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 				cachedFile.fileData = nil;
 				cachedFile.entityTagIdentifier = nil;
 				cachedFile.lastModifiedDate = nil;
+				
+				if (priority < [cachedFile.priority unsignedIntegerValue])
+				{
+					// update priority only if it is requested higher
+					cachedFile.priority = [NSNumber numberWithUnsignedLong:(unsigned long)priority];
+				}
 			}
 		}
 		else
@@ -286,6 +298,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			cachedFile.expirationDate = [NSDate distantFuture];
 			cachedFile.forceLoad = [NSNumber numberWithBool:YES];
 			cachedFile.isLoading = [NSNumber numberWithBool:NO];
+			cachedFile.priority = [NSNumber numberWithUnsignedLong:(unsigned long)priority];
 		}
 		
 		cachedFile.lastAccessDate = [NSDate date];
@@ -314,6 +327,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			case DTDownloadCacheOptionReturnCacheAndLoadAlways:
 			{
 				cachedFile.forceLoad = [NSNumber numberWithBool:YES];
+				cachedFile.abortDownloadIfNotChanged = @(NO);
 				
 				break;
 			}
@@ -349,6 +363,11 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 }
 
 - (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option
+{
+	return [self cachedDataForURL:URL option:option priority:DTDownloadCachePriorityNormal];
+}
+
+- (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority
 {
 	return [self cachedDataForURL:URL option:option completion:NULL];
 }
@@ -392,12 +411,14 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	NSURL *URL = download.URL;
 	
     [_workerContext performBlock:^{
-		 NSData *data = [NSData dataWithContentsOfMappedFile:path];
 		 
-		 if (download.expectedContentLength>0 && [data length] != download.expectedContentLength)
-		 {
-			 NSLog(@"Warning: finished file size %d differs from header size %d", (int)[data length], (int)download.expectedContentLength);
-		 }
+		 NSError *error = nil;
+		NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:&error];
+		 
+		if (error)
+		{
+			NSLog(@"Error occured when reading file from path: %@", path);
+		}
 		 
 		 // only add cached file if we actually got data in it
 		if (data)
@@ -542,6 +563,12 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	[entityTagIdentifierAttribute setOptional:YES];
 	[properties addObject:entityTagIdentifierAttribute];
 	
+	NSAttributeDescription *priorityAttribute = [[NSAttributeDescription alloc] init];
+	[priorityAttribute setName:@"priority"];
+	[priorityAttribute setAttributeType:NSInteger32AttributeType];
+	[priorityAttribute setOptional:YES];
+	[properties addObject:priorityAttribute];
+	
 	// add attributes to entity
 	[entity setProperties:properties];
 	
@@ -633,8 +660,12 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 {
 	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
 	
-	NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"lastAccessDate" ascending:NO];
-	request.sortDescriptors = [NSArray arrayWithObject:sort];
+	// load first added URLs first or last added URLs first -> depends on setting
+	NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"lastAccessDate" ascending:!_loadLastAddedURLFirst];
+	
+	NSSortDescriptor *prioritySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES];
+	
+	request.sortDescriptors = [NSArray arrayWithObjects:prioritySortDescriptor, sort, nil];
 	
 	request.predicate = [NSPredicate predicateWithFormat:@"forceLoad == YES and isLoading == NO"];
 	request.fetchLimit = _maxNumberOfConcurrentDownloads;
@@ -932,14 +963,20 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option completion:(DTDownloadCacheImageCompletionBlock)completion
 {
+	return [self cachedImageForURL:URL option:option priority:DTDownloadCachePriorityNormal completion:completion];
+}
+
+- (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority completion:(DTDownloadCacheImageCompletionBlock)completion
+{
+	
 	// try memory cache first
 	UIImage *cachedImage = [_memoryCache objectForKey:URL];
 	
-	if (cachedImage)
+	if (cachedImage && !DTDownloadCacheOptionReturnCacheAndLoadAlways)
 	{
 		return cachedImage;
 	}
-	
+
 	// create a special wrapper completion handler
 	DTDownloadCacheDataCompletionBlock internalBlock = NULL;
 	
@@ -969,7 +1006,6 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 			completion(URL, cachedImage, error);
 		};
 	}
-	
 	
 	// try file cache
 	NSData *data = [self cachedDataForURL:URL option:option completion:internalBlock];
@@ -1004,6 +1040,11 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 }
 
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option
+{
+	return [self cachedImageForURL:URL option:option priority:DTDownloadCachePriorityNormal];
+}
+
+- (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority
 {
 	return [self cachedImageForURL:URL option:option completion:NULL];
 }
