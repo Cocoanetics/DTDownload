@@ -3,6 +3,14 @@ Change Log
 
 This is the history of version updates.
 
+
+**Version 1.1.2**
+
+ADDED - Support for downloading first added URLs first or last added URLs first
+READDED - armv7s to lib building
+CHANGED - Updated DTFoundation to require 1.7.4
+UPDATED - Changed the way appledoc is built
+
 **Version 1.1.1**
 
 - FIXED: arm64 Warnings
@@ -32,4 +40,3 @@ This is the history of version updates.
 **Version 1.0.1**
 
 - FIXED: Downloads would be corrupted if requesting partial file from server that didn't support that
-
