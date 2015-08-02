@@ -8,17 +8,18 @@
 
 #import "DTDownloadCache.h"
 
-#import "NSString+DTPaths.h"
 #import "DTCachedFile.h"
 #import "DTDownload.h"
-#import "NSString+DTUtilities.h"
 
 #import <ImageIO/CGImageSource.h>
-#import "NSString+DTFormatNumbers.h"
-#import "DTWeakSupport.h"
+
+#import <DTFoundation/NSString+DTUtilities.h>
+#import <DTFoundation/NSString+DTPaths.h>
+#import <DTFoundation/NSString+DTFormatNumbers.h>
+#import <DTFoundation/DTWeakSupport.h>
 
 #if TARGET_OS_IPHONE
-#import "DTAsyncFileDeleter.h"
+#import <DTFoundation/DTAsyncFileDeleter.h>
 #endif
 
 NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFile";

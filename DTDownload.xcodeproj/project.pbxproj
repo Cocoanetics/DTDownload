@@ -25,6 +25,12 @@
 		A71902C616A802FF00C1EC52 /* DTDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902BF16A802FF00C1EC52 /* DTDownload.m */; };
 		A71903E316A8069100C1EC52 /* DTDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902BF16A802FF00C1EC52 /* DTDownload.m */; };
 		A71F5B8B17FB0A8E00D5E42C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71F5B8A17FB0A8E00D5E42C /* AppKit.framework */; };
+		A749883A1B6EA7BB00A66234 /* DTDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2408183545D600F54F02 /* DTDownloadCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A749883B1B6EA7BB00A66234 /* DTCachedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C24131835460500F54F02 /* DTCachedFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A749883C1B6EA7BB00A66234 /* DTDownloadItem.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2403183545D600F54F02 /* DTDownloadItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A749883D1B6EA7BB00A66234 /* DTDownloadQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2405183545D600F54F02 /* DTDownloadQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A749883E1B6EA7BB00A66234 /* DTDownload.h in Headers */ = {isa = PBXBuildFile; fileRef = A71902BE16A802FF00C1EC52 /* DTDownload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A749883F1B6EA7BE00A66234 /* DTDownload.h in Headers */ = {isa = PBXBuildFile; fileRef = A71902BE16A802FF00C1EC52 /* DTDownload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A76663511987A65A001944DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902AA16A8029400C1EC52 /* Foundation.framework */; };
 		A76663521987A65A001944DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABA5EAC178ED6BE00D13C5A /* UIKit.framework */; };
 		A76663621987A662001944DA /* DTDownloadTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A71903E816A8086400C1EC52 /* DTDownloadTest.m */; };
@@ -37,16 +43,16 @@
 		A766637E1987A8AB001944DA /* Test1.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040716A808E600C1EC52 /* Test1.txt.download */; };
 		A766637F1987A8AB001944DA /* Test2.txt.download in Resources */ = {isa = PBXBuildFile; fileRef = A719040816A808E600C1EC52 /* Test2.txt.download */; };
 		A76663821987A8F6001944DA /* libDTDownload_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71903D316A8068B00C1EC52 /* libDTDownload_Mac.a */; };
-		A76C240A183545D600F54F02 /* DTDownloadItem.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2403183545D600F54F02 /* DTDownloadItem.h */; };
+		A76C240A183545D600F54F02 /* DTDownloadItem.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2403183545D600F54F02 /* DTDownloadItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A76C240B183545D600F54F02 /* DTDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C2404183545D600F54F02 /* DTDownloadItem.m */; };
 		A76C240C183545D600F54F02 /* DTDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C2404183545D600F54F02 /* DTDownloadItem.m */; };
-		A76C240D183545D600F54F02 /* DTDownloadQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2405183545D600F54F02 /* DTDownloadQueue.h */; };
+		A76C240D183545D600F54F02 /* DTDownloadQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2405183545D600F54F02 /* DTDownloadQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A76C240E183545D600F54F02 /* DTDownloadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C2406183545D600F54F02 /* DTDownloadQueue.m */; };
 		A76C240F183545D600F54F02 /* DTDownloadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C2406183545D600F54F02 /* DTDownloadQueue.m */; };
-		A76C2410183545D600F54F02 /* DTDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2408183545D600F54F02 /* DTDownloadCache.h */; };
+		A76C2410183545D600F54F02 /* DTDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C2408183545D600F54F02 /* DTDownloadCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A76C2411183545D600F54F02 /* DTDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C2409183545D600F54F02 /* DTDownloadCache.m */; };
 		A76C2412183545D600F54F02 /* DTDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C2409183545D600F54F02 /* DTDownloadCache.m */; };
-		A76C24151835460500F54F02 /* DTCachedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C24131835460500F54F02 /* DTCachedFile.h */; };
+		A76C24151835460500F54F02 /* DTCachedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C24131835460500F54F02 /* DTCachedFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A76C24161835460500F54F02 /* DTCachedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C24141835460500F54F02 /* DTCachedFile.m */; };
 		A76C24171835460500F54F02 /* DTCachedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A76C24141835460500F54F02 /* DTCachedFile.m */; };
 		A78445471802B10D00965447 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902AA16A8029400C1EC52 /* Foundation.framework */; };
@@ -284,18 +290,6 @@
 			remoteInfo = "DTReachability Demo";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		A71902A516A8029400C1EC52 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A71902A716A8029400C1EC52 /* libDTDownload_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDTDownload_iOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -638,6 +632,19 @@
 				A76C2410183545D600F54F02 /* DTDownloadCache.h in Headers */,
 				A76C240D183545D600F54F02 /* DTDownloadQueue.h in Headers */,
 				A76C240A183545D600F54F02 /* DTDownloadItem.h in Headers */,
+				A749883F1B6EA7BE00A66234 /* DTDownload.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A74988391B6EA7A700A66234 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A749883D1B6EA7BB00A66234 /* DTDownloadQueue.h in Headers */,
+				A749883B1B6EA7BB00A66234 /* DTCachedFile.h in Headers */,
+				A749883C1B6EA7BB00A66234 /* DTDownloadItem.h in Headers */,
+				A749883A1B6EA7BB00A66234 /* DTDownloadCache.h in Headers */,
+				A749883E1B6EA7BB00A66234 /* DTDownload.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,7 +657,7 @@
 			buildPhases = (
 				A71902A316A8029400C1EC52 /* Sources */,
 				A71902A416A8029400C1EC52 /* Frameworks */,
-				A71902A516A8029400C1EC52 /* CopyFiles */,
+				A74988391B6EA7A700A66234 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -741,7 +748,7 @@
 		A719029F16A8029400C1EC52 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Drobnik KG";
 				TargetAttributes = {
 					A766634E1987A65A001944DA = {
@@ -1175,10 +1182,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -1192,10 +1195,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
@@ -1271,10 +1270,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					armv7s,
-				);
 				DSTROOT = /tmp/DTDownload.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
