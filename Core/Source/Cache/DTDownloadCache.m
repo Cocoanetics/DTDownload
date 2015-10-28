@@ -933,11 +933,17 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 
 - (void)setMaxNumberOfConcurrentDownloads:(NSUInteger)maxNumberOfConcurrentDownloads
 {
-	if (_maxNumberOfConcurrentDownloads != maxNumberOfConcurrentDownloads)
-	{
-		NSAssert(maxNumberOfConcurrentDownloads>0, @"maximum number of concurrent downloads cannot be zero");
-		_maxNumberOfConcurrentDownloads = maxNumberOfConcurrentDownloads;
-	}
+    if (_maxNumberOfConcurrentDownloads != maxNumberOfConcurrentDownloads)
+    {
+        BOOL downloadsWerePaused = _maxNumberOfConcurrentDownloads <= 0;
+        
+        _maxNumberOfConcurrentDownloads = maxNumberOfConcurrentDownloads;
+        
+        if (downloadsWerePaused)
+        {
+            [self _startNextQueuedDownload];
+        }
+    }
 }
 
 - (void)setDiskCapacity:(NSUInteger)diskCapacity
@@ -983,29 +989,37 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	
 	if (completion)
 	{
-		internalBlock = ^(NSURL *URL, NSData *data, NSError *error)
-		{
-			UIImage *cachedImage = nil;
-			
-			if (data)
-			{
-				// make an image out of the data
-				cachedImage = [UIImage imageWithData:data];
-				
-				if (!cachedImage)
-				{
-					NSLog(@"Illegal Data cached for %@", URL);
-					return;
-				}
-				
-				// put in memory cache
-				NSUInteger cost = (NSUInteger)(cachedImage.size.width * cachedImage.size.height);
-				[_memoryCache setObject:cachedImage forKey:URL cost:cost];
-			}
-			
-			// execute wrapped completion block
-			completion(URL, cachedImage, error);
-		};
+        internalBlock = ^(NSURL *URL, NSData *data, NSError *error)
+        {
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+                UIImage *cachedImage = nil;
+                
+                if (data)
+                {
+                    // make an image out of the data
+                    cachedImage = [UIImage imageWithData:data];
+                    
+                    if (!cachedImage)
+                    {
+                        NSLog(@"Illegal Data cached for %@", URL);
+                        return;
+                    }
+                    
+                    // redraw image using device context
+                    UIGraphicsBeginImageContextWithOptions(cachedImage.size, YES, 0);
+                    [cachedImage drawAtPoint:CGPointZero];
+                    cachedImage = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    
+                    // put in memory cache
+                    NSUInteger cost = (NSUInteger)(cachedImage.size.width * cachedImage.size.height);
+                    [_memoryCache setObject:cachedImage forKey:URL cost:cost];
+                }
+                
+                // execute wrapped completion block
+                completion(URL, cachedImage, error);
+            });
+        };
 	}
 	
 	// try file cache
