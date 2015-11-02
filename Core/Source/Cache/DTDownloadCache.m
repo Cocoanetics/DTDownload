@@ -1006,7 +1006,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
                     }
                     
                     // redraw image using device context
-                    UIGraphicsBeginImageContextWithOptions(cachedImage.size, YES, 0);
+                    UIGraphicsBeginImageContextWithOptions(cachedImage.size, NO, 0);
                     [cachedImage drawAtPoint:CGPointZero];
                     cachedImage = UIGraphicsGetImageFromCurrentImageContext();
                     UIGraphicsEndImageContext();
