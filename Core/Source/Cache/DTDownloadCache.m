@@ -6,21 +6,12 @@
 //  Copyright (c) 2012 Cocoanetics. All rights reserved.
 //
 
-#import "DTDownloadCache.h"
+#import <ImageIO/CGImageSource.h>
+#import <DTFoundation/DTFoundation.h>
 
+#import "DTDownloadCache.h"
 #import "DTCachedFile.h"
 #import "DTDownload.h"
-
-#import <ImageIO/CGImageSource.h>
-
-#import <DTFoundation/NSString+DTUtilities.h>
-#import <DTFoundation/NSString+DTPaths.h>
-#import <DTFoundation/NSString+DTFormatNumbers.h>
-#import <DTFoundation/DTWeakSupport.h>
-
-#if TARGET_OS_IPHONE
-#import <DTFoundation/DTAsyncFileDeleter.h>
-#endif
 
 NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFile";
 
