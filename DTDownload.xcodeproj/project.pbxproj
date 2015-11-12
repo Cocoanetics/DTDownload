@@ -119,6 +119,20 @@
 			remoteGlobalIDString = 384471551BA33ED80037C68D;
 			remoteInfo = "DTFoundation (tvOS)";
 		};
+		A70BCEC01BF4A436000CD60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A70B4CE61486637E00873A4A;
+			remoteInfo = "Static Library";
+		};
+		A70BCEC21BF4A541000CD60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A710A4FF1607556000437D36;
+			remoteInfo = "Static Library (Mac)";
+		};
 		A71F5B9F17FB0A8E00D5E42C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A719034B16A803A700C1EC52 /* DTFoundation.xcodeproj */;
@@ -734,6 +748,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A70BCEC11BF4A436000CD60D /* PBXTargetDependency */,
 			);
 			name = "DTDownload (iOS)";
 			productName = DTDownload;
@@ -751,6 +766,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A70BCEC31BF4A541000CD60D /* PBXTargetDependency */,
 			);
 			name = "DTDownload (Mac)";
 			productName = "DTDownload (Mac)";
@@ -1194,6 +1210,16 @@
 			name = "DTFoundation (iOS)";
 			targetProxy = A70BCEB31BF4A053000CD60D /* PBXContainerItemProxy */;
 		};
+		A70BCEC11BF4A436000CD60D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library";
+			targetProxy = A70BCEC01BF4A436000CD60D /* PBXContainerItemProxy */;
+		};
+		A70BCEC31BF4A541000CD60D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library (Mac)";
+			targetProxy = A70BCEC21BF4A541000CD60D /* PBXContainerItemProxy */;
+		};
 		A76663811987A8F0001944DA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A71903D216A8068B00C1EC52 /* DTDownload (Mac) */;
@@ -1393,6 +1419,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SYMROOT)/../../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1417,6 +1444,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SYMROOT)/../../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = iphoneos;
@@ -1458,6 +1486,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SYMROOT)/../../**",
+					"${TARGET_BUILD_DIR}/**",
+				);
 				PRODUCT_NAME = DTDownload_Mac;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/Mac";
@@ -1473,6 +1505,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SYMROOT)/../../**",
+					"${TARGET_BUILD_DIR}/**",
+				);
 				PRODUCT_NAME = DTDownload_Mac;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/Mac";
@@ -1505,6 +1541,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SYMROOT)/../../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1533,6 +1570,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Core/DTDownload-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SYMROOT)/../../**",
+					"${TARGET_BUILD_DIR}/**",
+				);
 				PRODUCT_NAME = DTDownload_Mac;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "Externals/DTFoundation/Core/Source Externals/DTFoundation/Core/Source/Mac";
