@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Cocoanetics. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 /**
  Represents one downloadable item for use with DTDownloadQueue. For using DTDownloadQueue you would instantiate one DTDownloadItem and pass it to downloadItem:completion:progress:.
  */

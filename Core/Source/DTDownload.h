@@ -6,6 +6,8 @@
 //  Copyright 2010 Drobnik.com. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 // notifications
 extern NSString * const DTDownloadDidStartNotification;
 extern NSString * const DTDownloadDidFinishNotification;
