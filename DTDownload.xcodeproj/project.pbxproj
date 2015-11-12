@@ -34,6 +34,7 @@
 		A70BCEAD1BF49F77000CD60D /* DTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A724C3871A5D3C10007490BD /* DTFoundation.framework */; };
 		A70BCEB11BF4A02C000CD60D /* DTDownload.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70BCE7F1BF49EE2000CD60D /* DTDownload.framework */; };
 		A70BCEB21BF4A036000CD60D /* DTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A724C3871A5D3C10007490BD /* DTFoundation.framework */; };
+		A70BCEE71BF4AA33000CD60D /* DTDownload-Umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A70BCEE51BF4A95A000CD60D /* DTDownload-Umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A71902AB16A8029400C1EC52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71902AA16A8029400C1EC52 /* Foundation.framework */; };
 		A71902C616A802FF00C1EC52 /* DTDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902BF16A802FF00C1EC52 /* DTDownload.m */; };
 		A71903E316A8069100C1EC52 /* DTDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = A71902BF16A802FF00C1EC52 /* DTDownload.m */; };
@@ -334,6 +335,8 @@
 /* Begin PBXFileReference section */
 		A70BCE7F1BF49EE2000CD60D /* DTDownload.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DTDownload.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70BCEAE1BF49FDF000CD60D /* Framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Framework-Info.plist"; sourceTree = "<group>"; };
+		A70BCEE51BF4A95A000CD60D /* DTDownload-Umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DTDownload-Umbrella.h"; sourceTree = "<group>"; };
+		A70BCEE61BF4A9C5000CD60D /* DTDownload.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = DTDownload.modulemap; sourceTree = "<group>"; };
 		A71902A716A8029400C1EC52 /* libDTDownload_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDTDownload_iOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71902AA16A8029400C1EC52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A71902B916A802D000C1EC52 /* DTDownload-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DTDownload-Prefix.pch"; sourceTree = "<group>"; };
@@ -498,6 +501,8 @@
 		A71902B816A802D000C1EC52 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				A70BCEE51BF4A95A000CD60D /* DTDownload-Umbrella.h */,
+				A70BCEE61BF4A9C5000CD60D /* DTDownload.modulemap */,
 				A70BCEAE1BF49FDF000CD60D /* Framework-Info.plist */,
 				A71902B916A802D000C1EC52 /* DTDownload-Prefix.pch */,
 				A71902BA16A802D000C1EC52 /* Source */,
@@ -685,6 +690,7 @@
 			files = (
 				A70BCEA61BF49F32000CD60D /* DTDownloadCache.h in Headers */,
 				A70BCEA71BF49F32000CD60D /* DTCachedFile.h in Headers */,
+				A70BCEE71BF4AA33000CD60D /* DTDownload-Umbrella.h in Headers */,
 				A70BCEA81BF49F32000CD60D /* DTDownloadItem.h in Headers */,
 				A70BCEA91BF49F32000CD60D /* DTDownloadQueue.h in Headers */,
 				A70BCEAA1BF49F32000CD60D /* DTDownload.h in Headers */,
@@ -1291,6 +1297,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Core/DTDownload.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Cocoanetics.DTDownload;
 				PRODUCT_NAME = DTDownload;
@@ -1337,6 +1344,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Core/DTDownload.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Cocoanetics.DTDownload;
 				PRODUCT_NAME = DTDownload;
@@ -1383,6 +1391,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Core/DTDownload.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Cocoanetics.DTDownload;
 				PRODUCT_NAME = DTDownload;
@@ -1872,6 +1881,7 @@
 				A70BCE861BF49EE2000CD60D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A71902A216A8029400C1EC52 /* Build configuration list for PBXProject "DTDownload" */ = {
 			isa = XCConfigurationList;

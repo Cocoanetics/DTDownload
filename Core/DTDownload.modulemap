@@ -1,0 +1,6 @@
+framework module DTDownload {
+  umbrella header "DTDownload-Umbrella.h"
+
+  export *
+  module * { export * }
+}
