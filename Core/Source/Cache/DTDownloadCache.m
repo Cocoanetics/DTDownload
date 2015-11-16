@@ -7,7 +7,15 @@
 //
 
 #import <ImageIO/CGImageSource.h>
-#import <DTFoundation/DTFoundation.h>
+
+#import <DTFoundation/DTWeakSupport.h>
+#import <DTFoundation/NSString+DTPaths.h>
+#import <DTFoundation/NSString+DTFormatNumbers.h>
+
+#if TARGET_OS_IPHONE
+#import <DTFoundation/DTAsyncFileDeleter.h>
+#endif
+
 
 #import "DTDownloadCache.h"
 #import "DTCachedFile.h"
