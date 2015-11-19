@@ -1033,22 +1033,27 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 		};
 	}
 	
-	// try file cache
+	// try file cache, this triggers a new load
 	NSData *data = [self cachedDataForURL:URL option:option completion:internalBlock];
 	
-	if (!data)
+	if (cachedImage)
 	{
-		return nil;
+        // return from memory cache
+		return cachedImage;
 	}
-	
-	@try {
-		cachedImage = [UIImage imageWithData:data];
-	}
-	@catch (NSException *exception) {
-		NSLog(@"%@", exception);
-	}
-	@finally {
-	}
+    
+    // try unpacking from cached data
+    @try
+    {
+        cachedImage = [UIImage imageWithData:data];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"%@", exception);
+    }
+    @finally
+    {
+    }
 	
 	if (!cachedImage)
 	{
