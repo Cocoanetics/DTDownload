@@ -451,7 +451,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	{
 		NSHTTPURLResponse *http = (NSHTTPURLResponse *) response;
 		_contentType = http.MIMEType;
-		
+        
 		if (http.statusCode >= 400)
 		{
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:http.statusCode] forKey:NSLocalizedDescriptionKey];
@@ -498,10 +498,15 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 			[dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
-			NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+			NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
 			[dateFormatter setLocale:locale];
 			
 			_lastModifiedDate = [dateFormatter dateFromString:modified];
+            
+            if (!_lastModifiedDate)
+            {
+                NSLog(@"Cannot parse Last-Modified %@", modified);
+            }
 		}
 		
 		if (_responseHandler)
