@@ -61,8 +61,10 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	
 	// timer that does cache maintenance
 	NSTimer *_maintenanceTimer;
-	
 	BOOL _needsMaintenance;
+    
+    // image decompression
+    dispatch_queue_t _decompressionQueue;
 }
 
 + (DTDownloadCache *)sharedInstance
@@ -99,6 +101,8 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 		// reset status of downloads
 		[self _resetDownloadStatus];
 		
+        _decompressionQueue = dispatch_queue_create("DTDownloadCache Decompression Queue", 0);
+        
 		_saveTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(_saveTimerTick:) userInfo:nil repeats:YES];
 		
 		_maintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(_maintenanceTimerTick:) userInfo:nil repeats:YES];
@@ -121,7 +125,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	_maintenanceTimer = nil;
 	
 	[self _writeToDisk];
-	
+    
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -990,41 +994,38 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	{
 		internalBlock = ^(NSURL *URL, NSData *data, NSError *error)
 		{
-			dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+			dispatch_async(_decompressionQueue, ^{
 				UIImage *cachedImage = nil;
 				
-				if (data)
-				{
-					// make an image out of the data
-					cachedImage = [UIImage imageWithData:data];
-					NSUInteger cost = (NSUInteger)(cachedImage.size.width * cachedImage.size.height);
-					
-					if (!cachedImage)
-					{
-						NSLog(@"Illegal Data cached for %@", URL);
-						return;
-					}
-					
-					// redraw image using device context if it is not too large
-					if (cost < 1024*1024)
-					{
-						UIGraphicsBeginImageContextWithOptions(cachedImage.size, NO, 0);
-						
-						CGContextRef context = UIGraphicsGetCurrentContext();
-						
-						// sanity check, only do it if we got a context
-						if (context)
-						{
-							[cachedImage drawAtPoint:CGPointZero];
-							cachedImage = UIGraphicsGetImageFromCurrentImageContext();
-						}
-						
-						UIGraphicsEndImageContext();
-					}
-					
-					// put in memory cache
-					[_memoryCache setObject:cachedImage forKey:URL cost:cost];
-				}
+                if (data)
+                {
+                    // make an image out of the data
+                    cachedImage = [UIImage imageWithData:data];
+                    NSUInteger cost = (NSUInteger)(cachedImage.size.width * cachedImage.size.height);
+                    
+                    if (cachedImage)
+                    {
+                        // redraw image using device context if it is not too large
+                        if (cost < 1024*1024)
+                        {
+                            UIGraphicsBeginImageContextWithOptions(cachedImage.size, NO, 0);
+                            
+                            CGContextRef context = UIGraphicsGetCurrentContext();
+                            
+                            // sanity check, only do it if we got a context
+                            if (context)
+                            {
+                                [cachedImage drawAtPoint:CGPointZero];
+                                cachedImage = UIGraphicsGetImageFromCurrentImageContext();
+                            }
+                            
+                            UIGraphicsEndImageContext();
+                        }
+                        
+                        // put in memory cache
+                        [_memoryCache setObject:cachedImage forKey:URL cost:cost];
+                    }
+                }
 				
 				// execute wrapped completion block
 				completion(URL, cachedImage, error);
