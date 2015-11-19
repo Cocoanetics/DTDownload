@@ -105,7 +105,7 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
         
 		_saveTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(_saveTimerTick:) userInfo:nil repeats:YES];
 		
-		_maintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(_maintenanceTimerTick:) userInfo:nil repeats:YES];
+		_maintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(_maintenanceTimerTick:) userInfo:nil repeats:YES];
 		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -1041,6 +1041,11 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
         // return from memory cache
 		return cachedImage;
 	}
+    
+    if (!data)
+    {
+        return nil;
+    }
     
     // try unpacking from cached data
     @try
