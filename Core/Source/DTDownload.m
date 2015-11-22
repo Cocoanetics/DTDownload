@@ -467,11 +467,6 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		if (_expectedContentLength <= 0)
 		{
 			_expectedContentLength = [response expectedContentLength];
-			
-			if (_expectedContentLength == NSURLResponseUnknownLength)
-			{
-				NSLog(@"No expected content length for %@", _URL);
-			}
 		}
 		
 		NSString *currentEntityTag = [http.allHeaderFields objectForKey:@"Etag"];
@@ -509,19 +504,27 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
             }
 		}
 		
+        BOOL shouldCancel = NO;
+        
+        if (http.statusCode == 304)
+        {
+            // treat Not Modified same as a cancel to avoid returning empty file
+            shouldCancel = YES;
+        }
+        
 		if (_responseHandler)
 		{
-			BOOL shouldCancel = NO;
 			_responseHandler([http allHeaderFields], &shouldCancel);
-			
-			if (shouldCancel)
-			{
-				[self stop];
-				
-				// exit here to avoid adding of download bundle folder
-				return;
-			}
 		}
+        
+        if (shouldCancel)
+        {
+            [self stop];
+            
+            // exit here to avoid adding of download bundle folder
+            return;
+        }
+
 		
 		// if _destinationBundleFilePath is not nil this means that it is a resumable download
 		if (!_destinationBundleFilePath)

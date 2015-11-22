@@ -117,6 +117,10 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
  */
 @property (nonatomic, strong, readonly) NSDate *lastModifiedDate;
 
+/**
+ The date to send as If-Modified-Since header
+ */
+@property (nonatomic, strong) NSDate *ifModifiedSinceDate;
 
 /**
  Use to set or retrieve an object that provides a context for the download.

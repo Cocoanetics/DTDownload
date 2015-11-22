@@ -171,6 +171,19 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 		{
 			NSString *cachedETag = cachedFile.entityTagIdentifier;
 			NSDate *lastModifiedDate = cachedFile.lastModifiedDate;
+            
+            if (lastModifiedDate)
+            {
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+                NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
+                [dateFormatter setLocale:locale];
+               // [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                
+                NSString *dateStr = [dateFormatter stringFromDate:lastModifiedDate];
+                
+                download.additionalHTTPHeaders = @{@"If-Modified-Since": dateStr};
+            }
 			
 			DT_WEAK_VARIABLE DTDownload *weakDownload = download;
 			
