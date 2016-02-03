@@ -175,5 +175,13 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  */
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority completion:(DTDownloadCacheImageCompletionBlock)completion;
 
+/**
+ Cancels download from list of upcoming downloads (If URL was found)
+ 
+ @param URL The URL of the download to be cancelled
+ @returns If an URL was cancelled
+ */
+- (BOOL)cancelDownloadForURL:(NSURL *)URL;
+
 @end
 #endif

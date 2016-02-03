@@ -159,6 +159,8 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 // only called from _workerContext
 - (void)_startDownloadForURL:(NSURL *)URL shouldAbortIfNotNewer:(BOOL)shouldAbortIfNotNewer context:(id)context
 {
+	NSLog(@"Start download for URL: %@", URL);
+	
 	DTDownload *download = [[DTDownload alloc] initWithURL:URL];
 	download.delegate = self;
 	download.context = context;
@@ -1096,6 +1098,56 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority
 {
 	return [self cachedImageForURL:URL option:option completion:NULL];
+}
+
+- (BOOL)cancelDownloadForURL:(NSURL *)URL
+{
+	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
+	
+	// load first added URLs first or last added URLs first -> depends on setting
+	NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"lastAccessDate" ascending:!_loadLastAddedURLFirst];
+	
+	NSSortDescriptor *prioritySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES];
+	
+	request.sortDescriptors = [NSArray arrayWithObjects:prioritySortDescriptor, sort, nil];
+	
+	request.predicate = [NSPredicate predicateWithFormat:@"fileData == nil and isLoading == NO"];
+//	request.fetchLimit = _maxNumberOfConcurrentDownloads;
+	
+	NSError *error;
+	
+	NSArray *results = [_workerContext executeFetchRequest:request error:&error];
+	if (!results)
+	{
+		NSLog(@"Error fetching download files: %@", [error localizedDescription]);
+	}
+	
+	
+	request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
+	
+	request.predicate = [NSPredicate predicateWithFormat:@"fileData == nil and isLoading == NO and remoteURL == %@", URL];
+	request.fetchLimit = _maxNumberOfConcurrentDownloads;
+	
+//	NSError *error;
+	
+	results = [_workerContext executeFetchRequest:request error:&error];
+	if (!results)
+	{
+		NSLog(@"Error fetching download files: %@", [error localizedDescription]);
+	}
+	
+	if (results.count > 0)
+	{
+		NSLog(@"Cancelled download for URL: %@", URL);
+		DTCachedFile *cachedFile = results[0];
+		cachedFile.forceLoad = @NO;
+		cachedFile.lastAccessDate = [NSDate date];
+		
+		[self _commitWorkerContext];
+		return YES;
+	}
+	
+	return NO;
 }
 
 @end
