@@ -11,6 +11,7 @@
 #import <DTFoundation/DTWeakSupport.h>
 #import <DTFoundation/NSString+DTPaths.h>
 #import <DTFoundation/NSString+DTFormatNumbers.h>
+#import <DTFoundation/NSURL+DTComparing.h>
 
 #if TARGET_OS_IPHONE
 #import <DTFoundation/DTAsyncFileDeleter.h>
@@ -22,6 +23,7 @@
 #import "DTDownload.h"
 
 NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFile";
+NSInteger DTDownloadCacheCancelError = 999;
 
 @interface DTDownloadCache ()
 
@@ -267,6 +269,21 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 	}];
 }
 
+- (void)_callCompletionBlocksForCancellingOfURL:(NSURL *)URL
+{
+	NSString *key = [URL absoluteString];
+	NSArray *blocksToExecute = _completionHandlers[key];
+	
+	NSDictionary *userInfo = @{[NSString stringWithFormat:@"Download cancelled for URL: %@", key] : NSLocalizedDescriptionKey};
+	NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:DTDownloadCacheCancelError userInfo:userInfo];
+	
+	// excecute all blocks and forward the error
+	for (DTDownloadCacheDataCompletionBlock oneBlock in blocksToExecute)
+	{
+		oneBlock(URL, nil, error);
+	}
+}
+
 #pragma mark External Methods
 
 - (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option completion:(DTDownloadCacheDataCompletionBlock)completion
@@ -416,7 +433,10 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 
 - (void)downloadDidCancel:(DTDownload *)download
 {
+	[self _callCompletionBlocksForCancellingOfURL:download.URL];
+	
 	[_workerContext performBlock:^{
+		
 		[self _removeDownloadFromActiveDownloads:download];
 		
 		[self _startNextQueuedDownload];
@@ -1096,6 +1116,46 @@ NSString *DTDownloadCacheDidCacheFileNotification = @"DTDownloadCacheDidCacheFil
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority
 {
 	return [self cachedImageForURL:URL option:option completion:NULL];
+}
+
+- (void)cancelDownloadForURL:(NSURL *)URL
+{
+	// Call all existing completion blocks for this URL and remove them
+	[self _callCompletionBlocksForCancellingOfURL:URL];
+	[self _unregisterAllCompletionBlocksForURL:URL];
+	
+	// Stop all active downloads for this URL
+	for (DTDownload *download in _activeDownloads)
+	{
+		if ([download.URL isEqualToURL:URL])
+		{
+			[download stop];
+		}
+	}
+	
+	// Change status of queued downloads to not be downloaded
+	[_workerContext performBlockAndWait:^{
+		
+		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
+		request.predicate = [NSPredicate predicateWithFormat:@"isLoading == NO and fileData == nil and remoteURL == %@", URL.absoluteString];
+		
+		NSError *error;
+		NSArray *results = [_workerContext executeFetchRequest:request error:&error];
+		
+		if (!results)
+		{
+			NSLog(@"Error fetching download files: %@", [error localizedDescription]);
+			return;
+		}
+		
+		for (DTCachedFile *cachedFile in results)
+		{
+			// Setting forceLoad to NO excludes it from future downloads
+			cachedFile.forceLoad = @(NO);
+			
+			[self _commitWorkerContext];
+		}
+	}];
 }
 
 @end

@@ -14,6 +14,9 @@
 
 extern NSString *DTDownloadCacheDidCacheFileNotification;
 
+// Error code used when a download was cancelled
+extern NSInteger DTDownloadCacheCancelError;
+
 
 enum {
     DTDownloadCacheOptionNeverLoad = 0,
@@ -174,6 +177,13 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  @returns The cached image or `nil` if none is cached.
  */
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority completion:(DTDownloadCacheImageCompletionBlock)completion;
+
+/**
+ Cancels download from list of upcoming downloads (If URL was found)
+ 
+ @param URL The URL of the download to be cancelled
+ */
+- (void)cancelDownloadForURL:(NSURL *)URL;
 
 @end
 #endif
