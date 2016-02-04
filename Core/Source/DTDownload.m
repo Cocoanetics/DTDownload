@@ -647,7 +647,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	self.lastPacketTimestamp = now;
 	// calculation speed done
 	
-	self.progress.completedUnitCount = _receivedBytes;
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+		self.progress.completedUnitCount = _receivedBytes;
+	});
 	
 	// send notification
 	if (_expectedContentLength > 0)

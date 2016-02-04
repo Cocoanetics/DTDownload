@@ -438,8 +438,8 @@ NSInteger DTDownloadCacheCancelError = 999;
 }
 
 - (void)downloadDidCancel:(DTDownload *)download
-{
-	[self _callCompletionBlocksForCancellingOfURL:download.URL];
+{	
+	[_progressLookup removeObjectForKey:download.URL.absoluteString];
 	
 	[_workerContext performBlock:^{
 		
@@ -452,6 +452,8 @@ NSInteger DTDownloadCacheCancelError = 999;
 - (void)download:(DTDownload *)download didFinishWithFile:(NSString *)path
 {
 	NSURL *URL = download.URL;
+	
+	[_progressLookup removeObjectForKey:download.URL.absoluteString];
 	
 	[_workerContext performBlock:^{
 		
@@ -964,12 +966,13 @@ NSInteger DTDownloadCacheCancelError = 999;
 
 - (NSProgress *)progressForURL:(NSURL *)URL
 {
-	NSProgress *progress = _progressLookup[URL];
+	NSString *key = URL.absoluteString;
+	NSProgress *progress = _progressLookup[key];
 	
 	if (!progress)
 	{
 		progress = [NSProgress progressWithTotalUnitCount:-1];
-		_progressLookup[URL] = progress;
+		_progressLookup[key] = progress;
 	}
 	
 	return progress;
