@@ -15,25 +15,23 @@
 extern NSString *DTDownloadCacheDidCacheFileNotification;
 
 // Error code used when a download was cancelled
-extern NSInteger DTDownloadCacheCancelError;
-
-
-enum {
+typedef NS_ENUM(NSUInteger, DTDownloadCacheOption)
+{
     DTDownloadCacheOptionNeverLoad = 0,
     DTDownloadCacheOptionLoadIfNotCached,
     DTDownloadCacheOptionReturnCacheAndLoadAlways,
-    DTDownloadCacheOptionReturnCacheAndLoadIfChanged,
+    DTDownloadCacheOptionReturnCacheAndLoadIfChanged
 };
-typedef NSUInteger DTDownloadCacheOption;
 
-enum {
+
+typedef NS_ENUM(NSUInteger, DTDownloadCachePriority)
+{
 	DTDownloadCachePriorityVeryHigh = 0,
 	DTDownloadCachePriorityHigh,
 	DTDownloadCachePriorityNormal,
 	DTDownloadCachePriorityLow,
 	DTDownloadCachePriorityVeryLow
 };
-typedef NSUInteger DTDownloadCachePriority;
 
 
 // when download succeedes or fails the blocks are called, passing URL. If there was an error then data/image is nil and the NSError holds the reason
@@ -99,6 +97,21 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  @returns The cached data or `nil` if none is cached.
  */
 - (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority completion:(DTDownloadCacheDataCompletionBlock)completion;
+
+/**
+ Cancels download from list of upcoming downloads (If URL was found)
+ 
+ @param URL The URL of the download to be cancelled
+ */
+- (void)cancelDownloadForURL:(NSURL *)URL;
+
+
+/**
+ Gets progress for a specified URL
+ 
+ @param URL The URL of the download
+ */
+- (NSProgress *)progressForURL:(NSURL *)URL;
 
 /**-------------------------------------------------------------------------------------
  @name Retrieving Information about the Cache
@@ -177,21 +190,6 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
  @returns The cached image or `nil` if none is cached.
  */
 - (UIImage *)cachedImageForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority completion:(DTDownloadCacheImageCompletionBlock)completion;
-
-/**
- Cancels download from list of upcoming downloads (If URL was found)
- 
- @param URL The URL of the download to be cancelled
- */
-- (void)cancelDownloadForURL:(NSURL *)URL;
-
-
-/**
- Gets progress for a specified URL
- 
- @param URL The URL of the download
- */
-- (NSProgress *)progressForURL:(NSURL *)URL;
 
 @end
 #endif

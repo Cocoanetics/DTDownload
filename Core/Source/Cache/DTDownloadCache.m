@@ -417,6 +417,46 @@ NSInteger DTDownloadCacheCancelError = 999;
 	return [self _currentDiskUsageInContext:_workerContext];
 }
 
+- (void)cancelDownloadForURL:(NSURL *)URL
+{
+	// Call all existing completion blocks for this URL and remove them
+	[self _callCompletionBlocksForCancellingOfURL:URL];
+	[self _unregisterAllCompletionBlocksForURL:URL];
+	
+	// Stop all active downloads for this URL
+	for (DTDownload *download in _activeDownloads)
+	{
+		if ([download.URL isEqualToURL:URL])
+		{
+			[download stop];
+		}
+	}
+	
+	// Change status of queued downloads to not be downloaded
+	[_workerContext performBlockAndWait:^{
+		
+		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
+		request.predicate = [NSPredicate predicateWithFormat:@"isLoading == NO and fileData == nil and remoteURL == %@", URL.absoluteString];
+		
+		NSError *error;
+		NSArray *results = [_workerContext executeFetchRequest:request error:&error];
+		
+		if (!results)
+		{
+			NSLog(@"Error fetching download files: %@", [error localizedDescription]);
+			return;
+		}
+		
+		for (DTCachedFile *cachedFile in results)
+		{
+			// Setting forceLoad to NO excludes it from future downloads
+			cachedFile.forceLoad = @(NO);
+			
+			[self _commitWorkerContext];
+		}
+	}];
+}
+
 #pragma mark DTDownload
 
 - (void)download:(DTDownload *)download didFailWithError:(NSError *)error
@@ -1142,45 +1182,6 @@ NSInteger DTDownloadCacheCancelError = 999;
 	return [self cachedImageForURL:URL option:option completion:NULL];
 }
 
-- (void)cancelDownloadForURL:(NSURL *)URL
-{
-	// Call all existing completion blocks for this URL and remove them
-	[self _callCompletionBlocksForCancellingOfURL:URL];
-	[self _unregisterAllCompletionBlocksForURL:URL];
-	
-	// Stop all active downloads for this URL
-	for (DTDownload *download in _activeDownloads)
-	{
-		if ([download.URL isEqualToURL:URL])
-		{
-			[download stop];
-		}
-	}
-	
-	// Change status of queued downloads to not be downloaded
-	[_workerContext performBlockAndWait:^{
-		
-		NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"DTCachedFile"];
-		request.predicate = [NSPredicate predicateWithFormat:@"isLoading == NO and fileData == nil and remoteURL == %@", URL.absoluteString];
-		
-		NSError *error;
-		NSArray *results = [_workerContext executeFetchRequest:request error:&error];
-		
-		if (!results)
-		{
-			NSLog(@"Error fetching download files: %@", [error localizedDescription]);
-			return;
-		}
-		
-		for (DTCachedFile *cachedFile in results)
-		{
-			// Setting forceLoad to NO excludes it from future downloads
-			cachedFile.forceLoad = @(NO);
-			
-			[self _commitWorkerContext];
-		}
-	}];
-}
 
 @end
 
