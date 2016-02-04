@@ -135,6 +135,12 @@ typedef void (^DTDownloadCompletionHandler)(NSString *path, NSError *error);
 
 @property (nonatomic, copy) NSDictionary *additionalHTTPHeaders;
 
+
+/**
+ Progress of this download.
+ */
+@property (nonatomic, strong) NSProgress *progress;
+
 /**
  Returns the receiver’s delegate.
  

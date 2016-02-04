@@ -94,6 +94,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		_resumeFileOffset = 0;
 		_destinationPath = destinationPath;
 		_isResume = NO;
+		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
 #else
@@ -467,6 +468,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		if (_expectedContentLength <= 0)
 		{
 			_expectedContentLength = [response expectedContentLength];
+			self.progress.totalUnitCount = _expectedContentLength;
 		}
 		
 		NSString *currentEntityTag = [http.allHeaderFields objectForKey:@"Etag"];
@@ -645,6 +647,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	self.lastPacketTimestamp = now;
 	// calculation speed done
 	
+	self.progress.completedUnitCount = _receivedBytes;
 	
 	// send notification
 	if (_expectedContentLength > 0)
@@ -729,12 +732,13 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	_receivedBytes += [data length];
 }
 
-- (void)closeDestinationFile {
+- (void)closeDestinationFile
+{
 	[_destinationFileHandle closeFile];
 	_destinationFileHandle = nil;
 }
 
-#pragma mark Properties
+#pragma mark - Properties
 
 - (BOOL)isRunning
 {
@@ -747,8 +751,19 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	return _resumeFileOffset > 0;
 }
 
-- (NSString *)downloadBundlePath {
+- (NSString *)downloadBundlePath
+{
 	return [_destinationBundleFilePath stringByDeletingLastPathComponent];
+}
+
+- (NSProgress *)progress
+{
+	if (!_progress)
+	{
+		_progress = [NSProgress progressWithTotalUnitCount:-1];
+	}
+	
+	return _progress;
 }
 
 @synthesize URL = _URL;

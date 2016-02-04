@@ -64,9 +64,12 @@ NSInteger DTDownloadCacheCancelError = 999;
 	// timer that does cache maintenance
 	NSTimer *_maintenanceTimer;
 	BOOL _needsMaintenance;
-    
-    // image decompression
-    dispatch_queue_t _decompressionQueue;
+	
+	// image decompression
+	dispatch_queue_t _decompressionQueue;
+	
+	// Progress dictionary
+	NSMutableDictionary *_progressLookup;
 }
 
 + (DTDownloadCache *)sharedInstance
@@ -97,6 +100,8 @@ NSInteger DTDownloadCacheCancelError = 999;
 		
 		_completionHandlers = [[NSMutableDictionary alloc] init];
 		
+		_progressLookup = [[NSMutableDictionary alloc] init];
+
 		// preload cached object identifiers to speed up initial access
 		[self _preloadCachedFileIDs];
 		
@@ -164,6 +169,7 @@ NSInteger DTDownloadCacheCancelError = 999;
 	DTDownload *download = [[DTDownload alloc] initWithURL:URL];
 	download.delegate = self;
 	download.context = context;
+	download.progress = [self progressForURL:URL];
 	
 	if (shouldAbortIfNotNewer)
 	{
@@ -930,7 +936,7 @@ NSInteger DTDownloadCacheCancelError = 999;
 	}
 }
 
-#pragma mark Completion Blocks
+#pragma mark - Completion Blocks
 
 - (void)_registerCompletion:(DTDownloadCacheDataCompletionBlock)completion forURL:(NSURL *)URL
 {
@@ -952,6 +958,21 @@ NSInteger DTDownloadCacheCancelError = 999;
 	NSString *key = [URL absoluteString];
 	
 	[_completionHandlers removeObjectForKey:key];
+}
+
+#pragma mark - Progress
+
+- (NSProgress *)progressForURL:(NSURL *)URL
+{
+	NSProgress *progress = _progressLookup[URL];
+	
+	if (!progress)
+	{
+		progress = [NSProgress progressWithTotalUnitCount:-1];
+		_progressLookup[URL] = progress;
+	}
+	
+	return progress;
 }
 
 #pragma mark - Notifications
