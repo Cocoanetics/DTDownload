@@ -28,12 +28,10 @@
 	[super viewDidLoad];
 	
 	// Do any additional setup after loading the view, typically from a nib.
-	_imageURL = [NSURL URLWithString:@"http://bundles.icatalogapp.com/bundles/TestApp/cache/AJGA-Volume4-Issue11-December2012.jpg"];
+	_imageURL = [NSURL URLWithString:@"https://www.cocoanetics.com/files/IMG_0024.jpg"];
 		
 	_downloadOptionPickerView.dataSource = self;
 	_downloadOptionPickerView.delegate = self;
-	
-	_activityIndicatorView.alpha = 0.0f;
 	
 	_reloading = NO;
 }
@@ -50,15 +48,10 @@
 	_reloading = YES;
 	
 	_imageView.image = nil;
-	[_activityIndicatorView startAnimating];
-	_activityIndicatorView.alpha = 1.0f;
 	
 	UIImage *image = [[DTDownloadCache sharedInstance] cachedImageForURL:_imageURL option:_downloadCacheOption completion:^(NSURL *URL, UIImage *image, NSError *error) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			
-			[_activityIndicatorView stopAnimating];
-			_activityIndicatorView.alpha = 0.0f;
 			
 			if (error)
 			{
@@ -76,6 +69,8 @@
 			_reloading = NO;
 		});
 	}];
+	
+	
 
 	if (image && _downloadCacheOption == DTDownloadCacheOptionNeverLoad)
 	{
@@ -89,7 +84,6 @@
 
 	if (image && _downloadCacheOption == DTDownloadCacheOptionReturnCacheAndLoadIfChanged)
 	{
-		_activityIndicatorView.alpha = 0.0;
 		_reloading = NO;
 	}
 	
@@ -98,6 +92,8 @@
 		_statusLabel.text = @"cached";
 		_imageView.image = image;
 	}
+	
+	_downloadProgress.observedProgress = [[DTDownloadCache sharedInstance] progressForURL:_imageURL];
 }
 
 - (void)didReceiveMemoryWarning

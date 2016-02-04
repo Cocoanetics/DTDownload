@@ -10,13 +10,14 @@
 
 @interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *downloadOptionPickerView;
+
+@property (weak, nonatomic) IBOutlet UIProgressView *downloadProgress;
+
 
 - (IBAction)reloadButtonPressed:(UIButton *)sender;
 
