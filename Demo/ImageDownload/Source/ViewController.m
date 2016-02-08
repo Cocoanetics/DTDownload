@@ -93,7 +93,7 @@
 		_imageView.image = image;
 	}
 	
-	_downloadProgress.observedProgress = [[DTDownloadCache sharedInstance] progressForURL:_imageURL];
+//	_downloadProgress.observedProgress = [[DTDownloadCache sharedInstance] progressForURL:_imageURL];
 }
 
 - (void)didReceiveMemoryWarning

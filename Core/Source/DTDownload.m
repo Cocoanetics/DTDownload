@@ -632,6 +632,12 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+	if (!_urlConnection)
+	{
+		// might already been cancelled
+		return;
+	}
+	
 	[self writeToDestinationFile:data];
 	
 	// calculate a transfer speed

@@ -106,13 +106,6 @@ typedef void (^DTDownloadCacheImageCompletionBlock)(NSURL *URL, UIImage *image, 
 - (void)cancelDownloadForURL:(NSURL *)URL;
 
 
-/**
- Gets progress for a specified URL
- 
- @param URL The URL of the download
- */
-- (NSProgress *)progressForURL:(NSURL *)URL;
-
 /**-------------------------------------------------------------------------------------
  @name Retrieving Information about the Cache
  ---------------------------------------------------------------------------------------
