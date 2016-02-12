@@ -67,6 +67,9 @@ NSInteger DTDownloadCacheCancelError = 999;
 	
 	// image decompression
 	dispatch_queue_t _decompressionQueue;
+    
+    // completion handler queue
+    dispatch_queue_t _completionHandlerQueue;
 }
 
 + (DTDownloadCache *)sharedInstance
@@ -103,7 +106,9 @@ NSInteger DTDownloadCacheCancelError = 999;
 		// reset status of downloads
 		[self _resetDownloadStatus];
 		
-        _decompressionQueue = dispatch_queue_create("DTDownloadCache Decompression Queue", 0);
+        _decompressionQueue = dispatch_queue_create("DTDownloadCache Decompression Queue", DISPATCH_QUEUE_SERIAL);
+        
+        _completionHandlerQueue = dispatch_queue_create("DTDownloadCache Completion Handler Queue", DISPATCH_QUEUE_SERIAL);
         
 		_saveTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(_saveTimerTick:) userInfo:nil repeats:YES];
 		
@@ -233,8 +238,6 @@ NSInteger DTDownloadCacheCancelError = 999;
 		[self _commitWorkerContext];
 		
 		[_activeDownloads removeObject:download];
-		
-		[self _unregisterAllCompletionBlocksForURL:download.URL];
 	}];
 }
 
@@ -269,22 +272,31 @@ NSInteger DTDownloadCacheCancelError = 999;
 	}];
 }
 
+- (void)_executeAndRemoveAllCompletionBlocksForURL:(NSURL *)URL data:(NSData *)data error:(NSError *)error
+{
+    dispatch_async(_completionHandlerQueue, ^{
+        NSString *key = [URL absoluteString];
+        NSArray *blocksToExecute = _completionHandlers[key];
+        
+        // excecute all blocks and forward the error
+        for (DTDownloadCacheDataCompletionBlock oneBlock in blocksToExecute)
+        {
+            
+            oneBlock(URL, data, error);
+        }
+        
+        // remove all handlers for the key
+        [_completionHandlers removeObjectForKey:key];
+    });
+}
+
 - (void)_callCompletionBlocksForCancellingOfURL:(NSURL *)URL
 {
-	@synchronized(self)
-	{
-		NSString *key = [URL absoluteString];
-		NSArray *blocksToExecute = _completionHandlers[key];
-		
-		NSDictionary *userInfo = @{[NSString stringWithFormat:@"Download cancelled for URL: %@", key] : NSLocalizedDescriptionKey};
-		NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:DTDownloadCacheCancelError userInfo:userInfo];
-		
-		// excecute all blocks and forward the error
-		for (DTDownloadCacheDataCompletionBlock oneBlock in blocksToExecute)
-		{
-			oneBlock(URL, nil, error);
-		}
-	}
+    NSString *key = [URL absoluteString];
+    NSDictionary *userInfo = @{[NSString stringWithFormat:@"Download cancelled for URL: %@", key] : NSLocalizedDescriptionKey};
+    NSError *error = [NSError errorWithDomain:DTDownloadErrorDomain code:DTDownloadCacheCancelError userInfo:userInfo];
+    
+    [self _executeAndRemoveAllCompletionBlocksForURL:URL data:nil error:error];
 }
 
 #pragma mark External Methods
@@ -418,7 +430,6 @@ NSInteger DTDownloadCacheCancelError = 999;
 {
 	// Call all existing completion blocks for this URL and remove them
 	[self _callCompletionBlocksForCancellingOfURL:URL];
-	[self _unregisterAllCompletionBlocksForURL:URL];
 	
 	// Stop all active downloads for this URL
 	for (DTDownload *download in _activeDownloads)
@@ -459,20 +470,10 @@ NSInteger DTDownloadCacheCancelError = 999;
 - (void)download:(DTDownload *)download didFailWithError:(NSError *)error
 {
 	[_workerContext performBlock:^{
-		NSString *key = [download.URL absoluteString];
-		
-		@synchronized(self)
-		{
-			NSArray *blocksToExecute = _completionHandlers[key];
-			
-			// excecute all blocks and forward the error
-			for (DTDownloadCacheDataCompletionBlock oneBlock in blocksToExecute)
-			{
-				oneBlock(download.URL, nil, error);
-			}
-		}
 		
 		[self _removeDownloadFromActiveDownloads:download];
+        
+        [self _executeAndRemoveAllCompletionBlocksForURL:download.URL data:nil error:error];
 		
 		[self _startNextQueuedDownload];
 	}];
@@ -483,6 +484,8 @@ NSInteger DTDownloadCacheCancelError = 999;
 	[_workerContext performBlock:^{
 		
 		[self _removeDownloadFromActiveDownloads:download];
+        
+        [self _callCompletionBlocksForCancellingOfURL:download.URL];
 		
 		[self _startNextQueuedDownload];
 	}];
@@ -538,20 +541,10 @@ NSInteger DTDownloadCacheCancelError = 999;
 			[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 #endif
 			
-			@synchronized(self)
-			{
-				NSString *key = [download.URL absoluteString];
-				NSArray *blocksToExecute = _completionHandlers[key];
-				
-				// excecute all blocks and forward the error
-				for (DTDownloadCacheDataCompletionBlock oneBlock in blocksToExecute)
-				{
-					oneBlock(URL, data, nil);
-				}
-			}
-			
 			// remove from active downloads
 			[self _removeDownloadFromActiveDownloads:download];
+            
+            [self _executeAndRemoveAllCompletionBlocksForURL:URL data:data error:nil];
 			
 			// completion block and notification
 			dispatch_async(dispatch_get_main_queue(), ^{
@@ -982,8 +975,7 @@ NSInteger DTDownloadCacheCancelError = 999;
 
 - (void)_registerCompletion:(DTDownloadCacheDataCompletionBlock)completion forURL:(NSURL *)URL
 {
-	@synchronized(self)
-	{
+    dispatch_async(_completionHandlerQueue, ^{
 		NSString *key = [URL absoluteString];
 		
 		NSMutableArray *completionBlocksForURL = _completionHandlers[key];
@@ -995,16 +987,7 @@ NSInteger DTDownloadCacheCancelError = 999;
 		}
 		
 		[completionBlocksForURL addObject:[completion copy]];
-	}
-}
-
-- (void)_unregisterAllCompletionBlocksForURL:(NSURL *)URL
-{
-	@synchronized(self)
-	{
-		NSString *key = [URL absoluteString];
-		[_completionHandlers removeObjectForKey:key];
-	}
+    });
 }
 
 #pragma mark - Notifications
