@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'DTDownload'
-  spec.version      = '1.1.1'
+  spec.version      = '1.1.2'
   spec.summary      = "File Downloading, Caching and Queueing."
   spec.homepage     = "https://github.com/Cocoanetics/DTDownload"
   spec.author       = { "Oliver Drobnik" => "oliver@drobnik.com" }
@@ -19,6 +19,7 @@ Pod::Spec.new do |spec|
     ss.source_files = 'Core/Source/Cache/*.{h,m}'
   	ss.frameworks = ['CoreData']
   	ss.dependency 'DTFoundation/Core', '~>1.7.0'
+  	ss.dependency 'DTFoundation/DTAsyncFileDeleter', '~>1.7.0'
   	ss.dependency 'DTDownload/Core', '~>1.1.1'
   end
 
