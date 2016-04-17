@@ -185,7 +185,7 @@ NSInteger DTDownloadCacheCancelError = 999;
                 [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
                 NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
                 [dateFormatter setLocale:locale];
-               // [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
                 
                 NSString *dateStr = [dateFormatter stringFromDate:lastModifiedDate];
                 
