@@ -418,7 +418,7 @@ NSInteger DTDownloadCacheCancelError = 999;
 
 - (NSData *)cachedDataForURL:(NSURL *)URL option:(DTDownloadCacheOption)option priority:(DTDownloadCachePriority)priority
 {
-	return [self cachedDataForURL:URL option:option completion:NULL];
+	return [self cachedDataForURL:URL option:option priority:priority completion:NULL];
 }
 
 - (NSUInteger)currentDiskUsage
@@ -1103,7 +1103,7 @@ NSInteger DTDownloadCacheCancelError = 999;
 	}
 	
 	// try file cache, this triggers a new load
-	NSData *data = [self cachedDataForURL:URL option:option completion:internalBlock];
+	NSData *data = [self cachedDataForURL:URL option:option priority:priority completion:internalBlock];
 	
 	if (cachedImage)
 	{
