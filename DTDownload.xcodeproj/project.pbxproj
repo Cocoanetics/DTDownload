@@ -841,7 +841,7 @@
 		A719029F16A8029400C1EC52 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Drobnik KG";
 				TargetAttributes = {
 					A70BCE7E1BF49EE2000CD60D = {
