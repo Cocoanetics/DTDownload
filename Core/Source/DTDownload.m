@@ -94,6 +94,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		_resumeFileOffset = 0;
 		_destinationPath = destinationPath;
 		_isResume = NO;
+		
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
 #else
@@ -451,7 +452,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	{
 		NSHTTPURLResponse *http = (NSHTTPURLResponse *) response;
 		_contentType = http.MIMEType;
-		
+        
 		if (http.statusCode >= 400)
 		{
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:http.statusCode] forKey:NSLocalizedDescriptionKey];
@@ -467,11 +468,7 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		if (_expectedContentLength <= 0)
 		{
 			_expectedContentLength = [response expectedContentLength];
-			
-			if (_expectedContentLength == NSURLResponseUnknownLength)
-			{
-				NSLog(@"No expected content length for %@", _URL);
-			}
+			self.progress.totalUnitCount = _expectedContentLength;
 		}
 		
 		NSString *currentEntityTag = [http.allHeaderFields objectForKey:@"Etag"];
@@ -498,25 +495,38 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 		{
 			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 			[dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
-			NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+			NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
 			[dateFormatter setLocale:locale];
 			
 			_lastModifiedDate = [dateFormatter dateFromString:modified];
+            
+            if (!_lastModifiedDate)
+            {
+                NSLog(@"Cannot parse Last-Modified %@", modified);
+            }
 		}
 		
+        BOOL shouldCancel = NO;
+        
+        if (http.statusCode == 304)
+        {
+            // treat Not Modified same as a cancel to avoid returning empty file
+            shouldCancel = YES;
+        }
+        
 		if (_responseHandler)
 		{
-			BOOL shouldCancel = NO;
 			_responseHandler([http allHeaderFields], &shouldCancel);
-			
-			if (shouldCancel)
-			{
-				[self stop];
-				
-				// exit here to avoid adding of download bundle folder
-				return;
-			}
 		}
+        
+        if (shouldCancel)
+        {
+            [self stop];
+            
+            // exit here to avoid adding of download bundle folder
+            return;
+        }
+
 		
 		// if _destinationBundleFilePath is not nil this means that it is a resumable download
 		if (!_destinationBundleFilePath)
@@ -622,6 +632,12 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+	if (!_urlConnection)
+	{
+		// might already been cancelled
+		return;
+	}
+	
 	[self writeToDestinationFile:data];
 	
 	// calculate a transfer speed
@@ -637,6 +653,9 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	self.lastPacketTimestamp = now;
 	// calculation speed done
 	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+		self.progress.completedUnitCount = _receivedBytes;
+	});
 	
 	// send notification
 	if (_expectedContentLength > 0)
@@ -721,12 +740,13 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	_receivedBytes += [data length];
 }
 
-- (void)closeDestinationFile {
+- (void)closeDestinationFile
+{
 	[_destinationFileHandle closeFile];
 	_destinationFileHandle = nil;
 }
 
-#pragma mark Properties
+#pragma mark - Properties
 
 - (BOOL)isRunning
 {
@@ -739,8 +759,19 @@ static NSString *const NSURLDownloadEntityTag = @"NSURLDownloadEntityTag";
 	return _resumeFileOffset > 0;
 }
 
-- (NSString *)downloadBundlePath {
+- (NSString *)downloadBundlePath
+{
 	return [_destinationBundleFilePath stringByDeletingLastPathComponent];
+}
+
+- (NSProgress *)progress
+{
+	if (!_progress)
+	{
+		_progress = [NSProgress progressWithTotalUnitCount:-1];
+	}
+	
+	return _progress;
 }
 
 @synthesize URL = _URL;
